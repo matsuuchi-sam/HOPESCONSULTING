@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI業務効率化コンサルティング | ホープスコンサルティング株式会社</title>
+<meta name="description" content="中小企業診断士とAIエンジニアのハイブリッドチームが、一人当たり20%の業務削減を実現。経営視点でのAI導入・効率化戦略を設計します。渋谷区のAIコンサルティング会社。">
+<link rel="canonical" href="https://www.hopesconsul.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI業務効率化コンサルティング | ホープスコンサルティング">
+<meta property="og:description" content="中小企業診断士とAIエンジニアが、一人当たり20%の業務削減を実現。経営視点でのAI導入・効率化戦略を設計します。">
+<meta property="og:url" content="https://www.hopesconsul.com/">
+<meta property="og:site_name" content="ホープスコンサルティング株式会社">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "ホープスコンサルティング株式会社",
+  "alternateName": "Hopes Consulting Co., Ltd.",
+  "description": "中小企業診断士とAIエンジニアのハイブリッドチームによるAI業務効率化コンサルティング",
+  "url": "https://www.hopesconsul.com",
+  "email": "info.hopesconsul@gmail.com",
+  "founder": {
+    "@type": "Person",
+    "name": "高橋 望"
+  },
+  "foundingDate": "2023-09-27",
+  "address": {
+    "@type": "PostalAddress",
+    "postalCode": "150-0002",
+    "addressRegion": "東京都",
+    "addressLocality": "渋谷区",
+    "streetAddress": "渋谷2丁目2番4号 青山アルコープ402号室",
+    "addressCountry": "JP"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Japan"
+  },
+  "serviceType": ["AI導入支援", "業務効率化コンサルティング", "システム開発", "士業効率化支援"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "サービス一覧",
+    "itemListElement": [
+      { "@type": "Offer", "name": "スポットプラン", "price": "50000", "priceCurrency": "JPY", "description": "1業務のデジタル化" },
+      { "@type": "Offer", "name": "プレミアムプラン", "price": "150000", "priceCurrency": "JPY", "description": "事務所全体の効率化推進（月額）" }
+    ]
+  },
+  "numberOfEmployees": { "@type": "QuantitativeValue", "value": 3 }
+}
+</script>
+<style>
+/* ===== Reset & Base ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+/* ===== Design Tokens ===== */
+:root {
+  /* Colors — Anthropic-inspired warm cream palette */
+  --color-primary: #141413;
+  --color-primary-light: #30302e;
+  --color-accent: #d97757;
+  --color-accent-light: #e08a6d;
+  --color-cta: #d97757;
+  --color-cta-hover: #c4674a;
+  --color-text: #141413;
+  --color-text-light: rgba(20, 20, 19, 0.55);
+  --color-text-muted: rgba(20, 20, 19, 0.4);
+  --color-bg: #e8e6dc;
+  --color-bg-alt: #dfddd3;
+  --color-bg-warm: #f5f4ed;
+  --color-bg-cool: #f5f4ed;
+  --color-bg-dark: #141413;
+  --color-border: rgba(194, 192, 182, 0.4);
+  --color-border-light: rgba(194, 192, 182, 0.25);
+
+  /* Typography */
+  --font-display: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-body: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-accent: "Inter", sans-serif;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+  --space-10: 4rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+
+  /* Type Scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-full: 9999px;
+
+  /* Shadow */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.06), 0 4px 8px rgba(0,0,0,0.03);
+
+  /* Transition */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.8;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* ===== Utility ===== */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 clamp(var(--space-4), 4vw, var(--space-8));
+}
+
+.section {
+  padding: clamp(var(--space-8), 5vw, var(--space-10)) 0;
+}
+
+/* ===== Animations ===== */
+@keyframes hero-fade-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transition-delay: calc(var(--stagger-index, 0) * 0.08s);
+}
+.stagger-item.visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .fade-in, .stagger-item { opacity: 1; transform: none; }
+}
+
+/* ===== Header ===== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-4) 0;
+  transition: background var(--duration-slow) var(--ease-smooth),
+              box-shadow var(--duration-slow) var(--ease-smooth),
+              padding var(--duration-normal) var(--ease-smooth);
+}
+.header.scrolled {
+  background: rgba(232, 230, 220, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+  padding: var(--space-2) 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: var(--font-accent);
+  font-weight: 800;
+  font-size: var(--text-lg);
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+}
+.logo-base {
+  flex-shrink: 0;
+}
+.logo-dot {
+  color: var(--color-accent);
+  display: inline-block;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.4s var(--ease-out) 0.1s, transform 0.4s var(--ease-out) 0.1s;
+}
+.logo-collapse {
+  display: inline-block;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  transform-origin: left center;
+  transition: max-width 0.5s var(--ease-out),
+              opacity 0.3s var(--ease-out),
+              transform 0.4s var(--ease-out),
+              filter 0.4s var(--ease-out);
+}
+.header.scrolled .logo-collapse {
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-20px) scale(0.3);
+  filter: blur(4px);
+}
+.header.scrolled .logo-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  list-style: none;
+}
+.nav-links a {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-light);
+  position: relative;
+  padding: var(--space-1) 0;
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+.nav-links a:hover { color: var(--color-primary); }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.nav-links .nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px 24px;
+  background: var(--color-cta);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  transition: background var(--duration-fast) var(--ease-smooth);
+}
+.nav-links .nav-cta:hover { background: var(--color-cta-hover); color: #fff; }
+.nav-links .nav-cta::after { display: none; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  z-index: 101;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-primary);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Mobile Menu Overlay — body直下に配置、ヘッダーのスタッキングコンテキスト外 */
+.mobile-menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(245, 244, 237, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 9999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.mobile-menu-overlay.open {
+  display: flex;
+}
+.mobile-menu-overlay ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+.mobile-menu-overlay a {
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+.mobile-menu-overlay a:hover { color: var(--color-accent); }
+.mobile-menu-overlay .nav-cta {
+  display: inline-flex;
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-cta);
+  color: #fff;
+  font-size: var(--text-base);
+  border-radius: var(--radius-full);
+}
+.mobile-menu-overlay .nav-cta:hover { color: #fff; background: var(--color-cta-hover); }
+
+@media (max-width: 767px) {
+  .hamburger {
+    display: flex;
+    position: relative;
+    z-index: 10000;
+    margin-left: auto;
+  }
+  nav { display: none; }
+}
+
+/* ===== Hero ===== */
+.hero {
+  min-height: min(80vh, 600px);
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: clamp(var(--space-8), 6vh, var(--space-10));
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+.hero > .container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0;
+  padding-top: 72px;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  flex-shrink: 0;
+}
+
+/* Globe */
+.hero-globe {
+  position: relative;
+  width: clamp(320px, 34vw, 460px);
+  height: clamp(320px, 34vw, 460px);
+  flex-shrink: 0;
+  margin-bottom: var(--space-6);
+  margin-left: -60px;
+}
+.hero-globe svg {
+  width: 100%;
+  height: 100%;
+}
+@keyframes globe-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes globe-pulse {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.2; }
+}
+.globe-ring {
+  transform-origin: center;
+  animation: globe-rotate 60s linear infinite;
+}
+.globe-ring-reverse {
+  transform-origin: center;
+  animation: globe-rotate 45s linear infinite reverse;
+}
+.globe-dot {
+  animation: globe-pulse 4s ease-in-out infinite;
+}
+.globe-dot:nth-child(odd) { animation-delay: -2s; }
+@media (max-width: 767px) {
+  .hero > .container { flex-direction: column-reverse; align-items: flex-start; }
+  .hero-globe {
+    width: 240px;
+    height: 240px;
+    align-self: center;
+    margin-bottom: var(--space-4);
+  }
+}
+@media (max-width: 1024px) and (min-width: 768px) {
+  .hero-globe { width: 280px; height: 280px; }
+}
+.hero-content > * {
+  opacity: 0;
+  animation: hero-fade-in 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.hero-content > *:nth-child(1) { animation-delay: 0.15s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.3s; }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 900;
+  line-height: 1.35;
+  color: var(--color-primary);
+  margin-bottom: var(--space-5);
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--color-accent);
+}
+.hero-lead {
+  font-size: clamp(var(--text-sm), 1.4vw, var(--text-lg));
+  color: var(--color-text-light);
+  line-height: 1.9;
+  margin-bottom: var(--space-8);
+  max-width: 560px;
+}
+.hero-actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  min-height: 48px;
+  transition: background var(--duration-fast) var(--ease-smooth),
+              color var(--duration-fast) var(--ease-smooth),
+              border-color var(--duration-fast) var(--ease-smooth);
+}
+.btn-primary {
+  background: var(--color-cta);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--color-cta-hover); }
+.btn-secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-border);
+}
+.btn-secondary:hover { border-color: var(--color-primary); }
+.btn-white {
+  background: var(--color-bg-warm);
+  color: var(--color-primary);
+}
+.btn-white:hover { background: #eae9e1; }
+.btn-outline-white {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.3);
+}
+.btn-outline-white:hover { border-color: rgba(255,255,255,0.6); }
+
+/* ===== Section Headers ===== */
+.section-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-10);
+}
+.section-header h2 {
+  font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+  font-weight: 900;
+  color: var(--color-primary);
+  line-height: 1.3;
+  margin-bottom: var(--space-4);
+}
+.section-header p {
+  font-size: var(--text-base);
+  color: var(--color-text-light);
+  line-height: 1.8;
+}
+
+/* ===== Pain Points (課題提起) ===== */
+.pain-section {
+  background: var(--color-bg-warm);
+}
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: var(--space-5);
+}
+.pain-card {
+  padding: var(--space-6) var(--space-5);
+  background: var(--color-bg-warm);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-light);
+  transition: border-color var(--duration-fast) var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+.pain-card::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  width: 120px;
+  height: 120px;
+  opacity: 0.04;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+}
+.pain-card:nth-child(1)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(2)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(3)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3Cline x1='11' y1='8' x2='11' y2='14'/%3E%3Cline x1='8' y1='11' x2='14' y2='11'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(4)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpolyline points='9 11 12 14 22 4'/%3E%3Cpath d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(5)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(6)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3C/svg%3E"); }
+.pain-card:hover { border-color: var(--color-accent); }
+.pain-card h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+  position: relative;
+}
+.pain-card .pain-headline {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+  position: relative;
+}
+.pain-card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: 1.7;
+  position: relative;
+}
+
+/* ===== Results (実現する未来) ===== */
+.results-section {
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}
+.results-inner {
+  position: relative;
+  z-index: 1;
+}
+.results-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var(--space-10);
+}
+.results-header h2 {
+  font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+.results-header p {
+  font-size: var(--text-base);
+  color: var(--color-text-light);
+  line-height: 1.8;
+}
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  text-align: center;
+}
+.result-item .result-number {
+  font-family: var(--font-accent);
+  font-size: clamp(var(--text-5xl), 6vw, var(--text-6xl));
+  font-weight: 800;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+.result-item .result-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  font-weight: 400;
+}
+@media (max-width: 767px) {
+  .results-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+}
+
+/* ===== Services ===== */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: var(--space-6);
+}
+.service-card {
+  padding: var(--space-8) var(--space-6);
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+.service-num {
+  font-family: var(--font-accent);
+  font-size: clamp(var(--text-5xl), 5vw, var(--text-6xl));
+  font-weight: 800;
+  color: var(--color-primary);
+  opacity: 0.06;
+  line-height: 1;
+  margin-bottom: var(--space-3);
+}
+.service-card h3 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+.service-card .service-sub {
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  font-weight: 500;
+  margin-bottom: var(--space-5);
+}
+.service-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.service-card li {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  padding-left: var(--space-5);
+  position: relative;
+  line-height: 1.6;
+}
+.service-card li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* ===== Strengths (選ばれる理由) ===== */
+.strengths-section {
+  background: var(--color-bg-warm);
+}
+.strengths-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+.strength-item {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+.strength-item::before {
+  content: "✦";
+  font-size: clamp(var(--text-4xl), 5vw, var(--text-5xl));
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.18;
+}
+.strength-body h3 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+.strength-body p {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: 1.85;
+}
+
+/* ===== Flow (サービスの流れ) ===== */
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  position: relative;
+}
+.flow-grid::before {
+  content: '';
+  position: absolute;
+  top: 62px;
+  left: calc(16.666% + 16px);
+  right: calc(16.666% + 16px);
+  height: 1px;
+  background: var(--color-border);
+}
+.flow-card {
+  text-align: center;
+  position: relative;
+}
+.flow-phase {
+  font-family: var(--font-accent);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+.flow-period {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--color-bg-warm);
+  border: none;
+  margin-bottom: var(--space-5);
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--shadow-sm);
+}
+.flow-period::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 180deg,
+    var(--color-accent) 0%,
+    var(--color-primary) 50%,
+    transparent 50%
+  );
+  z-index: -2;
+  opacity: 0.8;
+}
+.flow-period::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-bg-warm);
+  z-index: -1;
+}
+.flow-period .flow-num {
+  font-family: var(--font-accent);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1;
+}
+.flow-period .flow-duration {
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+.flow-card:nth-child(1) .flow-period::before {
+  background: conic-gradient(from 180deg, var(--color-accent), var(--color-primary) 33%, transparent 33%);
+}
+.flow-card:nth-child(2) .flow-period::before {
+  background: conic-gradient(from 180deg, var(--color-accent), var(--color-primary) 66%, transparent 66%);
+}
+.flow-card:nth-child(3) .flow-period::before {
+  background: conic-gradient(from 180deg, var(--color-accent), var(--color-primary) 100%);
+}
+.flow-card h3 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+.flow-card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: 1.75;
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .flow-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+  .flow-grid::before { display: none; }
+  .flow-card p { text-align: center; }
+}
+
+/* ===== 士業特化 ===== */
+.shigyou-section {
+  background: var(--color-bg-warm);
+}
+.shigyou-intro {
+  max-width: 760px;
+  margin: 0 auto var(--space-10);
+  text-align: center;
+}
+.shigyou-intro p {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: 1.85;
+}
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.case-card {
+  background: var(--color-bg-warm);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+}
+.case-card-header {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-primary);
+  color: #fff;
+}
+.case-card-header h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.case-card-header span {
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.7);
+}
+.case-card-body {
+  padding: var(--space-3) var(--space-4);
+}
+.case-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-1);
+}
+.case-card-body ul {
+  list-style: none;
+  margin-bottom: var(--space-2);
+}
+.case-card-body li {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  padding-left: var(--space-4);
+  position: relative;
+  line-height: 1.7;
+  margin-bottom: 2px;
+}
+.case-card-body li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.case-card-body .case-challenge li::before { background: var(--color-text-muted); }
+.case-card-body .case-solution li::before { background: var(--color-accent); }
+.case-card-body .case-result li::before { background: var(--color-cta); }
+.case-card-body .case-result-list li::before { background: var(--color-cta); }
+.case-result-list li {
+  font-weight: 500;
+  color: var(--color-primary) !important;
+}
+
+/* Pricing */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: var(--space-6);
+  max-width: 680px;
+  margin: 0 auto;
+}
+.pricing-card {
+  padding: var(--space-6);
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  position: relative;
+}
+.pricing-card.featured {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+.pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--space-1) var(--space-4);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+.pricing-card h3 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+.pricing-price {
+  font-family: var(--font-accent);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+.pricing-price span {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-text-light);
+}
+.pricing-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-5);
+}
+
+/* ===== About (会社概要) ===== */
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+.about-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.about-table tr {
+  border-bottom: 1px solid var(--color-border-light);
+}
+.about-table th,
+.about-table td {
+  padding: var(--space-4) 0;
+  font-size: var(--text-sm);
+  text-align: left;
+  vertical-align: top;
+}
+.about-table th {
+  font-weight: 500;
+  color: var(--color-text-muted);
+  width: 110px;
+  white-space: nowrap;
+}
+.about-table td {
+  color: var(--color-text);
+}
+.values-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.value-item h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+.value-item p {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: 1.7;
+}
+@media (max-width: 767px) {
+  .about-content { grid-template-columns: 1fr; gap: var(--space-8); }
+}
+
+/* ===== CTA Section ===== */
+.cta-section {
+  background: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  padding: clamp(var(--space-12), 10vw, var(--space-16)) 0;
+}
+.cta-section h2 {
+  font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+  font-weight: 900;
+  margin-bottom: var(--space-4);
+}
+.cta-section p {
+  font-size: var(--text-base);
+  color: rgba(255,255,255,0.65);
+  margin-bottom: var(--space-8);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--color-primary);
+  color: rgba(255,255,255,0.7);
+  padding: var(--space-8) 0 var(--space-5);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+.footer-brand .logo {
+  color: #fff;
+  margin-bottom: var(--space-4);
+  display: inline-block;
+}
+.footer-brand p {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  margin-bottom: var(--space-4);
+  max-width: 360px;
+}
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-3);
+}
+.footer-contact-item svg { flex-shrink: 0; margin-top: 3px; opacity: 0.5; }
+.footer h4 {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: var(--space-4);
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.footer-links a {
+  font-size: var(--text-sm);
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+.footer-links a:hover { color: #fff; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: var(--space-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+.footer-bottom p {
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.4);
+}
+.footer-legal {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+}
+.footer-legal a {
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.4);
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+.footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+@media (max-width: 767px) {
+  .footer-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* ===== Fixed CTA bar (Mobile) ===== */
+.fixed-cta-bar {
+  display: none;
+}
+@media (max-width: 767px) {
+  .fixed-cta-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-3) var(--space-4);
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+    z-index: 90;
+    display: flex;
+    justify-content: center;
+  }
+  .fixed-cta-bar .btn { width: 100%; max-width: 400px; }
+  body { padding-bottom: 72px; }
+}
+
+/* ===== Mid CTA ===== */
+.mid-cta {
+  text-align: center;
+  padding: var(--space-10) 0;
+  background: var(--color-bg-cool);
+}
+.mid-cta p {
+  font-size: var(--text-base);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-5);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header" role="banner">
+  <div class="container header-inner">
+    <a href="#" class="logo" translate="no"><span class="logo-base">HOPES</span><span class="logo-dot">.</span><span class="logo-collapse"> CONSULTING</span></a>
+    <button class="hamburger" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+    <nav aria-label="メインナビゲーション">
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#problems">課題</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="#strengths">選ばれる理由</a></li>
+        <li><a href="#flow">ご利用の流れ</a></li>
+        <li><a href="#shigyou">士業の方</a></li>
+        <li><a href="#about">会社概要</a></li>
+        <li><a href="mailto:info.hopesconsul@gmail.com" class="nav-cta">無料相談</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobile-menu">
+  <ul>
+    <li><a href="#problems">課題</a></li>
+    <li><a href="#services">サービス</a></li>
+    <li><a href="#strengths">選ばれる理由</a></li>
+    <li><a href="#flow">ご利用の流れ</a></li>
+    <li><a href="#shigyou">士業の方</a></li>
+    <li><a href="#about">会社概要</a></li>
+    <li><a href="mailto:info.hopesconsul@gmail.com" class="nav-cta">無料相談</a></li>
+  </ul>
+</div>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-content">
+      <h1>AIが実現する<br><em>人にしかできない仕事</em>に<br>集中できる未来へ</h1>
+      <p class="hero-lead">私たちは単なるコンサルタントではありません。<br>お客様と共に成果を創り上げる<strong>「実践型パートナー」</strong>として、<br>貴社の持続的な成長と競争力強化を実現します。</p>
+    </div>
+    <div class="hero-globe" aria-hidden="true">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer circle -->
+        <circle cx="200" cy="200" r="180" stroke="#141413" stroke-width="1" opacity="0.2"/>
+        <!-- Equator -->
+        <ellipse cx="200" cy="200" rx="180" ry="40" stroke="#141413" stroke-width="0.8" opacity="0.16"/>
+        <!-- Latitude lines -->
+        <ellipse cx="200" cy="140" rx="155" ry="30" stroke="#141413" stroke-width="0.7" opacity="0.12"/>
+        <ellipse cx="200" cy="260" rx="155" ry="30" stroke="#141413" stroke-width="0.7" opacity="0.12"/>
+        <ellipse cx="200" cy="90" rx="110" ry="18" stroke="#141413" stroke-width="0.5" opacity="0.1"/>
+        <ellipse cx="200" cy="310" rx="110" ry="18" stroke="#141413" stroke-width="0.5" opacity="0.1"/>
+        <!-- Meridian lines -->
+        <ellipse cx="200" cy="200" rx="40" ry="180" stroke="#141413" stroke-width="0.8" opacity="0.16"/>
+        <ellipse cx="200" cy="200" rx="100" ry="180" stroke="#141413" stroke-width="0.7" opacity="0.14"/>
+        <ellipse cx="200" cy="200" rx="150" ry="180" stroke="#141413" stroke-width="0.6" opacity="0.12"/>
+        <!-- Tilted meridians -->
+        <ellipse cx="200" cy="200" rx="70" ry="180" stroke="#141413" stroke-width="0.5" opacity="0.1" transform="rotate(30 200 200)"/>
+        <ellipse cx="200" cy="200" rx="70" ry="180" stroke="#141413" stroke-width="0.5" opacity="0.1" transform="rotate(-30 200 200)"/>
+        <!-- Rotating accent ring -->
+        <g class="globe-ring">
+          <ellipse cx="200" cy="200" rx="190" ry="60" stroke="#d97757" stroke-width="1" opacity="0.3" stroke-dasharray="8 12"/>
+        </g>
+        <g class="globe-ring-reverse">
+          <ellipse cx="200" cy="200" rx="160" ry="175" stroke="#d97757" stroke-width="0.8" opacity="0.2" stroke-dasharray="6 14" transform="rotate(65 200 200)"/>
+        </g>
+        <!-- Dots at intersections -->
+        <circle class="globe-dot" cx="200" cy="20" r="3" fill="#d97757" opacity="0.4"/>
+        <circle class="globe-dot" cx="200" cy="380" r="3" fill="#d97757" opacity="0.4"/>
+        <circle class="globe-dot" cx="20" cy="200" r="3" fill="#d97757" opacity="0.3"/>
+        <circle class="globe-dot" cx="380" cy="200" r="3" fill="#d97757" opacity="0.3"/>
+        <circle class="globe-dot" cx="330" cy="100" r="2.5" fill="#d97757" opacity="0.35"/>
+        <circle class="globe-dot" cx="70" cy="300" r="2.5" fill="#d97757" opacity="0.35"/>
+        <circle class="globe-dot" cx="310" cy="280" r="2.5" fill="#d97757" opacity="0.25"/>
+        <circle class="globe-dot" cx="90" cy="120" r="2.5" fill="#d97757" opacity="0.25"/>
+        <circle class="globe-dot" cx="280" cy="160" r="2" fill="#141413" opacity="0.2"/>
+        <circle class="globe-dot" cx="120" cy="240" r="2" fill="#141413" opacity="0.2"/>
+        <circle class="globe-dot" cx="250" cy="80" r="2" fill="#141413" opacity="0.18"/>
+        <circle class="globe-dot" cx="150" cy="320" r="2" fill="#141413" opacity="0.18"/>
+        <!-- Inner glow circle -->
+        <circle cx="200" cy="200" r="120" stroke="#d97757" stroke-width="0.5" opacity="0.12"/>
+        <circle cx="200" cy="200" r="4" fill="#d97757" opacity="0.4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Pain Points ===== -->
+<section class="section pain-section" id="problems">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>こんな課題、抱えていませんか？</h2>
+      <p>多くの企業が同じ壁にぶつかっています。あなたの会社ではいかがでしょうか。</p>
+    </div>
+    <div class="pain-grid stagger-group">
+      <div class="pain-card stagger-item">
+        <p class="pain-headline">「毎日が作業で終わる」</p>
+        <h3>日々のルーチンで業務が逼迫</h3>
+        <p>本来やるべき戦略検討に時間を使えていない。目の前の業務に追われ、未来を考える余裕がない。</p>
+      </div>
+      <div class="pain-card stagger-item">
+        <p class="pain-headline">「担当者不在で停滞」</p>
+        <h3>知識と業務が属人化</h3>
+        <p>あの人が辞めたら、この業務は回らなくなる。長年の経験が特定の個人に集中してしまっている。</p>
+      </div>
+      <div class="pain-card stagger-item">
+        <p class="pain-headline">「何から手を付けるべきか」</p>
+        <h3>デジタル化の開始手順が不明</h3>
+        <p>IT投資で失敗したくないが、相談相手がいない。何が自社に必要なのか判断できない。</p>
+      </div>
+      <div class="pain-card stagger-item">
+        <p class="pain-headline">「結局 Excel に逆戻り」</p>
+        <h3>ツール導入後に運用定着せず</h3>
+        <p>高い費用をかけたのに、誰も使ってくれない。現場に合わないツールを導入してしまった。</p>
+      </div>
+      <div class="pain-card stagger-item">
+        <p class="pain-headline">「転記ミスが発生」</p>
+        <h3>書類作成・入力に時間を要す</h3>
+        <p>単純作業のミスで、顧客の信頼を損ねたくない。手作業による入力ミスが業務品質を下げている。</p>
+      </div>
+      <div class="pain-card stagger-item">
+        <p class="pain-headline">「全体像が把握できない」</p>
+        <h3>複数の管理表が肥大化</h3>
+        <p>正確な経営判断に必要なデータがすぐに出てこない。情報が分散し、意思決定が遅れている。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Services ===== -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>人がより創造的な仕事に<br>集中できる環境を</h2>
+    </div>
+    <div class="services-grid stagger-group">
+      <div class="service-card stagger-item">
+        <div class="service-num">01</div>
+        <h3>AI導入支援</h3>
+        <p class="service-sub">経営課題を解決するAI活用戦略</p>
+        <ul>
+          <li>経営診断に基づくAI活用領域の特定</li>
+          <li>費用対効果シミュレーション</li>
+          <li>段階的導入計画の策定</li>
+        </ul>
+      </div>
+      <div class="service-card stagger-item">
+        <div class="service-num">02</div>
+        <h3>効率化戦略策定</h3>
+        <p class="service-sub">経営戦略と一体化した効率化ロードマップ</p>
+        <ul>
+          <li>業務プロセスのデジタル化推進</li>
+          <li>IT人材の育成支援</li>
+          <li>IT投資の最適配分と実行管理</li>
+        </ul>
+      </div>
+      <div class="service-card stagger-item">
+        <div class="service-num">03</div>
+        <h3>受託開発</h3>
+        <p class="service-sub">経営課題解決型のシステム開発</p>
+        <ul>
+          <li>業務プロセス最適化設計</li>
+          <li>投資効果の最大化</li>
+          <li>内製化移行支援</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Strengths ===== -->
+<section class="section strengths-section" id="strengths">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>ホープスコンサルティングが<br>選ばれる理由</h2>
+    </div>
+    <div class="strengths-list">
+      <div class="strength-item fade-in">
+        <div class="strength-body">
+          <h3>経営 &times; 技術のハイブリッド体制</h3>
+          <p>中小企業診断士が経営診断の手法で貴社の本質的な課題を見極め、その解決に最適な技術を選定・実装します。売上向上、コスト削減、組織力強化など、経営の根幹に関わる課題解決にコミットし、技術はあくまで手段として活用します。</p>
+        </div>
+      </div>
+      <div class="strength-item fade-in">
+        <div class="strength-body">
+          <h3>低コストかつ迅速な開発</h3>
+          <p>Custom GPTsやGoogle Apps Script等を駆使し、大掛かりなシステム開発なしに、最短1週間で業務課題を解決するプロトタイプを構築可能。現場で実際に触れて効果を実感いただいてから、本格的な展開を判断できます。</p>
+        </div>
+      </div>
+      <div class="strength-item fade-in">
+        <div class="strength-body">
+          <h3>成果へのコミットメント</h3>
+          <p>私たちのゴールは、ツールを導入することではなく、お客様の業務が改善され、利益が向上すること。導入後の運用定着から効果測定まで徹底的に伴走します。目標の達成度に応じた成功報酬型のご契約も可能です。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Flow ===== -->
+<section class="section" id="flow">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>ご利用の流れ</h2>
+      <p>お客様の状況に合わせて柔軟に対応しますが、標準的な進め方は以下の通りです。</p>
+    </div>
+    <div class="flow-grid fade-in">
+      <div class="flow-card">
+        <div class="flow-phase">Phase 1</div>
+        <div class="flow-period"><span class="flow-num">01</span><span class="flow-duration">約1ヶ月</span></div>
+        <h3>診断・計画策定</h3>
+        <p>経営課題ヒアリング、業務フローの可視化、ボトルネック特定、効果の試算。どこから手をつければ最も効果が出るかを特定し、最適化された改善案をご提案します。</p>
+      </div>
+      <div class="flow-card">
+        <div class="flow-phase">Phase 2</div>
+        <div class="flow-period"><span class="flow-num">02</span><span class="flow-duration">約1〜2ヶ月</span></div>
+        <h3>改善実装</h3>
+        <p>最も効果的なツールを選定・構築。プロトタイプでテスト運用し、業務マニュアル整備と社員研修を実施。社員の皆様が自走できる状態を目指します。</p>
+      </div>
+      <div class="flow-card">
+        <div class="flow-phase">Phase 3</div>
+        <div class="flow-period"><span class="flow-num">03</span><span class="flow-duration">3ヶ月〜</span></div>
+        <h3>効果測定・定着支援</h3>
+        <p>導入効果のモニタリング、フィードバックに基づく追加チューニング、社内ナレッジ共有を支援。継続的に業務改善が生まれる組織文化の土台を構築します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 士業特化 ===== -->
+<section class="section shigyou-section" id="shigyou">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>士業の専門性を、<br>テクノロジーで最大化する</h2>
+    </div>
+    <div class="shigyou-intro fade-in">
+      <p>代表自身が司法書士法人を経営する現役司法書士。中小企業診断士は数多くの士業事務所の経営課題に向き合ってきた経験があります。士業特有の業務フローを肌で理解しているからこそ、本当に必要な効率化を設計できます。</p>
+    </div>
+
+    <div class="section-header fade-in" style="margin-bottom: var(--space-6);">
+      <h2 style="font-size: clamp(var(--text-xl), 2.5vw, var(--text-2xl));">導入実績</h2>
+    </div>
+    <div class="case-grid stagger-group">
+      <div class="case-card stagger-item">
+        <div class="case-card-header">
+          <h3>司法書士法人</h3>
+          <span>従業員5名</span>
+        </div>
+        <div class="case-card-body">
+          <div class="case-label">課題</div>
+          <ul class="case-challenge">
+            <li>登記見積書作成に1件15分、日に10件以上</li>
+            <li>メール返信の定型文作成が煩雑</li>
+          </ul>
+          <div class="case-label">施策</div>
+          <ul class="case-solution">
+            <li>登記見積書の自動作成システム構築</li>
+            <li>AIによるメール下書き自動生成</li>
+          </ul>
+          <div class="case-label">成果</div>
+          <ul class="case-result-list">
+            <li>見積書作成を完全自動化</li>
+            <li>メール対応時間を80%削減</li>
+            <li>月間60時間のコア業務時間創出</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-card stagger-item">
+        <div class="case-card-header">
+          <h3>税理士法人</h3>
+          <span>従業員40名</span>
+        </div>
+        <div class="case-card-body">
+          <div class="case-label">課題</div>
+          <ul class="case-challenge">
+            <li>面談後の議事録作成が負担（1件1時間）</li>
+            <li>受領書類の整理に時間を要す</li>
+          </ul>
+          <div class="case-label">施策</div>
+          <ul class="case-solution">
+            <li>AI音声認識による議事録の自動作成</li>
+            <li>AIによる受領書類の自動整理・分類</li>
+          </ul>
+          <div class="case-label">成果</div>
+          <ul class="case-result-list">
+            <li>議事録作成時間を80%削減</li>
+            <li>書類整理の完全自動化で月40時間削減</li>
+            <li>税務相談業務に注力できる環境を整備</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== About ===== -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>会社概要</h2>
+    </div>
+    <div class="about-content fade-in">
+      <div>
+        <table class="about-table">
+          <tr><th>会社名</th><td>ホープスコンサルティング株式会社</td></tr>
+          <tr><th>代表取締役</th><td>高橋 望</td></tr>
+          <tr><th>設立</th><td>2023年9月27日</td></tr>
+          <tr><th>資本金</th><td>100万円</td></tr>
+          <tr><th>所在地</th><td>〒150-0002<br>東京都渋谷区渋谷2丁目2番4号<br>青山アルコープ402号室</td></tr>
+          <tr><th>事業内容</th><td>AI・効率化コンサルティング<br>システム開発・導入支援<br>業務プロセス改善支援</td></tr>
+          <tr><th>従業員数</th><td>3名（業務委託社員含む）</td></tr>
+        </table>
+      </div>
+      <div class="values-grid">
+        <div class="value-item">
+          <h3>成果へのコミットメント</h3>
+          <p>ツールの導入ではなく、お客様の業務改善と利益向上を最終目標とします。</p>
+        </div>
+        <div class="value-item">
+          <h3>現場に寄り添う姿勢</h3>
+          <p>現場の声を大切にし、実際に使われるソリューションを提供します。</p>
+        </div>
+        <div class="value-item">
+          <h3>継続的な改善</h3>
+          <p>導入後も継続的にサポートし、長期的な成功を支援します。</p>
+        </div>
+        <div class="value-item">
+          <h3>誠実なパートナーシップ</h3>
+          <p>お客様との信頼関係を最も大切にし、透明性のある関係を築きます。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" translate="no">HOPES<span>.</span></a>
+        <p>中小企業診断士とAIエンジニアのハイブリッドチームが、経営視点での効率化戦略を設計。本質的な課題解決と持続的成長を実現します。</p>
+        <div class="footer-contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span>info.hopesconsul@gmail.com</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>東京都渋谷区渋谷2丁目2番4号<br>青山アルコープ402号室</span>
+        </div>
+      </div>
+      <div>
+        <h4>サービス</h4>
+        <ul class="footer-links">
+          <li><a href="#services">AI導入支援</a></li>
+          <li><a href="#services">効率化戦略策定</a></li>
+          <li><a href="#services">受託開発</a></li>
+          <li><a href="#shigyou">士業効率化</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>企業情報</h4>
+        <ul class="footer-links">
+          <li><a href="#about">会社概要</a></li>
+          <li><a href="#services">サービス詳細</a></li>
+          <li><a href="mailto:info.hopesconsul@gmail.com">お問い合わせ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Hopes Consulting Co., Ltd. All rights reserved.</p>
+      <ul class="footer-legal">
+        <li><a href="privacy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== Fixed CTA Bar (Mobile) ===== -->
+<div class="fixed-cta-bar">
+  <a href="mailto:info.hopesconsul@gmail.com" class="btn btn-primary">無料相談を予約する</a>
+</div>
+
+<script>
+// Scroll header
+window.addEventListener('scroll', () => {
+  document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+// Hamburger menu
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger?.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+// Close menu on link click
+mobileMenu?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// Intersection Observer for fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in, .stagger-item').forEach(el => observer.observe(el));
+
+// Stagger index
+document.querySelectorAll('.stagger-group').forEach(group => {
+  group.querySelectorAll('.stagger-item').forEach((item, i) => {
+    item.style.setProperty('--stagger-index', i);
+  });
+});
+
+// Count-up animation — triggers after parent fade-in is visible
+function initCountUp() {
+  const counters = document.querySelectorAll('[data-count-to]');
+  if (!counters.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    counters.forEach(el => { el.textContent = (el.dataset.countPrefix || '') + el.dataset.countTo + (el.dataset.countSuffix || ''); });
+    return;
+  }
+  // Wait for the parent .results-grid to become visible before starting count
+  const resultsGrid = document.querySelector('.results-grid');
+  if (!resultsGrid) return;
+  const parentObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      // Small delay to ensure fade-in has started
+      setTimeout(() => {
+        counters.forEach(el => {
+          const target = parseInt(el.dataset.countTo, 10);
+          const duration = 1500;
+          const suffix = el.dataset.countSuffix || '';
+          const prefix = el.dataset.countPrefix || '';
+          const startTime = performance.now();
+          function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 4);
+            const current = Math.round(eased * target);
+            el.textContent = prefix + current + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+          }
+          requestAnimationFrame(update);
+        });
+      }, 200);
+      parentObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.15 });
+  parentObserver.observe(resultsGrid);
+}
+document.addEventListener('DOMContentLoaded', initCountUp);
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+      const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    }
+  });
+});
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + 120;
+  sections.forEach(section => {
+    const top = section.offsetTop;
+    const height = section.offsetHeight;
+    const id = section.getAttribute('id');
+    if (scrollY >= top && scrollY < top + height) {
+      navAnchors.forEach(a => {
+        a.style.color = '';
+        if (a.getAttribute('href') === '#' + id) {
+          a.style.color = 'var(--color-primary)';
+        }
+      });
+    }
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
