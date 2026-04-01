@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>AI 脳年齢テスト | ホープスコンサルティング</title>
+<meta name="description" content="4つのミニテストであなたの脳年齢を診断！反射神経・記憶力・計算力を測定して、AI時代の脳力をチェック。">
+<link rel="icon" href="../../images/favicon.ico" sizes="any">
+<link rel="icon" href="../../images/favicon-48x48.png" type="image/png" sizes="48x48">
+<link rel="canonical" href="https://www.hopesconsul.com/games/brain-age/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI 脳年齢テスト | ホープスコンサルティング">
+<meta property="og:description" content="4つのミニテストであなたの脳年齢を診断！AI時代の脳力をチェック。">
+<meta property="og:url" content="https://www.hopesconsul.com/games/brain-age/">
+<meta property="og:image" content="https://www.hopesconsul.com/images/ogp-games.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.hopesconsul.com/images/ogp-games.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&family=Silkscreen:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+:root {
+  --color-primary: #141413;
+  --color-accent: #d97757;
+  --color-accent-light: #e08a6d;
+  --color-cta-hover: #c4674a;
+  --color-text: #141413;
+  --color-text-light: rgba(20, 20, 19, 0.55);
+  --color-text-muted: rgba(20, 20, 19, 0.4);
+  --color-bg: #e8e6dc;
+  --color-bg-alt: #dfddd3;
+  --color-bg-warm: #f5f4ed;
+  --color-border: rgba(194, 192, 182, 0.4);
+  --font-display: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-body: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-accent: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", "Consolas", monospace;
+  --font-pixel: "Silkscreen", cursive;
+  --font-dot: "DotGothic16", "Noto Sans JP", sans-serif;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 6px 6px 0 rgba(20,20,19,0.10);
+  --shadow-lg: 6px 6px 0 rgba(20,20,19,0.10);
+  --clip-card: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
+  --clip-btn: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px));
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  background-image: radial-gradient(circle, rgba(20,20,19,0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(20,20,19,0.15) 100%);
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* 背景スプライト — 脳+稲妻 */
+.bg-sprite {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  pointer-events: none;
+  z-index: 0;
+  color: var(--color-text);
+  box-shadow:
+    /* y=0: ドーム頂点 */
+    12px 0 0 currentColor, 16px 0 0 currentColor, 20px 0 0 currentColor,
+    24px 0 0 currentColor, 28px 0 0 currentColor,
+    /* y=4: ドーム（ベタ） */
+    8px 4px 0 currentColor, 12px 4px 0 currentColor, 16px 4px 0 currentColor,
+    20px 4px 0 currentColor, 24px 4px 0 currentColor, 28px 4px 0 currentColor,
+    32px 4px 0 currentColor, 36px 4px 0 currentColor, 40px 4px 0 currentColor,
+    /* y=8: しわA — 16,28を抜く */
+    4px 8px 0 currentColor, 8px 8px 0 currentColor, 12px 8px 0 currentColor,
+    20px 8px 0 currentColor, 24px 8px 0 currentColor,
+    32px 8px 0 currentColor, 36px 8px 0 currentColor,
+    40px 8px 0 currentColor, 44px 8px 0 currentColor,
+    /* y=12: ベタ塗り */
+    0 12px 0 currentColor, 4px 12px 0 currentColor, 8px 12px 0 currentColor,
+    12px 12px 0 currentColor, 16px 12px 0 currentColor, 20px 12px 0 currentColor,
+    24px 12px 0 currentColor, 28px 12px 0 currentColor, 32px 12px 0 currentColor,
+    36px 12px 0 currentColor, 40px 12px 0 currentColor, 44px 12px 0 currentColor,
+    /* y=16: しわB上段 — 12,24,36を抜く */
+    0 16px 0 currentColor, 4px 16px 0 currentColor, 8px 16px 0 currentColor,
+    16px 16px 0 currentColor, 20px 16px 0 currentColor,
+    28px 16px 0 currentColor, 32px 16px 0 currentColor,
+    40px 16px 0 currentColor, 44px 16px 0 currentColor,
+    /* y=20: しわB下段 — 8,20,32を抜く */
+    0 20px 0 currentColor, 4px 20px 0 currentColor,
+    12px 20px 0 currentColor, 16px 20px 0 currentColor,
+    24px 20px 0 currentColor, 28px 20px 0 currentColor,
+    36px 20px 0 currentColor, 40px 20px 0 currentColor,
+    /* y=24: しわC — 16,28を抜く */
+    4px 24px 0 currentColor, 8px 24px 0 currentColor, 12px 24px 0 currentColor,
+    20px 24px 0 currentColor, 24px 24px 0 currentColor,
+    32px 24px 0 currentColor, 36px 24px 0 currentColor,
+    /* y=28: 底 + 小脳 */
+    8px 28px 0 currentColor, 12px 28px 0 currentColor, 16px 28px 0 currentColor,
+    20px 28px 0 currentColor, 24px 28px 0 currentColor,
+    36px 28px 0 currentColor, 40px 28px 0 currentColor,
+    /* y=32: 脳幹 */
+    28px 32px 0 currentColor, 32px 32px 0 currentColor,
+    /* y=36 */
+    28px 36px 0 currentColor;
+}
+.bg-sprite-1 { top: 22%; right: 10%; opacity: 0.05; transform: scale(3) rotate(10deg); }
+.bg-sprite-2 { top: 48%; left: 8%; opacity: 0.04; transform: scale(3.5) rotate(-15deg); }
+.bg-sprite-3 { bottom: 15%; right: 14%; opacity: 0.04; transform: scale(2.5) rotate(25deg); }
+
+.site-header {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+.site-header a { text-decoration: none; color: var(--color-text); }
+.logo { font-family: var(--font-pixel); font-weight: 700; font-size: 1rem; letter-spacing: 0.02em; }
+.back-link { font-family: var(--font-pixel); font-size: 0.8rem; color: var(--color-text-light); transition: color 0.2s; padding: 0.4rem 0.75rem; }
+.back-link:hover { color: var(--color-accent); }
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.5rem 3rem;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.game-title { font-family: var(--font-pixel); font-size: 1.3rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; letter-spacing: 0.05em; }
+.game-subtitle { font-family: var(--font-dot); color: var(--color-text-light); font-size: 0.85rem; text-align: center; margin-bottom: 1.5rem; }
+
+.game-area {
+  background: var(--color-bg-warm);
+  padding: 2rem;
+  width: 100%;
+  border: 3px solid var(--color-text);
+  box-shadow: 6px 6px 0 rgba(217, 119, 87, 0.25);
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  clip-path: var(--clip-card);
+  position: relative;
+}
+/* プラスネジ装飾 */
+.screw {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-text);
+  opacity: 0.2;
+  z-index: 3;
+}
+.screw::before, .screw::after {
+  content: '';
+  position: absolute;
+  background: var(--color-bg-warm);
+}
+.screw::after {
+  top: 50%; left: 2px; right: 2px;
+  height: 1.5px;
+  transform: translateY(-50%);
+}
+.screw::before {
+  left: 50%; top: 2px; bottom: 2px;
+  width: 1.5px;
+  transform: translateX(-50%);
+}
+.screw-tl { top: 8px; left: 8px; transform: rotate(15deg); }
+.screw-tr { top: 8px; right: 8px; transform: rotate(72deg); }
+.screw-bl { bottom: 8px; left: 8px; transform: rotate(38deg); }
+.screw-br { bottom: 8px; right: 8px; transform: rotate(55deg); }
+
+/* ===== Progress Steps ===== */
+.steps {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+.step {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  transition: background 0.3s;
+}
+.step.done { background: var(--color-accent); }
+.step.active { background: var(--color-accent-light); }
+
+/* ===== Screen Commons ===== */
+.screen { display: none; flex-direction: column; align-items: center; text-align: center; flex: 1; justify-content: center; }
+.screen.active { display: flex; }
+
+.screen-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.screen-title {
+  font-family: var(--font-dot);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.screen-desc {
+  font-family: var(--font-dot);
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.btn-primary {
+  font-family: var(--font-dot); font-size: 0.95rem; font-weight: 400;
+  padding: 0.875rem 2.5rem; background: var(--color-accent); color: #fff;
+  border: none; cursor: pointer;
+  transition: background 0.2s var(--ease-smooth); box-shadow: var(--shadow-sm);
+  clip-path: var(--clip-btn);
+}
+.btn-primary:hover { background: var(--color-cta-hover); }
+
+.btn-secondary {
+  font-family: var(--font-dot); font-size: 0.85rem; font-weight: 400;
+  padding: 0.75rem 2rem; background: transparent; color: var(--color-text);
+  border: 2px solid var(--color-border);
+  cursor: pointer; transition: all 0.2s var(--ease-smooth);
+  clip-path: var(--clip-btn);
+}
+.btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* ===== Test Area ===== */
+.test-display {
+  background: var(--color-bg);
+  padding: 2rem;
+  width: 100%;
+  min-height: 220px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--color-text);
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  clip-path: var(--clip-card);
+}
+
+.test-display.waiting { background: var(--color-bg); }
+.test-display.go { background: #16a34a; }
+.test-display.too-early { background: #dc2626; }
+
+.test-big-text {
+  font-family: var(--font-mono);
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+}
+
+.test-display.go .test-big-text,
+.test-display.too-early .test-big-text {
+  color: #fff;
+}
+
+.test-message {
+  font-family: var(--font-dot);
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-bottom: 1rem;
+  min-height: 1.5rem;
+}
+
+/* ===== Number Input ===== */
+.number-input {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 250px;
+  border: 3px solid var(--color-text);
+  background: #fff;
+  color: var(--color-text);
+  outline: none;
+  clip-path: var(--clip-btn);
+}
+.number-input:focus { border-color: var(--color-accent); }
+
+/* ===== Pattern Grid ===== */
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto 1rem;
+}
+
+.pattern-cell {
+  aspect-ratio: 1;
+  background: var(--color-bg-alt);
+  border: 3px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.15s;
+  clip-path: var(--clip-btn);
+}
+.pattern-cell.lit { background: var(--color-accent); border-color: var(--color-accent); }
+.pattern-cell.correct-lit { background: #16a34a; border-color: #16a34a; }
+.pattern-cell.wrong-lit { background: #dc2626; border-color: #dc2626; }
+.pattern-cell:active { transform: scale(0.93); }
+
+/* ===== Calc Buttons ===== */
+.calc-choices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.calc-btn {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 0.875rem;
+  min-height: 54px;
+  border: 3px solid var(--color-border);
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  clip-path: var(--clip-btn);
+}
+.calc-btn:active { transform: scale(0.95); }
+.calc-btn.correct-flash { background: rgba(61,154,80,0.15); border-color: #16a34a; }
+.calc-btn.wrong-flash { background: rgba(220,68,68,0.15); border-color: #dc2626; }
+
+/* ===== Result ===== */
+.result-age {
+  font-family: var(--font-mono);
+  font-size: 5rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.result-age-unit {
+  font-family: var(--font-dot);
+  font-size: 1.1rem;
+  color: var(--color-text-light);
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+.result-comment {
+  font-family: var(--font-dot);
+  font-size: 0.85rem;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--color-bg);
+  line-height: 1.8;
+  border: 2px solid var(--color-border);
+  clip-path: var(--clip-btn);
+}
+.result-breakdown {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+.breakdown-item {
+  background: var(--color-bg);
+  padding: 0.75rem;
+  text-align: center;
+  border: 2px solid var(--color-border);
+  clip-path: var(--clip-btn);
+}
+.breakdown-label { font-family: var(--font-dot); font-size: 0.7rem; color: var(--color-text-muted); font-weight: 400; }
+.breakdown-value { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; }
+.breakdown-age { font-size: 0.75rem; color: var(--color-accent); font-weight: 600; }
+
+.result-best { font-family: var(--font-dot); font-size: 0.8rem; color: var(--color-text-light); margin-bottom: 1.5rem; }
+.result-best strong { color: var(--color-accent); font-family: var(--font-mono); }
+.new-record { display: inline-block; background: var(--color-accent); color: #fff; font-family: var(--font-pixel); font-size: 0.55rem; font-weight: 700; padding: 0.15rem 0.5rem; margin-left: 0.4rem; vertical-align: middle; clip-path: var(--clip-btn); }
+
+.result-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; width: 100%; }
+
+.site-footer { text-align: center; padding: 1.5rem; font-family: var(--font-pixel); font-size: 0.75rem; color: var(--color-text-muted); letter-spacing: 0.05em; }
+.site-footer a { color: var(--color-text-light); text-decoration: none; }
+.site-footer a:hover { color: var(--color-accent); }
+
+@media (max-width: 600px) {
+  .site-header { padding: 0.75rem 1rem; }
+  .main { padding: 0.75rem 1rem 2rem; }
+  .game-title { font-size: 1.35rem; }
+  .game-area { padding: 1.25rem; min-height: 300px; }
+  .test-big-text { font-size: 2.5rem; }
+  .result-age { font-size: 4rem; }
+  .result-actions { flex-direction: column; }
+  .btn-primary, .btn-secondary { width: 100%; }
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.4s var(--ease-out) forwards; }
+</style>
+</head>
+<body>
+
+<span class="bg-sprite bg-sprite-1" aria-hidden="true"></span>
+<span class="bg-sprite bg-sprite-2" aria-hidden="true"></span>
+<span class="bg-sprite bg-sprite-3" aria-hidden="true"></span>
+
+<header class="site-header">
+  <a href="../../" class="logo">Hopes Consulting</a>
+  <a href="../" class="back-link">Back to Games</a>
+</header>
+
+<main class="main">
+  <h1 class="game-title">AI 脳年齢テスト</h1>
+  <p class="game-subtitle">4つのテストであなたの脳年齢を診断</p>
+
+  <div class="game-area">
+    <span class="screw screw-tl" aria-hidden="true"></span>
+    <span class="screw screw-tr" aria-hidden="true"></span>
+    <span class="screw screw-bl" aria-hidden="true"></span>
+    <span class="screw screw-br" aria-hidden="true"></span>
+    <!-- Steps -->
+    <div class="steps" id="steps" style="display:none;">
+      <div class="step" id="step0"></div>
+      <div class="step" id="step1"></div>
+      <div class="step" id="step2"></div>
+      <div class="step" id="step3"></div>
+    </div>
+
+    <!-- ===== Start Screen ===== -->
+    <div class="screen active" id="screenStart">
+      <div class="screen-label">Brain Age Test</div>
+      <div class="screen-title">あなたの脳年齢は何歳？</div>
+      <div class="screen-desc">
+        4つのミニテストで<br>反射神経・記憶力・計算力を測定します。<br>所要時間は約2分です。
+      </div>
+      <button class="btn-primary" id="btnStart">テスト開始</button>
+    </div>
+
+    <!-- ===== Test 1: Reaction ===== -->
+    <div class="screen" id="screenReaction">
+      <div class="screen-label">テスト 1/4</div>
+      <div class="screen-title">反射神経テスト</div>
+      <div class="screen-desc">画面が緑になったら<br>できるだけ速くタップしてください。</div>
+      <button class="btn-primary" id="btnReactionStart">スタート</button>
+    </div>
+
+    <div class="screen" id="screenReactionPlay">
+      <div class="test-message" id="reactionMsg">画面が緑に変わるまで待って...</div>
+      <div class="test-display waiting" id="reactionBox">
+        <div class="test-big-text" id="reactionText">待って...</div>
+      </div>
+      <div class="test-message" id="reactionResult"></div>
+    </div>
+
+    <!-- ===== Test 2: Number Memory ===== -->
+    <div class="screen" id="screenNumber">
+      <div class="screen-label">テスト 2/4</div>
+      <div class="screen-title">数字記憶テスト</div>
+      <div class="screen-desc">表示される数字を覚えて<br>入力してください。正解するたびに桁が増えます。</div>
+      <button class="btn-primary" id="btnNumberStart">スタート</button>
+    </div>
+
+    <div class="screen" id="screenNumberPlay">
+      <div class="test-message" id="numberMsg">覚えてください</div>
+      <div class="test-display" id="numberDisplay">
+        <div class="test-big-text" id="numberText"></div>
+      </div>
+      <input type="tel" class="number-input" id="numberInput" style="display:none;" placeholder="数字を入力">
+      <div style="height:0.75rem;"></div>
+      <button class="btn-primary" id="btnNumberSubmit" style="display:none;">回答</button>
+    </div>
+
+    <!-- ===== Test 3: Pattern Memory ===== -->
+    <div class="screen" id="screenPattern">
+      <div class="screen-label">テスト 3/4</div>
+      <div class="screen-title">パターン記憶テスト</div>
+      <div class="screen-desc">光るパネルの順番を覚えて<br>同じ順番でタップしてください。</div>
+      <button class="btn-primary" id="btnPatternStart">スタート</button>
+    </div>
+
+    <div class="screen" id="screenPatternPlay">
+      <div class="test-message" id="patternMsg">覚えてください...</div>
+      <div class="pattern-grid" id="patternGrid">
+        <div class="pattern-cell" data-idx="0"></div>
+        <div class="pattern-cell" data-idx="1"></div>
+        <div class="pattern-cell" data-idx="2"></div>
+        <div class="pattern-cell" data-idx="3"></div>
+        <div class="pattern-cell" data-idx="4"></div>
+        <div class="pattern-cell" data-idx="5"></div>
+        <div class="pattern-cell" data-idx="6"></div>
+        <div class="pattern-cell" data-idx="7"></div>
+        <div class="pattern-cell" data-idx="8"></div>
+      </div>
+    </div>
+
+    <!-- ===== Test 4: Calc Speed ===== -->
+    <div class="screen" id="screenCalc">
+      <div class="screen-label">テスト 4/4</div>
+      <div class="screen-title">計算スピードテスト</div>
+      <div class="screen-desc">10問の計算に<br>できるだけ速く答えてください。</div>
+      <button class="btn-primary" id="btnCalcStart">スタート</button>
+    </div>
+
+    <div class="screen" id="screenCalcPlay">
+      <div class="test-message" id="calcMsg">問題 1/10</div>
+      <div class="test-display">
+        <div class="test-big-text" id="calcQuestion"></div>
+      </div>
+      <div class="calc-choices" id="calcChoices"></div>
+    </div>
+
+    <!-- ===== Result Screen ===== -->
+    <div class="screen" id="screenResult">
+      <div class="screen-label">診断結果</div>
+      <div class="result-age" id="resultAge">30</div>
+      <div class="result-age-unit">歳</div>
+      <div class="result-comment" id="resultComment"></div>
+      <div class="result-breakdown" id="resultBreakdown"></div>
+      <div class="result-best" id="resultBest"></div>
+      <div class="result-actions">
+        <button class="btn-primary" id="btnRetry">もう一度</button>
+        <button class="btn-secondary" id="btnShare">X でシェア</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <a href="../../">Hopes Consulting Inc.</a> &copy; 2026
+</footer>
+
+<script>
+// ===== Utility =====
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(function(s) { s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+function updateSteps(current) {
+  for (var i = 0; i < 4; i++) {
+    var el = document.getElementById("step" + i);
+    el.className = "step";
+    if (i < current) el.classList.add("done");
+    else if (i === current) el.classList.add("active");
+  }
+}
+
+// ===== Score to Age Mapping =====
+function reactionToAge(ms) {
+  if (ms <= 200) return 18;
+  if (ms <= 250) return 22;
+  if (ms <= 300) return 28;
+  if (ms <= 350) return 33;
+  if (ms <= 400) return 40;
+  if (ms <= 500) return 50;
+  if (ms <= 600) return 58;
+  return 65;
+}
+
+function numberToAge(digits) {
+  if (digits >= 9) return 18;
+  if (digits >= 8) return 22;
+  if (digits >= 7) return 28;
+  if (digits >= 6) return 35;
+  if (digits >= 5) return 42;
+  if (digits >= 4) return 52;
+  return 60;
+}
+
+function patternToAge(count) {
+  if (count >= 9) return 18;
+  if (count >= 8) return 22;
+  if (count >= 7) return 28;
+  if (count >= 6) return 35;
+  if (count >= 5) return 42;
+  if (count >= 4) return 52;
+  return 60;
+}
+
+function calcToAge(totalMs) {
+  var sec = totalMs / 1000;
+  if (sec <= 12) return 18;
+  if (sec <= 15) return 22;
+  if (sec <= 20) return 28;
+  if (sec <= 25) return 35;
+  if (sec <= 30) return 42;
+  if (sec <= 40) return 52;
+  return 60;
+}
+
+// ===== Game State =====
+var results = {
+  reaction: 0,
+  number: 0,
+  pattern: 0,
+  calc: 0
+};
+
+// ===== Start =====
+document.getElementById("btnStart").addEventListener("click", function() {
+  document.getElementById("steps").style.display = "flex";
+  updateSteps(0);
+  showScreen("screenReaction");
+});
+
+// ==========================================
+// TEST 1: REACTION TIME
+// ==========================================
+var reactionTimes = [];
+var reactionRound = 0;
+var reactionTimeout = null;
+var reactionReady = false;
+var REACTION_ROUNDS = 3;
+
+document.getElementById("btnReactionStart").addEventListener("click", function() {
+  reactionTimes = [];
+  reactionRound = 0;
+  showScreen("screenReactionPlay");
+  startReactionRound();
+});
+
+function startReactionRound() {
+  reactionReady = false;
+  var box = document.getElementById("reactionBox");
+  var text = document.getElementById("reactionText");
+  var msg = document.getElementById("reactionMsg");
+  var result = document.getElementById("reactionResult");
+
+  box.className = "test-display waiting";
+  text.textContent = "待って...";
+  msg.textContent = "画面が緑に変わったらタップ！（" + (reactionRound + 1) + "/" + REACTION_ROUNDS + "回目）";
+  result.textContent = "";
+
+  var delay = 1500 + Math.random() * 3000;
+  reactionTimeout = setTimeout(function() {
+    box.className = "test-display go";
+    text.textContent = "タップ！";
+    reactionReady = true;
+    reactionStart = performance.now();
+  }, delay);
+}
+
+var reactionStart = 0;
+
+document.getElementById("reactionBox").addEventListener("click", function() {
+  var box = document.getElementById("reactionBox");
+  var text = document.getElementById("reactionText");
+  var result = document.getElementById("reactionResult");
+
+  if (!reactionReady) {
+    // Too early
+    clearTimeout(reactionTimeout);
+    box.className = "test-display too-early";
+    text.textContent = "早すぎ！";
+    result.textContent = "緑になるまで待ちましょう";
+    setTimeout(function() {
+      startReactionRound();
+    }, 1000);
+    return;
+  }
+
+  var elapsed = Math.round(performance.now() - reactionStart);
+  reactionReady = false;
+  reactionTimes.push(elapsed);
+  reactionRound++;
+
+  text.textContent = elapsed + "ms";
+  result.textContent = reactionRound < REACTION_ROUNDS ? "次のラウンドへ..." : "";
+
+  if (reactionRound >= REACTION_ROUNDS) {
+    var avg = Math.round(reactionTimes.reduce(function(a, b) { return a + b; }, 0) / reactionTimes.length);
+    results.reaction = avg;
+    setTimeout(function() {
+      updateSteps(1);
+      showScreen("screenNumber");
+    }, 1000);
+  } else {
+    setTimeout(function() {
+      startReactionRound();
+    }, 1000);
+  }
+});
+
+// ==========================================
+// TEST 2: NUMBER MEMORY
+// ==========================================
+var numDigits = 3;
+var numCorrectStreak = 0;
+var currentNumber = "";
+
+document.getElementById("btnNumberStart").addEventListener("click", function() {
+  numDigits = 3;
+  numCorrectStreak = 0;
+  showScreen("screenNumberPlay");
+  showNumber();
+});
+
+function showNumber() {
+  var msg = document.getElementById("numberMsg");
+  var display = document.getElementById("numberDisplay");
+  var text = document.getElementById("numberText");
+  var input = document.getElementById("numberInput");
+  var btn = document.getElementById("btnNumberSubmit");
+
+  currentNumber = "";
+  for (var i = 0; i < numDigits; i++) {
+    currentNumber += Math.floor(Math.random() * 10).toString();
+  }
+
+  msg.textContent = numDigits + "桁の数字を覚えてください";
+  text.textContent = currentNumber;
+  display.style.display = "flex";
+  input.style.display = "none";
+  btn.style.display = "none";
+  input.value = "";
+
+  var showTime = 800 + (numDigits * 300);
+  setTimeout(function() {
+    display.style.display = "none";
+    input.style.display = "";
+    btn.style.display = "";
+    msg.textContent = numDigits + "桁の数字を入力してください";
+    input.focus();
+  }, showTime);
+}
+
+document.getElementById("btnNumberSubmit").addEventListener("click", submitNumber);
+document.getElementById("numberInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") submitNumber();
+});
+
+function submitNumber() {
+  var input = document.getElementById("numberInput");
+  var answer = input.value.trim();
+  var msg = document.getElementById("numberMsg");
+
+  if (answer === currentNumber) {
+    numCorrectStreak = numDigits;
+    numDigits++;
+    msg.textContent = "正解！次は" + numDigits + "桁";
+    input.value = "";
+    setTimeout(function() { showNumber(); }, 800);
+  } else {
+    results.number = numCorrectStreak;
+    msg.textContent = "不正解... 正解は " + currentNumber + "（最高 " + numCorrectStreak + "桁）";
+    setTimeout(function() {
+      updateSteps(2);
+      showScreen("screenPattern");
+    }, 1500);
+  }
+}
+
+// ==========================================
+// TEST 3: PATTERN MEMORY
+// ==========================================
+var patternSequence = [];
+var patternLevel = 3;
+var patternInputIdx = 0;
+var patternAccepting = false;
+var patternBestLevel = 0;
+
+document.getElementById("btnPatternStart").addEventListener("click", function() {
+  patternLevel = 3;
+  patternBestLevel = 0;
+  showScreen("screenPatternPlay");
+  startPatternRound();
+});
+
+function startPatternRound() {
+  patternAccepting = false;
+  patternInputIdx = 0;
+  patternSequence = [];
+
+  var msg = document.getElementById("patternMsg");
+  msg.textContent = "覚えてください...（" + patternLevel + "個）";
+
+  // Generate sequence
+  for (var i = 0; i < patternLevel; i++) {
+    var idx;
+    do {
+      idx = Math.floor(Math.random() * 9);
+    } while (patternSequence.length > 0 && patternSequence[patternSequence.length - 1] === idx);
+    patternSequence.push(idx);
+  }
+
+  // Clear all cells
+  document.querySelectorAll(".pattern-cell").forEach(function(c) {
+    c.className = "pattern-cell";
+  });
+
+  // Show sequence
+  var showIdx = 0;
+  var showInterval = setInterval(function() {
+    // Clear previous
+    document.querySelectorAll(".pattern-cell").forEach(function(c) { c.classList.remove("lit"); });
+
+    if (showIdx >= patternSequence.length) {
+      clearInterval(showInterval);
+      msg.textContent = "同じ順番でタップ！";
+      patternAccepting = true;
+      return;
+    }
+
+    document.querySelector('[data-idx="' + patternSequence[showIdx] + '"]').classList.add("lit");
+    showIdx++;
+  }, 600);
+}
+
+document.querySelectorAll(".pattern-cell").forEach(function(cell) {
+  cell.addEventListener("click", function() {
+    if (!patternAccepting) return;
+
+    var idx = parseInt(cell.dataset.idx);
+    if (idx === patternSequence[patternInputIdx]) {
+      cell.classList.add("correct-lit");
+      patternInputIdx++;
+
+      if (patternInputIdx >= patternSequence.length) {
+        patternAccepting = false;
+        patternBestLevel = patternLevel;
+        patternLevel++;
+        document.getElementById("patternMsg").textContent = "正解！次は" + patternLevel + "個";
+        setTimeout(function() {
+          document.querySelectorAll(".pattern-cell").forEach(function(c) { c.className = "pattern-cell"; });
+          startPatternRound();
+        }, 1000);
+      }
+    } else {
+      patternAccepting = false;
+      cell.classList.add("wrong-lit");
+      results.pattern = patternBestLevel;
+      document.getElementById("patternMsg").textContent = "不正解...（最高 " + patternBestLevel + "個）";
+      setTimeout(function() {
+        updateSteps(3);
+        showScreen("screenCalc");
+      }, 1500);
+    }
+  });
+});
+
+// ==========================================
+// TEST 4: CALC SPEED
+// ==========================================
+var calcTotal = 10;
+var calcCurrent = 0;
+var calcStartTime = 0;
+var calcCorrect = 0;
+
+document.getElementById("btnCalcStart").addEventListener("click", function() {
+  calcCurrent = 0;
+  calcCorrect = 0;
+  showScreen("screenCalcPlay");
+  calcStartTime = performance.now();
+  nextCalcQuestion();
+});
+
+function nextCalcQuestion() {
+  calcCurrent++;
+  if (calcCurrent > calcTotal) {
+    var totalMs = Math.round(performance.now() - calcStartTime);
+    results.calc = totalMs;
+    showResult();
+    return;
+  }
+
+  document.getElementById("calcMsg").textContent = "問題 " + calcCurrent + "/" + calcTotal;
+
+  // Generate question
+  var ops = ["+", "-", "x"];
+  var op = ops[Math.floor(Math.random() * ops.length)];
+  var a, b, answer;
+
+  if (op === "+") {
+    a = 10 + Math.floor(Math.random() * 90);
+    b = 10 + Math.floor(Math.random() * 90);
+    answer = a + b;
+  } else if (op === "-") {
+    a = 20 + Math.floor(Math.random() * 80);
+    b = 1 + Math.floor(Math.random() * (a - 1));
+    answer = a - b;
+  } else {
+    a = 2 + Math.floor(Math.random() * 12);
+    b = 2 + Math.floor(Math.random() * 12);
+    answer = a * b;
+  }
+
+  document.getElementById("calcQuestion").textContent = a + " " + op + " " + b + " = ?";
+
+  // Generate choices
+  var choices = [answer];
+  while (choices.length < 4) {
+    var wrong = answer + (Math.floor(Math.random() * 21) - 10);
+    if (wrong !== answer && choices.indexOf(wrong) === -1 && wrong >= 0) {
+      choices.push(wrong);
+    }
+  }
+  choices.sort(function() { return Math.random() - 0.5; });
+
+  var container = document.getElementById("calcChoices");
+  container.innerHTML = "";
+  choices.forEach(function(val) {
+    var btn = document.createElement("button");
+    btn.className = "calc-btn";
+    btn.textContent = val;
+    btn.addEventListener("click", function() {
+      // 連打防止: 全ボタン無効化
+      container.querySelectorAll(".calc-btn").forEach(function(b) { b.disabled = true; });
+      if (val === answer) {
+        calcCorrect++;
+        btn.classList.add("correct-flash");
+      } else {
+        btn.classList.add("wrong-flash");
+      }
+      setTimeout(function() { nextCalcQuestion(); }, 300);
+    });
+    container.appendChild(btn);
+  });
+}
+
+// ==========================================
+// RESULT
+// ==========================================
+function showResult() {
+  var ageReaction = reactionToAge(results.reaction);
+  var ageNumber = numberToAge(results.number);
+  var agePattern = patternToAge(results.pattern);
+  var ageCalc = calcToAge(results.calc);
+
+  var totalAge = Math.round((ageReaction + ageNumber + agePattern + ageCalc) / 4);
+
+  // Clamp
+  if (totalAge < 18) totalAge = 18;
+  if (totalAge > 65) totalAge = 65;
+
+  // Comment
+  var comment = "";
+  if (totalAge <= 22) comment = "AI時代を駆け抜ける最強の脳！驚異的な処理能力を持っています。";
+  else if (totalAge <= 30) comment = "キレッキレの脳です！高い情報処理能力で、マルチタスクもお手のもの。";
+  else if (totalAge <= 38) comment = "バランスの取れた安定した脳力です。日常の判断もスムーズにこなせます。";
+  else if (totalAge <= 48) comment = "まだまだ伸びしろあり！ちょっとしたトレーニングで大きく向上できます。";
+  else comment = "脳トレを続ければ確実に若返ります！毎日の小さな刺激が大きな効果に。";
+
+  document.getElementById("resultAge").textContent = totalAge;
+  document.getElementById("resultComment").textContent = comment;
+
+  // Breakdown
+  var breakdown = document.getElementById("resultBreakdown");
+  breakdown.innerHTML = "";
+  var items = [
+    { label: "反射神経", value: results.reaction + "ms", age: ageReaction },
+    { label: "数字記憶", value: (results.number || "3未満") + "桁", age: ageNumber },
+    { label: "パターン記憶", value: (results.pattern || "3未満") + "個", age: agePattern },
+    { label: "計算スピード", value: (results.calc / 1000).toFixed(1) + "秒", age: ageCalc }
+  ];
+  items.forEach(function(item) {
+    var div = document.createElement("div");
+    div.className = "breakdown-item";
+    div.innerHTML = '<div class="breakdown-label">' + item.label + '</div>' +
+      '<div class="breakdown-value">' + item.value + '</div>' +
+      '<div class="breakdown-age">脳年齢 ' + item.age + '歳</div>';
+    breakdown.appendChild(div);
+  });
+
+  // Best score
+  var prevBest = parseInt(localStorage.getItem("brain_age_best") || "99");
+  var isNewRecord = totalAge < prevBest;
+  if (isNewRecord) {
+    localStorage.setItem("brain_age_best", totalAge.toString());
+  }
+  var bestAge = isNewRecord ? totalAge : Math.min(prevBest, totalAge);
+  document.getElementById("resultBest").innerHTML =
+    "自己ベスト: <strong>" + bestAge + "歳</strong>" +
+    (isNewRecord ? '<span class="new-record">NEW RECORD</span>' : "");
+
+  document.getElementById("steps").style.display = "none";
+  showScreen("screenResult");
+}
+
+// ===== Retry =====
+document.getElementById("btnRetry").addEventListener("click", function() {
+  clearTimeout(reactionTimeout);
+  reactionTimes = [];
+  reactionRound = 0;
+  reactionReady = false;
+  reactionStart = 0;
+  numDigits = 3;
+  numCorrectStreak = 0;
+  patternLevel = 3;
+  patternBestLevel = 0;
+  calcCurrent = 0;
+  calcCorrect = 0;
+  results = { reaction: 0, number: 0, pattern: 0, calc: 0 };
+  showScreen("screenStart");
+});
+
+// ===== Share =====
+document.getElementById("btnShare").addEventListener("click", function() {
+  var age = document.getElementById("resultAge").textContent;
+  var text = "AI 脳年齢テストの結果は「" + age + "歳」でした！\nあなたの脳年齢は何歳？\n\nhttps://www.hopesconsul.com/games/brain-age/";
+  var url = "https://x.com/intent/tweet?text=" + encodeURIComponent(text);
+  window.open(url, "_blank", "width=550,height=420");
+});
+</script>
+</body>
+</html>

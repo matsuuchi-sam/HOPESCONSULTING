@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
 <script type="application/ld+json">
 {
@@ -364,10 +364,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-5);
 }
 .mobile-menu-overlay a {
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   font-weight: 500;
   color: var(--color-primary);
   text-decoration: none;
@@ -390,6 +390,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     position: relative;
     z-index: 10000;
     margin-left: auto;
+  }
+  .header.scrolled .hamburger {
+    padding: 8px;
+  }
+  .header.scrolled .hamburger span {
+    width: 20px;
   }
   nav { display: none; }
 }
@@ -736,12 +742,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transition: transform 0.2s cubic-bezier(0.25,0.46,0.45,0.94), background 0.2s, color 0.2s;
 }
 
-/* Easter egg */
+/* ===== Easter egg — レトロアーケード風 ===== */
 .easter-egg-overlay {
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: #000;
+  background: #0a0a0a;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -756,6 +762,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   opacity: 1;
   pointer-events: auto;
 }
+/* CRTスキャンライン */
+.easter-egg-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(255,255,255,0.03) 2px,
+    rgba(255,255,255,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
 .easter-egg-overlay canvas {
   position: absolute;
   inset: 0;
@@ -764,63 +785,104 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .ee-center {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   text-align: center;
   animation: ee-zoom-in 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
 }
 @keyframes ee-zoom-in {
-  from { opacity: 0; transform: scale(0.3) rotate(-10deg); }
-  to { opacity: 1; transform: scale(1) rotate(0deg); }
+  from { opacity: 0; transform: scale(0.3); }
+  to { opacity: 1; transform: scale(1); }
 }
 .ee-center .ee-title {
-  font-size: clamp(2rem, 6vw, 4rem);
-  font-weight: 900;
-  background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6, #ff6b6b);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: ee-rainbow 2s linear infinite;
-}
-@keyframes ee-rainbow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
+  font-family: "Silkscreen", cursive;
+  font-size: clamp(1.6rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #d97757;
+  text-shadow: 0 0 20px rgba(217,119,87,0.5), 0 0 60px rgba(217,119,87,0.2);
+  letter-spacing: 0.05em;
 }
 .ee-center .ee-sub {
-  font-size: 1.2rem;
-  margin-top: 0.8rem;
-  opacity: 0.7;
-  font-family: var(--font-accent);
+  font-family: "Silkscreen", cursive;
+  font-size: clamp(0.65rem, 2vw, 0.85rem);
+  margin-top: 1rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.1em;
 }
 .ee-center .ee-code {
-  margin-top: 1.5rem;
-  font-size: 0.9rem;
-  font-family: var(--font-accent);
-  opacity: 0.4;
+  margin-top: 1.2rem;
+  font-family: "Silkscreen", cursive;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.25);
   letter-spacing: 0.3em;
 }
-/* Confetti particle */
+.ee-center .ee-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 0.6rem 1.5rem;
+  font-family: "Silkscreen", cursive;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: transparent;
+  border: 2px solid #d97757;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  transition: background 0.2s, box-shadow 0.2s;
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+  animation: ee-glow-pulse 2s ease-in-out infinite;
+}
+.ee-center .ee-play-btn::before {
+  content: '\25B6';
+  font-size: 0.6rem;
+  animation: ee-cursor-blink 0.6s step-end infinite;
+}
+.ee-center .ee-play-btn:hover {
+  background: #d97757;
+  animation: none;
+  box-shadow: 0 0 20px rgba(217,119,87,0.5);
+}
+.ee-center .ee-play-btn:hover::before {
+  animation: none;
+  opacity: 1;
+}
+@keyframes ee-glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(217,119,87,0.2); }
+  50% { box-shadow: 0 0 25px rgba(217,119,87,0.5), 0 0 50px rgba(217,119,87,0.15); }
+}
+@keyframes ee-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+/* Confetti — ピクセル四角に変更 */
 .ee-confetti {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 0;
   opacity: 0;
   animation: ee-confetti-fall linear forwards;
 }
 @keyframes ee-confetti-fall {
-  0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
-  100% { opacity: 0; transform: translateY(100vh) rotate(720deg) scale(0.5); }
+  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
 }
 /* Screen flash */
 .ee-flash {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: #fff;
+  background: #d97757;
   animation: ee-flash-anim 0.4s ease-out forwards;
 }
 @keyframes ee-flash-anim {
-  0% { opacity: 0.8; }
+  0% { opacity: 0.6; }
   100% { opacity: 0; }
 }
 
@@ -1272,7 +1334,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .about-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-10);
+  gap: var(--space-6);
   align-items: start;
 }
 .about-table {
@@ -1298,18 +1360,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .about-table td {
   color: var(--color-text);
 }
-.values-grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
+.about-map {
+  height: 260px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
-.value-item h3 {
-  font-size: var(--text-base);
+.about-access {
+  margin-top: var(--space-4);
+}
+.about-access h4 {
+  font-size: var(--text-sm);
   font-weight: 700;
   color: var(--color-primary);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
 }
-.value-item p {
+.about-access p {
   font-size: var(--text-sm);
   color: var(--color-text-light);
   line-height: 1.7;
@@ -1419,8 +1484,102 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .footer-legal a:hover { color: rgba(255,255,255,0.7); }
 
 @media (max-width: 767px) {
-  .footer-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+  .footer-grid { grid-template-columns: 1fr; gap: var(--space-8); text-align: center; }
+  .footer-brand { display: flex; flex-direction: column; align-items: center; }
+  .footer-brand p { text-align: center; }
   .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* ===== Scroll to Top ===== */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth), visibility 0.3s, background 0.2s;
+  z-index: 90;
+}
+.scroll-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.scroll-top:hover {
+  background: var(--color-accent);
+  transform: translateY(-2px);
+}
+.scroll-top svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  fill: none;
+}
+
+@media (max-width: 767px) {
+  .scroll-top { bottom: 5rem; right: 1rem; width: 40px; height: 40px; }
+}
+
+/* ===== Footer Game Link — レトロアーケード風 ===== */
+.footer-game-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0;
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--color-accent);
+  background: transparent;
+  color: rgba(255,255,255,0.85);
+  font-family: "Silkscreen", cursive;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: background 0.2s, box-shadow 0.2s;
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+  animation: footer-glow-pulse 2s ease-in-out infinite;
+}
+.footer-game-btn::before {
+  content: '\25B6';
+  font-size: 0.55rem;
+  animation: footer-cursor-blink 0.6s step-end infinite;
+}
+.footer-game-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  animation: none;
+  box-shadow: 0 0 20px rgba(217,119,87,0.4);
+}
+.footer-game-btn:hover::before {
+  animation: none;
+  opacity: 1;
+}
+.footer-game-btn svg { display: none; }
+@keyframes footer-glow-pulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(217,119,87,0.15); }
+  50% { box-shadow: 0 0 20px rgba(217,119,87,0.4), 0 0 40px rgba(217,119,87,0.1); }
+}
+@keyframes footer-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* ===== Fixed CTA bar (Mobile) ===== */
@@ -1779,22 +1938,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           <tr><th>従業員数</th><td>3名（業務委託社員含む）</td></tr>
         </table>
       </div>
-      <div class="values-grid">
-        <div class="value-item">
-          <h3>成果へのコミットメント</h3>
-          <p>ツールの導入ではなく、お客様の業務改善と利益向上を最終目標とします。</p>
+      <div class="about-map-wrap">
+        <div class="about-map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.6685691136086!2d139.7060846748212!3d35.6605365311121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b5efc2fffff%3A0x9431c4ad32fb6f78!2z6Z2S5bGx44Ki44Or44Kz44O844OW!5e0!3m2!1sja!2sjp!4v1775029933054!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <div class="value-item">
-          <h3>現場に寄り添う姿勢</h3>
-          <p>現場の声を大切にし、実際に使われるソリューションを提供します。</p>
-        </div>
-        <div class="value-item">
-          <h3>継続的な改善</h3>
-          <p>導入後も継続的にサポートし、長期的な成功を支援します。</p>
-        </div>
-        <div class="value-item">
-          <h3>誠実なパートナーシップ</h3>
-          <p>お客様との信頼関係を最も大切にし、透明性のある関係を築きます。</p>
+        <div class="about-access">
+          <h4>アクセス</h4>
+          <p>渋谷駅 徒歩7分<br>表参道駅 徒歩10分</p>
+          <p>青山・恵比寿・原宿エリアからもアクセス良好</p>
         </div>
       </div>
     </div>
@@ -1806,7 +1957,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#" class="logo" translate="no">HOPES<span>.</span></a>
+        <div style="display:flex; align-items:center; gap:1.5rem; margin-bottom:var(--space-4);">
+          <a href="#" class="logo" style="margin-bottom:0;" translate="no">HOPES<span>.</span></a>
+          <a href="games/" class="footer-game-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>Play Games</a>
+        </div>
         <p>中小企業診断士とAIエンジニアのハイブリッドチームが、経営視点での効率化戦略を設計。本質的な課題解決と持続的成長を実現します。</p>
         <div class="footer-contact-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
@@ -1849,10 +2003,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   <canvas id="eeCanvas"></canvas>
   <div class="ee-center">
     <div class="ee-title">HOPES CONSULTING</div>
-    <div class="ee-sub">You found the secret command!</div>
+    <div class="ee-sub">Secret Command Activated!</div>
     <div class="ee-code">&#8593;&#8593;&#8595;&#8595;&#8592;&#8594;&#8592;&#8594;BA</div>
+    <a href="games/" class="ee-play-btn">Play Games</a>
   </div>
 </div>
+
+<!-- ===== Scroll to Top ===== -->
+<button class="scroll-top" id="scrollTop" aria-label="ページの先頭に戻る">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
 
 <!-- ===== Fixed CTA Bar (Mobile) ===== -->
 <div class="fixed-cta-bar">
@@ -1860,10 +2020,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 </div>
 
 <script>
-// Scroll header
-window.addEventListener('scroll', () => {
-  document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 50);
-}, { passive: true });
+// Scroll header + scroll-to-top
+(function() {
+  var scrollTopBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', function() {
+    document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 50);
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
 
 // Hamburger menu
 const hamburger = document.querySelector('.hamburger');
@@ -2299,7 +2466,7 @@ window.addEventListener('scroll', () => {
   }
 
   function spawnConfetti() {
-    for (var i = 0; i < 150; i++) {
+    for (var i = 0; i < 40; i++) {
       confettiPieces.push({
         x: Math.random() * canvas.width,
         y: Math.random() * -canvas.height,
@@ -2376,15 +2543,16 @@ window.addEventListener('scroll', () => {
     var burstInterval = setInterval(function() {
       spawnConfetti();
       burstCount++;
-      if (burstCount > 3) clearInterval(burstInterval);
+      if (burstCount > 1) clearInterval(burstInterval);
     }, 800);
 
-    setTimeout(function() {
-      active = false;
-      cancelAnimationFrame(animId);
-      overlay.classList.remove('active');
-      clearInterval(burstInterval);
-    }, 5000);
+  }
+
+  function deactivate() {
+    active = false;
+    cancelAnimationFrame(animId);
+    overlay.classList.remove('active');
+    clearInterval(burstInterval);
   }
 
   /* Konami code (desktop) */
@@ -2401,7 +2569,6 @@ window.addEventListener('scroll', () => {
     var tapCount = 0;
     var tapTimer;
     globe.addEventListener('touchend', function(e) {
-      /* Only count quick taps, not drags */
       tapCount++;
       clearTimeout(tapTimer);
       tapTimer = setTimeout(function() { tapCount = 0; }, 800);
@@ -2409,10 +2576,10 @@ window.addEventListener('scroll', () => {
     });
   }
 
-  overlay.addEventListener('click', function() {
-    active = false;
-    cancelAnimationFrame(animId);
-    overlay.classList.remove('active');
+  /* クリックで閉じる（Play Gamesリンク以外） */
+  overlay.addEventListener('click', function(e) {
+    if (e.target.closest('.ee-play-btn')) return;
+    deactivate();
   });
   window.addEventListener('resize', function() { if (active) resize(); });
 })();

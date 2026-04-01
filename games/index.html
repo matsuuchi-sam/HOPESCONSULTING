@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ミニゲーム・ツール | ホープスコンサルティング</title>
+<meta name="description" content="ホープスコンサルティングが提供する無料のミニゲーム・ツール集。タイピングテストや脳トレゲームで楽しみながらスキルチェック！">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" href="../images/favicon-48x48.png" type="image/png" sizes="48x48">
+<link rel="canonical" href="https://www.hopesconsul.com/games/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ミニゲーム・ツール | ホープスコンサルティング">
+<meta property="og:description" content="無料のミニゲーム・ツール集。タイピングテストや脳トレゲームで楽しみながらスキルチェック！">
+<meta property="og:url" content="https://www.hopesconsul.com/games/">
+<meta property="og:image" content="https://www.hopesconsul.com/images/ogp-games.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.hopesconsul.com/images/ogp-games.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=DotGothic16&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+:root {
+  --color-primary: #141413;
+  --color-accent: #d97757;
+  --color-accent-light: #e08a6d;
+  --color-cta-hover: #c4674a;
+  --color-text: #141413;
+  --color-text-light: rgba(20, 20, 19, 0.55);
+  --color-text-muted: rgba(20, 20, 19, 0.4);
+  --color-bg: #e8e6dc;
+  --color-bg-alt: #dfddd3;
+  --color-bg-warm: #f5f4ed;
+  --color-border: rgba(194, 192, 182, 0.4);
+  --font-display: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-body: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-dot: "DotGothic16", "Noto Sans JP", sans-serif;
+  --font-pixel: "Silkscreen", cursive;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.06), 0 4px 8px rgba(0,0,0,0.03);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --px: 4px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* ドットグリッド背景 */
+  background-image: radial-gradient(circle, rgba(20,20,19,0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* CRTビネット — 四隅がほんのり暗い */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(20,20,19,0.15) 100%);
+  pointer-events: none;
+  z-index: 100;
+}
+
+.site-header {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+.site-header a { text-decoration: none; color: var(--color-text); }
+.logo { font-family: var(--font-pixel); font-weight: 700; font-size: 1rem; letter-spacing: 0.02em; }
+.back-link { font-family: var(--font-pixel); font-size: 0.8rem; color: var(--color-text-light); transition: color 0.2s; letter-spacing: 0.02em; padding: 0.4rem 0.75rem; }
+.back-link:hover { color: var(--color-accent); }
+
+.main {
+  flex: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  width: 100%;
+}
+
+.page-title {
+  font-family: var(--font-pixel);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+.page-subtitle {
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-family: var(--font-dot);
+}
+
+/* ===== Game Cards ===== */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.game-card {
+  background: var(--color-bg-warm);
+  padding: 0;
+  border: 3px solid var(--color-text);
+  box-shadow: 6px 6px 0 rgba(20, 20, 19, 0.10);
+  transition: box-shadow 0.2s var(--ease-smooth), border-color 0.2s var(--ease-smooth);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  /* ピクセルステップ角 */
+  clip-path: polygon(
+    0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0,
+    calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
+    calc(100% - 4px) 8px, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px),
+    calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px),
+    calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px),
+    4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px)
+  );
+}
+
+.game-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 8px 8px 0 rgba(217, 119, 87, 0.15);
+}
+
+/* CRTスキャンラインオーバーレイ */
+.game-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.025) 2px,
+    rgba(0, 0, 0, 0.025) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card-inner {
+  padding: 1.75rem 2rem 2rem;
+}
+
+/* STAGEラベル — アーケードのステージ選択風 */
+.card-stage {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  background: var(--color-text);
+  color: var(--color-bg-warm);
+  padding: 0.25rem 0.7rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* ===== ピクセルスプライト（CSSボックスシャドウ） ===== */
+.card-sprite {
+  position: absolute;
+  top: 1.5rem;
+  right: 6.5rem;
+  width: var(--px);
+  height: var(--px);
+  opacity: 0.07;
+  z-index: 1;
+  transform: scale(2.5);
+}
+
+/* タイピング — ピクセルモニター/ターミナル */
+.sprite-typing {
+  box-shadow:
+    /* モニター外枠 上 */
+    4px 0 0 var(--color-accent),
+    8px 0 0 var(--color-accent),
+    12px 0 0 var(--color-accent),
+    16px 0 0 var(--color-accent),
+    20px 0 0 var(--color-accent),
+    24px 0 0 var(--color-accent),
+    28px 0 0 var(--color-accent),
+    /* 左右枠 */
+    0px 4px 0 var(--color-accent),
+    32px 4px 0 var(--color-accent),
+    0px 8px 0 var(--color-accent),
+    32px 8px 0 var(--color-accent),
+    0px 12px 0 var(--color-accent),
+    32px 12px 0 var(--color-accent),
+    0px 16px 0 var(--color-accent),
+    32px 16px 0 var(--color-accent),
+    0px 20px 0 var(--color-accent),
+    32px 20px 0 var(--color-accent),
+    /* モニター外枠 下 */
+    4px 24px 0 var(--color-accent),
+    8px 24px 0 var(--color-accent),
+    12px 24px 0 var(--color-accent),
+    16px 24px 0 var(--color-accent),
+    20px 24px 0 var(--color-accent),
+    24px 24px 0 var(--color-accent),
+    28px 24px 0 var(--color-accent),
+    /* 画面内テキスト行 */
+    8px 8px 0 var(--color-accent),
+    12px 8px 0 var(--color-accent),
+    16px 8px 0 var(--color-accent),
+    8px 12px 0 var(--color-accent),
+    12px 12px 0 var(--color-accent),
+    16px 12px 0 var(--color-accent),
+    20px 12px 0 var(--color-accent),
+    8px 16px 0 var(--color-accent),
+    12px 16px 0 var(--color-accent),
+    /* カーソル点滅風 */
+    20px 16px 0 var(--color-accent),
+    /* スタンド */
+    14px 28px 0 var(--color-accent),
+    18px 28px 0 var(--color-accent),
+    10px 32px 0 var(--color-accent),
+    14px 32px 0 var(--color-accent),
+    18px 32px 0 var(--color-accent),
+    22px 32px 0 var(--color-accent);
+}
+
+/* ストループ — カラフルなピクセルドット（色が混ざるイメージ） */
+.sprite-stroop {
+  --c-red: #c0392b;
+  --c-blue: #2980b9;
+  --c-green: #27ae60;
+  --c-yellow: #f39c12;
+  box-shadow:
+    /* 散らばったカラードット — 色の混乱を表現 */
+    8px 0 0 var(--c-red),
+    12px 0 0 var(--c-red),
+    20px 4px 0 var(--c-blue),
+    24px 4px 0 var(--c-blue),
+    4px 8px 0 var(--c-green),
+    8px 8px 0 var(--c-green),
+    16px 8px 0 var(--c-yellow),
+    28px 8px 0 var(--c-red),
+    0 12px 0 var(--c-blue),
+    12px 12px 0 var(--c-red),
+    20px 12px 0 var(--c-green),
+    24px 12px 0 var(--c-blue),
+    8px 16px 0 var(--c-yellow),
+    16px 16px 0 var(--c-blue),
+    28px 16px 0 var(--c-green),
+    4px 20px 0 var(--c-red),
+    12px 20px 0 var(--c-green),
+    20px 20px 0 var(--c-yellow),
+    24px 20px 0 var(--c-red),
+    0 24px 0 var(--c-yellow),
+    8px 24px 0 var(--c-blue),
+    16px 24px 0 var(--c-green),
+    28px 24px 0 var(--c-yellow),
+    4px 28px 0 var(--c-green),
+    20px 28px 0 var(--c-blue),
+    12px 28px 0 var(--c-yellow),
+    24px 28px 0 var(--c-red);
+}
+
+/* 脳年齢 — 横顔+脳みそ */
+.sprite-brain {
+  box-shadow:
+    /* y=0: ドーム */
+    12px 0 0 var(--color-accent), 16px 0 0 var(--color-accent),
+    20px 0 0 var(--color-accent), 24px 0 0 var(--color-accent),
+    28px 0 0 var(--color-accent), 32px 0 0 var(--color-accent),
+    36px 0 0 var(--color-accent),
+    /* y=4: ドーム（ベタ） */
+    8px 4px 0 var(--color-accent), 12px 4px 0 var(--color-accent),
+    16px 4px 0 var(--color-accent), 20px 4px 0 var(--color-accent),
+    24px 4px 0 var(--color-accent), 28px 4px 0 var(--color-accent),
+    32px 4px 0 var(--color-accent), 36px 4px 0 var(--color-accent),
+    40px 4px 0 var(--color-accent),
+    /* y=8: しわA — 16,28を抜く */
+    4px 8px 0 var(--color-accent), 8px 8px 0 var(--color-accent),
+    12px 8px 0 var(--color-accent),
+    20px 8px 0 var(--color-accent), 24px 8px 0 var(--color-accent),
+    32px 8px 0 var(--color-accent), 36px 8px 0 var(--color-accent),
+    40px 8px 0 var(--color-accent), 44px 8px 0 var(--color-accent),
+    /* y=12: ベタ塗り */
+    0 12px 0 var(--color-accent), 4px 12px 0 var(--color-accent),
+    8px 12px 0 var(--color-accent), 12px 12px 0 var(--color-accent),
+    16px 12px 0 var(--color-accent), 20px 12px 0 var(--color-accent),
+    24px 12px 0 var(--color-accent), 28px 12px 0 var(--color-accent),
+    32px 12px 0 var(--color-accent), 36px 12px 0 var(--color-accent),
+    40px 12px 0 var(--color-accent), 44px 12px 0 var(--color-accent),
+    /* y=16: しわB上段 — 12,24,36を抜く */
+    0 16px 0 var(--color-accent), 4px 16px 0 var(--color-accent),
+    8px 16px 0 var(--color-accent),
+    16px 16px 0 var(--color-accent), 20px 16px 0 var(--color-accent),
+    28px 16px 0 var(--color-accent), 32px 16px 0 var(--color-accent),
+    40px 16px 0 var(--color-accent), 44px 16px 0 var(--color-accent),
+    /* y=20: しわB下段 — 8,20,32を抜く（ずれ） */
+    0 20px 0 var(--color-accent), 4px 20px 0 var(--color-accent),
+    12px 20px 0 var(--color-accent), 16px 20px 0 var(--color-accent),
+    24px 20px 0 var(--color-accent), 28px 20px 0 var(--color-accent),
+    36px 20px 0 var(--color-accent), 40px 20px 0 var(--color-accent),
+    /* y=24: しわC — 16,28を抜く */
+    4px 24px 0 var(--color-accent), 8px 24px 0 var(--color-accent),
+    12px 24px 0 var(--color-accent),
+    20px 24px 0 var(--color-accent), 24px 24px 0 var(--color-accent),
+    32px 24px 0 var(--color-accent), 36px 24px 0 var(--color-accent),
+    /* y=28: 底 + 小脳 */
+    8px 28px 0 var(--color-accent), 12px 28px 0 var(--color-accent),
+    16px 28px 0 var(--color-accent), 20px 28px 0 var(--color-accent),
+    24px 28px 0 var(--color-accent),
+    36px 28px 0 var(--color-accent), 40px 28px 0 var(--color-accent),
+    /* y=32: 脳幹 */
+    32px 32px 0 var(--color-accent), 36px 32px 0 var(--color-accent),
+    /* y=36 */
+    32px 36px 0 var(--color-accent);
+}
+
+.card-title {
+  font-family: var(--font-dot);
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.card-desc {
+  font-family: var(--font-dot);
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.card-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.card-tag {
+  font-family: var(--font-dot);
+  font-size: 0.7rem;
+  font-weight: 400;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--color-bg-alt);
+  color: var(--color-text-light);
+}
+
+.card-tag.accent {
+  background: rgba(217, 119, 87, 0.12);
+  color: var(--color-accent);
+}
+
+/* ===== ホバー時のセレクトカーソル（アーケード風） ===== */
+.game-card:hover .card-stage {
+  background: var(--color-accent);
+}
+
+.site-footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+.site-footer a { color: var(--color-text-light); text-decoration: none; transition: color 0.2s; }
+.site-footer a:hover { color: var(--color-accent); }
+
+@media (max-width: 600px) {
+  .site-header { padding: 0.75rem 1rem; }
+  .main { padding: 1.5rem 1rem 3rem; }
+  .page-title { font-size: 1.1rem; }
+  .game-grid { grid-template-columns: 1fr; }
+  .card-inner { padding: 1.5rem; }
+  .card-sprite { opacity: 0.12; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../" class="logo">Hopes Consulting</a>
+  <a href="../" class="back-link">Back to Top</a>
+</header>
+
+<main class="main">
+  <h1 class="page-title">- SELECT YOUR GAME -</h1>
+  <p class="page-subtitle">遊びながらスキルチェック。データはすべてブラウザ内で完結します。</p>
+
+  <div class="game-grid">
+
+    <a href="typing/" class="game-card">
+      <div class="card-sprite sprite-typing" aria-hidden="true"></div>
+      <div class="card-inner">
+        <div class="card-stage">Typing</div>
+        <h2 class="card-title">IT タイピングスピードテスト</h2>
+        <p class="card-desc">IT・ビジネス用語でタイピング速度を測定。30秒・60秒・120秒モード対応。自己ベストに挑戦しよう。</p>
+        <div class="card-tags">
+          <span class="card-tag">PC向け</span>
+          <span class="card-tag">タイピング</span>
+          <span class="card-tag">スコア記録</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="stroop/" class="game-card">
+      <div class="card-sprite sprite-stroop" aria-hidden="true"></div>
+      <div class="card-inner">
+        <div class="card-stage">Color</div>
+        <h2 class="card-title">ストループテスト</h2>
+        <p class="card-desc">「赤」が青色で表示される...正しい色をタップできるか？脳の処理速度に挑戦。スマホ対応。</p>
+        <div class="card-tags">
+          <span class="card-tag accent">スマホ対応</span>
+          <span class="card-tag">脳トレ</span>
+          <span class="card-tag">20問</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="brain-age/" class="game-card">
+      <div class="card-sprite sprite-brain" aria-hidden="true"></div>
+      <div class="card-inner">
+        <div class="card-stage">Brain</div>
+        <h2 class="card-title">AI 脳年齢テスト</h2>
+        <p class="card-desc">反射神経・数字記憶・パターン記憶・計算力の4つのテストで脳年齢を診断。スマホ対応。</p>
+        <div class="card-tags">
+          <span class="card-tag accent">スマホ対応</span>
+          <span class="card-tag">脳トレ</span>
+          <span class="card-tag">約2分</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <a href="../">Hopes Consulting Inc.</a> &copy; 2026
+</footer>
+
+</body>
+</html>
