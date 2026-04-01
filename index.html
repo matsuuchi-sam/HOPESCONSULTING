@@ -3,11 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI業務効率化コンサルティング | ホープスコンサルティング株式会社</title>
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" href="images/favicon-48x48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="images/favicon-192x192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<title>ホープスコンサルティング | AI業務効率化コンサルティング</title>
 <meta name="description" content="中小企業診断士とAIエンジニアのハイブリッドチームが、一人当たり20%の業務削減を実現。経営視点でのAI導入・効率化戦略を設計します。渋谷区のAIコンサルティング会社。">
 <link rel="canonical" href="https://www.hopesconsul.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="AI業務効率化コンサルティング | ホープスコンサルティング">
+<meta property="og:title" content="ホープスコンサルティング | AI業務効率化コンサルティング">
 <meta property="og:description" content="中小企業診断士とAIエンジニアが、一人当たり20%の業務削減を実現。経営視点でのAI導入・効率化戦略を設計します。">
 <meta property="og:url" content="https://www.hopesconsul.com/">
 <meta property="og:site_name" content="ホープスコンサルティング株式会社">
@@ -339,6 +343,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mobile-menu-overlay.open {
   display: flex;
 }
+.mobile-menu-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
 .mobile-menu-overlay ul {
   list-style: none;
   display: flex;
@@ -406,6 +426,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   flex-shrink: 0;
   margin-bottom: var(--space-6);
   margin-left: -60px;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.hero-globe:active {
+  cursor: grabbing;
 }
 .hero-globe svg {
   width: 100%;
@@ -571,6 +597,233 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pain-card:nth-child(5)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3C/svg%3E"); }
 .pain-card:nth-child(6)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3C/svg%3E"); }
 .pain-card:hover { border-color: var(--color-accent); }
+.pain-card {
+  cursor: grab;
+  touch-action: none;
+  transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s ease, border-color var(--duration-fast) var(--ease-smooth);
+  will-change: transform, opacity;
+}
+.pain-card:active { cursor: grabbing; }
+.pain-card.flung {
+  transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease;
+  pointer-events: none;
+}
+.pain-card.snap-back {
+  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.pain-solve-hint {
+  text-align: center;
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  opacity: 0.6;
+}
+.pain-all-solved {
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  animation: solved-appear 0.6s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+}
+.pain-all-solved h3 {
+  font-size: var(--text-xl);
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+.pain-all-solved p {
+  color: var(--color-text-light);
+  font-size: var(--text-base);
+}
+.pain-all-solved .solved-cta {
+  display: inline-block;
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.pain-all-solved .solved-cta:hover { background: var(--color-accent-hover); }
+@keyframes solved-appear {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cursor glow */
+.cursor-glow {
+  position: fixed;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217,119,87,0.10) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+.cursor-glow.visible { opacity: 1; }
+
+/* Tap ripple (mobile) */
+.tap-ripple {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217,119,87,0.2) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%) scale(0);
+  animation: tap-ripple-anim 0.6s ease-out forwards;
+}
+@keyframes tap-ripple-anim {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+
+/* Mobile tap tilt */
+@keyframes tap-tilt {
+  0% { transform: perspective(600px) rotateY(0deg) scale(1); }
+  30% { transform: perspective(600px) rotateY(6deg) scale(1.02); }
+  60% { transform: perspective(600px) rotateY(-4deg) scale(1.01); }
+  100% { transform: perspective(600px) rotateY(0deg) scale(1); }
+}
+.service-card.tap-tilt {
+  animation: tap-tilt 0.5s ease-out;
+}
+
+/* Mobile tap bounce for buttons */
+@keyframes tap-bounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.92); }
+  70% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.tap-bounce {
+  animation: tap-bounce 0.4s ease-out !important;
+}
+
+/* Mobile: strength icon auto-pulse on scroll */
+.strength-item.in-view::before {
+  animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+/* 3D tilt cards */
+.service-card {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, border-color var(--duration-fast) var(--ease-smooth);
+}
+.service-card .service-card-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255,255,255,0.15) 0%, transparent 60%);
+}
+.service-card:hover .service-card-shine { opacity: 1; }
+
+/* Text decode */
+.hero-content h1 .decode-char {
+  display: inline-block;
+  min-width: 0.5em;
+}
+.hero-content h1 br + .decode-char { min-width: 0; }
+
+/* Magnetic button */
+.btn, .nav-cta, .solved-cta {
+  transition: transform 0.2s cubic-bezier(0.25,0.46,0.45,0.94), background 0.2s, color 0.2s;
+}
+
+/* Easter egg */
+.easter-egg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+}
+.easter-egg-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.easter-egg-overlay canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ee-center {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  animation: ee-zoom-in 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes ee-zoom-in {
+  from { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+.ee-center .ee-title {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6, #ff6b6b);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: ee-rainbow 2s linear infinite;
+}
+@keyframes ee-rainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+.ee-center .ee-sub {
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+  opacity: 0.7;
+  font-family: var(--font-accent);
+}
+.ee-center .ee-code {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  font-family: var(--font-accent);
+  opacity: 0.4;
+  letter-spacing: 0.3em;
+}
+/* Confetti particle */
+.ee-confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  animation: ee-confetti-fall linear forwards;
+}
+@keyframes ee-confetti-fall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(720deg) scale(0.5); }
+}
+/* Screen flash */
+.ee-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #fff;
+  animation: ee-flash-anim 0.4s ease-out forwards;
+}
+@keyframes ee-flash-anim {
+  0% { opacity: 0.8; }
+  100% { opacity: 0; }
+}
+
 .pain-card h3 {
   font-size: var(--text-base);
   font-weight: 700;
@@ -734,6 +987,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1;
   color: var(--color-accent);
   opacity: 0.18;
+  transition: opacity 0.3s ease;
+}
+.strength-item:hover::before {
+  animation: heartbeat 1.8s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); opacity: 0.18; }
+  14% { transform: scale(1.25); opacity: 0.35; }
+  28% { transform: scale(0.95); opacity: 0.18; }
+  42% { transform: scale(1.15); opacity: 0.28; }
+  56% { transform: scale(1); opacity: 0.18; }
 }
 .strength-body h3 {
   font-size: var(--text-xl);
@@ -757,7 +1021,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .flow-grid::before {
   content: '';
   position: absolute;
-  top: 62px;
+  top: 48px;
   left: calc(16.666% + 16px);
   right: calc(16.666% + 16px);
   height: 1px;
@@ -767,73 +1031,46 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   text-align: center;
   position: relative;
 }
-.flow-phase {
-  font-family: var(--font-accent);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  margin-bottom: var(--space-3);
-}
-.flow-period {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  background: var(--color-bg-warm);
-  border: none;
-  margin-bottom: var(--space-5);
+/* Flow circle */
+.flow-circle {
   position: relative;
-  z-index: 1;
-  box-shadow: var(--shadow-sm);
+  width: 96px;
+  height: 96px;
+  margin: 0 auto var(--space-5);
 }
-.flow-period::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 180deg,
-    var(--color-accent) 0%,
-    var(--color-primary) 50%,
-    transparent 50%
-  );
-  z-index: -2;
-  opacity: 0.8;
+.flow-circle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
 }
-.flow-period::after {
-  content: '';
+.flow-ring-bg {
+  fill: none;
+  stroke: var(--color-border-light);
+  stroke-width: 3;
+}
+.flow-ring-fill {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 276.46;
+  stroke-dashoffset: 276.46;
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flow-card.flow-active .flow-ring-fill {
+  /* set by JS per phase */
+}
+.flow-phase-label {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background: var(--color-bg-warm);
-  z-index: -1;
-}
-.flow-period .flow-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-accent);
-  font-size: var(--text-2xl);
-  font-weight: 800;
+  font-size: var(--text-sm);
+  font-weight: 700;
   color: var(--color-primary);
-  line-height: 1;
-}
-.flow-period .flow-duration {
-  font-size: 0.625rem;
-  font-weight: 500;
-  color: var(--color-text-muted);
-  margin-top: 2px;
-}
-.flow-card:nth-child(1) .flow-period::before {
-  background: conic-gradient(from 180deg, var(--color-accent), var(--color-primary) 33%, transparent 33%);
-}
-.flow-card:nth-child(2) .flow-period::before {
-  background: conic-gradient(from 180deg, var(--color-accent), var(--color-primary) 66%, transparent 66%);
-}
-.flow-card:nth-child(3) .flow-period::before {
-  background: conic-gradient(from 180deg, var(--color-accent), var(--color-primary) 100%);
+  letter-spacing: 0.03em;
 }
 .flow-card h3 {
   font-size: var(--text-lg);
@@ -878,14 +1115,44 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .case-card {
   background: var(--color-bg-warm);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  border-radius: 2px 2px var(--radius-lg) var(--radius-lg);
+  overflow: visible;
   border: 1px solid var(--color-border-light);
+  position: relative;
+  margin-top: 20px;
+  box-shadow: 2px 3px 8px rgba(0,0,0,0.06);
+}
+/* Folder tab */
+.case-card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 16px;
+  width: 120px;
+  height: 22px;
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border-light);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  z-index: 0;
+}
+/* Folder tab accent stripe */
+.case-card::after {
+  content: '';
+  position: absolute;
+  top: -17px;
+  left: 18px;
+  width: 116px;
+  height: 3px;
+  background: var(--color-accent);
+  border-radius: 2px;
+  z-index: 1;
 }
 .case-card-header {
   padding: var(--space-3) var(--space-4);
   background: var(--color-primary);
   color: #fff;
+  position: relative;
 }
 .case-card-header h3 {
   font-size: var(--text-base);
@@ -898,6 +1165,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .case-card-body {
   padding: var(--space-3) var(--space-4);
+  background: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 27px,
+    rgba(194,192,182,0.15) 27px,
+    rgba(194,192,182,0.15) 28px
+  );
 }
 .case-label {
   font-size: var(--text-xs);
@@ -1209,6 +1483,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 <!-- Mobile Menu Overlay -->
 <div class="mobile-menu-overlay" id="mobile-menu">
+  <button class="mobile-menu-close" aria-label="メニューを閉じる">&times;</button>
   <ul>
     <li><a href="#problems">課題</a></li>
     <li><a href="#services">サービス</a></li>
@@ -1224,35 +1499,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <section class="hero" id="top">
   <div class="container">
     <div class="hero-content">
-      <h1>AIが実現する<br><em>人にしかできない仕事</em>に<br>集中できる未来へ</h1>
+      <h1 data-decode>AIが実現する<br><em>人にしかできない仕事</em>に<br>集中できる未来へ</h1>
       <p class="hero-lead">私たちは単なるコンサルタントではありません。<br>お客様と共に成果を創り上げる<strong>「実践型パートナー」</strong>として、<br>貴社の持続的な成長と競争力強化を実現します。</p>
     </div>
     <div class="hero-globe" aria-hidden="true">
       <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Outer circle -->
         <circle cx="200" cy="200" r="180" stroke="#141413" stroke-width="1" opacity="0.2"/>
-        <!-- Equator -->
         <ellipse cx="200" cy="200" rx="180" ry="40" stroke="#141413" stroke-width="0.8" opacity="0.16"/>
-        <!-- Latitude lines -->
         <ellipse cx="200" cy="140" rx="155" ry="30" stroke="#141413" stroke-width="0.7" opacity="0.12"/>
         <ellipse cx="200" cy="260" rx="155" ry="30" stroke="#141413" stroke-width="0.7" opacity="0.12"/>
         <ellipse cx="200" cy="90" rx="110" ry="18" stroke="#141413" stroke-width="0.5" opacity="0.1"/>
         <ellipse cx="200" cy="310" rx="110" ry="18" stroke="#141413" stroke-width="0.5" opacity="0.1"/>
-        <!-- Meridian lines -->
         <ellipse cx="200" cy="200" rx="40" ry="180" stroke="#141413" stroke-width="0.8" opacity="0.16"/>
         <ellipse cx="200" cy="200" rx="100" ry="180" stroke="#141413" stroke-width="0.7" opacity="0.14"/>
         <ellipse cx="200" cy="200" rx="150" ry="180" stroke="#141413" stroke-width="0.6" opacity="0.12"/>
-        <!-- Tilted meridians -->
         <ellipse cx="200" cy="200" rx="70" ry="180" stroke="#141413" stroke-width="0.5" opacity="0.1" transform="rotate(30 200 200)"/>
         <ellipse cx="200" cy="200" rx="70" ry="180" stroke="#141413" stroke-width="0.5" opacity="0.1" transform="rotate(-30 200 200)"/>
-        <!-- Rotating accent ring -->
         <g class="globe-ring">
           <ellipse cx="200" cy="200" rx="190" ry="60" stroke="#d97757" stroke-width="1" opacity="0.3" stroke-dasharray="8 12"/>
         </g>
         <g class="globe-ring-reverse">
           <ellipse cx="200" cy="200" rx="160" ry="175" stroke="#d97757" stroke-width="0.8" opacity="0.2" stroke-dasharray="6 14" transform="rotate(65 200 200)"/>
         </g>
-        <!-- Dots at intersections -->
         <circle class="globe-dot" cx="200" cy="20" r="3" fill="#d97757" opacity="0.4"/>
         <circle class="globe-dot" cx="200" cy="380" r="3" fill="#d97757" opacity="0.4"/>
         <circle class="globe-dot" cx="20" cy="200" r="3" fill="#d97757" opacity="0.3"/>
@@ -1265,7 +1533,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <circle class="globe-dot" cx="120" cy="240" r="2" fill="#141413" opacity="0.2"/>
         <circle class="globe-dot" cx="250" cy="80" r="2" fill="#141413" opacity="0.18"/>
         <circle class="globe-dot" cx="150" cy="320" r="2" fill="#141413" opacity="0.18"/>
-        <!-- Inner glow circle -->
         <circle cx="200" cy="200" r="120" stroke="#d97757" stroke-width="0.5" opacity="0.12"/>
         <circle cx="200" cy="200" r="4" fill="#d97757" opacity="0.4"/>
       </svg>
@@ -1312,8 +1579,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <p>正確な経営判断に必要なデータがすぐに出てこない。情報が分散し、意思決定が遅れている。</p>
       </div>
     </div>
+    <p class="pain-solve-hint">&#8592; カードをスワイプして課題を解決 &#8594;</p>
   </div>
 </section>
+
+<div class="cursor-glow" id="cursorGlow"></div>
 
 <!-- ===== Services ===== -->
 <section class="section" id="services">
@@ -1322,8 +1592,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <h2>人がより創造的な仕事に<br>集中できる環境を</h2>
     </div>
     <div class="services-grid stagger-group">
-      <div class="service-card stagger-item">
-        <div class="service-num">01</div>
+      <div class="service-card stagger-item" data-tilt>
+        <div class="service-card-shine"></div>
+        <div class="service-num">1</div>
         <h3>AI導入支援</h3>
         <p class="service-sub">経営課題を解決するAI活用戦略</p>
         <ul>
@@ -1332,8 +1603,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           <li>段階的導入計画の策定</li>
         </ul>
       </div>
-      <div class="service-card stagger-item">
-        <div class="service-num">02</div>
+      <div class="service-card stagger-item" data-tilt>
+        <div class="service-card-shine"></div>
+        <div class="service-num">2</div>
         <h3>効率化戦略策定</h3>
         <p class="service-sub">経営戦略と一体化した効率化ロードマップ</p>
         <ul>
@@ -1342,8 +1614,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           <li>IT投資の最適配分と実行管理</li>
         </ul>
       </div>
-      <div class="service-card stagger-item">
-        <div class="service-num">03</div>
+      <div class="service-card stagger-item" data-tilt>
+        <div class="service-card-shine"></div>
+        <div class="service-num">3</div>
         <h3>受託開発</h3>
         <p class="service-sub">経営課題解決型のシステム開発</p>
         <ul>
@@ -1393,21 +1666,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <p>お客様の状況に合わせて柔軟に対応しますが、標準的な進め方は以下の通りです。</p>
     </div>
     <div class="flow-grid fade-in">
-      <div class="flow-card">
-        <div class="flow-phase">Phase 1</div>
-        <div class="flow-period"><span class="flow-num">01</span><span class="flow-duration">約1ヶ月</span></div>
+      <div class="flow-card" data-phase="1">
+        <div class="flow-circle">
+          <svg viewBox="0 0 100 100"><circle class="flow-ring-bg" cx="50" cy="50" r="44"/><circle class="flow-ring-fill" cx="50" cy="50" r="44"/></svg>
+          <span class="flow-phase-label">Phase 1</span>
+        </div>
         <h3>診断・計画策定</h3>
         <p>経営課題ヒアリング、業務フローの可視化、ボトルネック特定、効果の試算。どこから手をつければ最も効果が出るかを特定し、最適化された改善案をご提案します。</p>
       </div>
-      <div class="flow-card">
-        <div class="flow-phase">Phase 2</div>
-        <div class="flow-period"><span class="flow-num">02</span><span class="flow-duration">約1〜2ヶ月</span></div>
+      <div class="flow-card" data-phase="2">
+        <div class="flow-circle">
+          <svg viewBox="0 0 100 100"><circle class="flow-ring-bg" cx="50" cy="50" r="44"/><circle class="flow-ring-fill" cx="50" cy="50" r="44"/></svg>
+          <span class="flow-phase-label">Phase 2</span>
+        </div>
         <h3>改善実装</h3>
         <p>最も効果的なツールを選定・構築。プロトタイプでテスト運用し、業務マニュアル整備と社員研修を実施。社員の皆様が自走できる状態を目指します。</p>
       </div>
-      <div class="flow-card">
-        <div class="flow-phase">Phase 3</div>
-        <div class="flow-period"><span class="flow-num">03</span><span class="flow-duration">3ヶ月〜</span></div>
+      <div class="flow-card" data-phase="3">
+        <div class="flow-circle">
+          <svg viewBox="0 0 100 100"><circle class="flow-ring-bg" cx="50" cy="50" r="44"/><circle class="flow-ring-fill" cx="50" cy="50" r="44"/></svg>
+          <span class="flow-phase-label">Phase 3</span>
+        </div>
         <h3>効果測定・定着支援</h3>
         <p>導入効果のモニタリング、フィードバックに基づく追加チューニング、社内ナレッジ共有を支援。継続的に業務改善が生まれる組織文化の土台を構築します。</p>
       </div>
@@ -1565,6 +1844,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   </div>
 </footer>
 
+<!-- Easter egg overlay -->
+<div class="easter-egg-overlay" id="easterEgg">
+  <canvas id="eeCanvas"></canvas>
+  <div class="ee-center">
+    <div class="ee-title">HOPES CONSULTING</div>
+    <div class="ee-sub">You found the secret command!</div>
+    <div class="ee-code">&#8593;&#8593;&#8595;&#8595;&#8592;&#8594;&#8592;&#8594;BA</div>
+  </div>
+</div>
+
 <!-- ===== Fixed CTA Bar (Mobile) ===== -->
 <div class="fixed-cta-bar">
   <a href="mailto:info.hopesconsul@gmail.com" class="btn btn-primary">無料相談を予約する</a>
@@ -1584,14 +1873,16 @@ hamburger?.addEventListener('click', () => {
   mobileMenu.classList.toggle('open');
   document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
 });
-// Close menu on link click
+// Close menu on link click or close button
+function closeMenu() {
+  hamburger.classList.remove('active');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
 mobileMenu?.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
-  });
+  link.addEventListener('click', closeMenu);
 });
+mobileMenu?.querySelector('.mobile-menu-close')?.addEventListener('click', closeMenu);
 
 // Intersection Observer for fade-in
 const observer = new IntersectionObserver((entries) => {
@@ -1683,6 +1974,506 @@ window.addEventListener('scroll', () => {
     }
   });
 }, { passive: true });
+
+/* Globe: drag + rotation in hero */
+(function() {
+  var globe = document.querySelector('.hero-globe');
+  if (!globe) return;
+  var svg = globe.querySelector('svg');
+
+  var isDragging = false;
+  var startX, startY, currentX = 0, currentY = 0;
+  var rotation = 0, lastMoveX = 0, velocity = 0, spinAnim;
+
+  function applyTransform() {
+    globe.style.transform = 'translate(' + currentX + 'px,' + currentY + 'px)';
+    svg.style.transform = 'rotate(' + rotation + 'deg)';
+  }
+
+  function onStart(e) {
+    isDragging = true;
+    cancelAnimationFrame(spinAnim);
+    var point = e.touches ? e.touches[0] : e;
+    startX = point.clientX - currentX;
+    startY = point.clientY - currentY;
+    lastMoveX = point.clientX;
+    velocity = 0;
+  }
+
+  function onMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    var point = e.touches ? e.touches[0] : e;
+    currentX = point.clientX - startX;
+    currentY = point.clientY - startY;
+    var dx = point.clientX - lastMoveX;
+    velocity = dx * 0.8;
+    rotation += dx * 0.5;
+    lastMoveX = point.clientX;
+    applyTransform();
+  }
+
+  function onEnd() {
+    isDragging = false;
+    function spin() {
+      if (Math.abs(velocity) < 0.1) return;
+      velocity *= 0.95;
+      rotation += velocity;
+      svg.style.transform = 'rotate(' + rotation + 'deg)';
+      spinAnim = requestAnimationFrame(spin);
+    }
+    spin();
+  }
+
+  globe.addEventListener('mousedown', onStart);
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onEnd);
+  globe.addEventListener('touchstart', onStart, { passive: true });
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('touchend', onEnd);
+
+  globe.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    rotation += e.deltaY * 0.3;
+    svg.style.transform = 'rotate(' + rotation + 'deg)';
+  }, { passive: false });
+})();
+
+/* Pain card flick-to-solve */
+(function() {
+  var cards = document.querySelectorAll('.pain-card');
+  var grid = document.querySelector('.pain-grid');
+  var hint = document.querySelector('.pain-solve-hint');
+  var section = document.querySelector('.pain-section .container');
+  if (!cards.length) return;
+
+  var solvedCount = 0;
+  var totalCards = cards.length;
+  var THRESHOLD = 80;
+
+  cards.forEach(function(card) {
+    var isDragging = false;
+    var startX, startY, dx, dy, lastT, lastX, vx;
+
+    function onStart(e) {
+      if (card.classList.contains('flung')) return;
+      card.classList.remove('snap-back');
+      var point = e.touches ? e.touches[0] : e;
+      startX = point.clientX;
+      startY = point.clientY;
+      dx = 0; dy = 0; vx = 0;
+      lastX = startX;
+      lastT = Date.now();
+      isDragging = true;
+    }
+
+    function onMove(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      var point = e.touches ? e.touches[0] : e;
+      dx = point.clientX - startX;
+      dy = point.clientY - startY;
+      var now = Date.now();
+      var dt = now - lastT;
+      if (dt > 0) { vx = (point.clientX - lastX) / dt; }
+      lastX = point.clientX;
+      lastT = now;
+      var rotate = dx * 0.08;
+      var opacity = Math.max(0.3, 1 - Math.abs(dx) / 400);
+      card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rotate + 'deg)';
+      card.style.opacity = opacity;
+    }
+
+    function onEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      var speed = Math.abs(vx);
+      var dist = Math.abs(dx);
+
+      if (dist > THRESHOLD || speed > 0.5) {
+        var dir = dx > 0 ? 1 : -1;
+        var flingX = dir * (800 + dist);
+        var flingY = dy * 2;
+        var flingR = dir * (20 + Math.random() * 20);
+        card.classList.add('flung');
+        card.style.transform = 'translate(' + flingX + 'px,' + flingY + 'px) rotate(' + flingR + 'deg)';
+        card.style.opacity = '0';
+        solvedCount++;
+
+        if (solvedCount === totalCards) {
+          setTimeout(function() {
+            grid.style.display = 'none';
+            if (hint) hint.style.display = 'none';
+            var msg = document.createElement('div');
+            msg.className = 'pain-all-solved';
+            msg.innerHTML = '<h3>すべての課題、解決できます。</h3>' +
+              '<p>ホープスコンサルティングが<br>貴社の課題解決パートナーになります。</p>' +
+              '<a href="mailto:info.hopesconsul@gmail.com" class="solved-cta">無料相談してみる</a>';
+            section.appendChild(msg);
+          }, 700);
+        }
+      } else {
+        card.classList.add('snap-back');
+        card.style.transform = '';
+        card.style.opacity = '';
+      }
+    }
+
+    card.addEventListener('mousedown', onStart);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    card.addEventListener('touchstart', onStart, { passive: true });
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onEnd);
+  });
+})();
+
+/* Cursor glow */
+(function() {
+  var glow = document.getElementById('cursorGlow');
+  if (!glow) return;
+  var visible = false;
+  document.addEventListener('mousemove', function(e) {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+    if (!visible) { visible = true; glow.classList.add('visible'); }
+  });
+  document.addEventListener('mouseleave', function() {
+    visible = false; glow.classList.remove('visible');
+  });
+})();
+
+/* 3D tilt cards */
+(function() {
+  document.querySelectorAll('[data-tilt]').forEach(function(card) {
+    var shine = card.querySelector('.service-card-shine');
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width;
+      var y = (e.clientY - rect.top) / rect.height;
+      var rotateX = (0.5 - y) * 12;
+      var rotateY = (x - 0.5) * 12;
+      card.style.transform = 'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
+      if (shine) {
+        shine.style.setProperty('--shine-x', (x * 100) + '%');
+        shine.style.setProperty('--shine-y', (y * 100) + '%');
+      }
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = '';
+    });
+  });
+})();
+
+/* Text decode effect */
+(function() {
+  var h1 = document.querySelector('[data-decode]');
+  if (!h1) return;
+  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZアイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789@#$%';
+  var original = h1.innerHTML;
+  var textNodes = [];
+
+  function getTextContent(node) {
+    var result = [];
+    node.childNodes.forEach(function(child) {
+      if (child.nodeType === 3) {
+        result.push({ node: child, text: child.textContent });
+      } else if (child.tagName !== 'BR') {
+        result = result.concat(getTextContent(child));
+      }
+    });
+    return result;
+  }
+
+  textNodes = getTextContent(h1);
+  var allChars = textNodes.map(function(t) { return t.text; }).join('');
+  var totalLen = allChars.length;
+  var frame = 0;
+  var totalFrames = 40;
+
+  textNodes.forEach(function(t) { t.node.textContent = t.text.replace(/[^\s]/g, ' '); });
+
+  function animate() {
+    frame++;
+    var revealUpTo = Math.floor((frame / totalFrames) * totalLen);
+    var idx = 0;
+    textNodes.forEach(function(t) {
+      var out = '';
+      for (var i = 0; i < t.text.length; i++) {
+        if (t.text[i] === ' ' || t.text[i] === '\n') { out += t.text[i]; }
+        else if (idx < revealUpTo) { out += t.text[i]; }
+        else { out += chars[Math.floor(Math.random() * chars.length)]; }
+        idx++;
+      }
+      t.node.textContent = out;
+    });
+    if (frame < totalFrames) requestAnimationFrame(animate);
+  }
+
+  setTimeout(animate, 300);
+})();
+
+/* Flow circle progress animation — replays on re-enter */
+(function() {
+  var cards = document.querySelectorAll('.flow-card[data-phase]');
+  if (!cards.length) return;
+  var circumference = 2 * Math.PI * 44; // 276.46
+
+  var flowObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var card = entry.target;
+      var phase = parseInt(card.getAttribute('data-phase'));
+      var fill = card.querySelector('.flow-ring-fill');
+      if (!fill) return;
+
+      if (entry.isIntersecting) {
+        var progress = phase / 3;
+        var offset = circumference * (1 - progress);
+        setTimeout(function() {
+          fill.style.strokeDashoffset = offset;
+          card.classList.add('flow-active');
+        }, (phase - 1) * 300);
+      } else {
+        fill.style.transition = 'none';
+        fill.style.strokeDashoffset = circumference;
+        card.classList.remove('flow-active');
+        requestAnimationFrame(function() {
+          fill.style.transition = '';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  cards.forEach(function(card) { flowObserver.observe(card); });
+})();
+
+/* Magnetic buttons — event delegation for dynamic elements too */
+(function() {
+  var RANGE = 60;
+  var SELECTOR = '.btn, .nav-cta, .solved-cta';
+  var lastBtn = null;
+
+  document.addEventListener('mousemove', function(e) {
+    var btns = document.querySelectorAll(SELECTOR);
+    var found = null;
+    btns.forEach(function(btn) {
+      var rect = btn.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      var dx = e.clientX - cx;
+      var dy = e.clientY - cy;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var maxDist = Math.max(rect.width, rect.height) / 2 + RANGE;
+      if (dist < maxDist) {
+        var strength = 1 - dist / maxDist;
+        btn.style.transform = 'translate(' + (dx * strength * 0.4) + 'px,' + (dy * strength * 0.4) + 'px) scale(' + (1 + strength * 0.05) + ')';
+        found = btn;
+      } else {
+        btn.style.transform = '';
+      }
+    });
+    if (lastBtn && lastBtn !== found) lastBtn.style.transform = '';
+    lastBtn = found;
+  });
+})();
+
+/* Easter egg — Konami code */
+(function() {
+  var code = [38,38,40,40,37,39,37,39,66,65];
+  var pos = 0;
+  var overlay = document.getElementById('easterEgg');
+  var canvas = document.getElementById('eeCanvas');
+  if (!overlay || !canvas) return;
+  var ctx = canvas.getContext('2d');
+  var animId;
+  var confettiPieces = [];
+  var matrixDrops = [];
+  var active = false;
+
+  var colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#9b59b6','#ff9f43','#ee5a24','#0abde3'];
+  var matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%アイウエオカキクケコ'.split('');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function spawnConfetti() {
+    for (var i = 0; i < 150; i++) {
+      confettiPieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height,
+        w: 4 + Math.random() * 8,
+        h: 4 + Math.random() * 8,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 6,
+        vy: 2 + Math.random() * 5,
+        rot: Math.random() * 360,
+        vr: (Math.random() - 0.5) * 12,
+        opacity: 1
+      });
+    }
+  }
+
+  function initMatrix() {
+    var cols = Math.floor(canvas.width / 16);
+    matrixDrops = [];
+    for (var i = 0; i < cols; i++) {
+      matrixDrops.push({ x: i * 16, y: Math.random() * -200, speed: 1 + Math.random() * 3 });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    /* Matrix rain */
+    ctx.font = '14px monospace';
+    matrixDrops.forEach(function(d) {
+      var char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+      ctx.fillStyle = 'rgba(74,222,128,' + (0.15 + Math.random() * 0.15) + ')';
+      ctx.fillText(char, d.x, d.y);
+      d.y += d.speed * 3;
+      if (d.y > canvas.height) { d.y = Math.random() * -100; }
+    });
+
+    /* Confetti */
+    confettiPieces.forEach(function(p) {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.vy += 0.08;
+      if (p.y > canvas.height + 20) p.opacity = 0;
+    });
+
+    if (active) animId = requestAnimationFrame(draw);
+  }
+
+  function activate() {
+    active = true;
+    resize();
+    confettiPieces = [];
+    spawnConfetti();
+    initMatrix();
+
+    /* Flash */
+    var flash = document.createElement('div');
+    flash.className = 'ee-flash';
+    overlay.appendChild(flash);
+    setTimeout(function() { flash.remove(); }, 500);
+
+    overlay.classList.add('active');
+    draw();
+
+    /* Continuous confetti bursts */
+    var burstCount = 0;
+    var burstInterval = setInterval(function() {
+      spawnConfetti();
+      burstCount++;
+      if (burstCount > 3) clearInterval(burstInterval);
+    }, 800);
+
+    setTimeout(function() {
+      active = false;
+      cancelAnimationFrame(animId);
+      overlay.classList.remove('active');
+      clearInterval(burstInterval);
+    }, 5000);
+  }
+
+  /* Konami code (desktop) */
+  document.addEventListener('keydown', function(e) {
+    if (e.keyCode === code[pos]) {
+      pos++;
+      if (pos === code.length) { pos = 0; activate(); }
+    } else { pos = 0; }
+  });
+
+  /* Globe triple-tap (mobile) */
+  var globe = document.querySelector('.hero-globe');
+  if (globe) {
+    var tapCount = 0;
+    var tapTimer;
+    globe.addEventListener('touchend', function(e) {
+      /* Only count quick taps, not drags */
+      tapCount++;
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(function() { tapCount = 0; }, 800);
+      if (tapCount >= 3) { tapCount = 0; activate(); }
+    });
+  }
+
+  overlay.addEventListener('click', function() {
+    active = false;
+    cancelAnimationFrame(animId);
+    overlay.classList.remove('active');
+  });
+  window.addEventListener('resize', function() { if (active) resize(); });
+})();
+
+/* Mobile enhancements */
+(function() {
+  var isTouchDevice = 'ontouchstart' in window;
+  if (!isTouchDevice) return;
+
+  /* 1. Tap ripple instead of cursor glow */
+  document.addEventListener('touchstart', function(e) {
+    var touch = e.touches[0];
+    var ripple = document.createElement('div');
+    ripple.className = 'tap-ripple';
+    ripple.style.left = touch.clientX + 'px';
+    ripple.style.top = touch.clientY + 'px';
+    document.body.appendChild(ripple);
+    setTimeout(function() { ripple.remove(); }, 600);
+  }, { passive: true });
+
+  /* 2. Service card tap tilt */
+  document.querySelectorAll('[data-tilt]').forEach(function(card) {
+    card.addEventListener('touchstart', function() {
+      card.classList.remove('tap-tilt');
+      void card.offsetWidth;
+      card.classList.add('tap-tilt');
+    }, { passive: true });
+    card.addEventListener('animationend', function() {
+      card.classList.remove('tap-tilt');
+    });
+  });
+
+  /* 3. Button tap bounce */
+  document.addEventListener('touchstart', function(e) {
+    var btn = e.target.closest('.btn, .nav-cta, .solved-cta');
+    if (!btn) return;
+    btn.classList.remove('tap-bounce');
+    void btn.offsetWidth;
+    btn.classList.add('tap-bounce');
+    btn.addEventListener('animationend', function handler() {
+      btn.classList.remove('tap-bounce');
+      btn.removeEventListener('animationend', handler);
+    });
+  }, { passive: true });
+
+  /* 4. Strength icons auto-pulse on scroll */
+  var strengthItems = document.querySelectorAll('.strength-item');
+  if (strengthItems.length) {
+    var sObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
+        }
+      });
+    }, { threshold: 0.5 });
+    strengthItems.forEach(function(item) { sObserver.observe(item); });
+  }
+})();
+
 </script>
 </body>
 </html>
