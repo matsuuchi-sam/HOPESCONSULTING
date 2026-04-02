@@ -14,6 +14,8 @@
 <meta property="og:description" content="IT・ビジネス用語でタイピング速度を測定！あなたは何文字打てる？">
 <meta property="og:url" content="https://www.hopesconsul.com/games/typing/">
 <meta property="og:image" content="https://www.hopesconsul.com/games/typing/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.hopesconsul.com/games/typing/ogp.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -752,10 +754,11 @@ retryBtn.addEventListener("click", function() {
 
 // ===== Share =====
 function getTypingShareText() {
+  var rank = document.getElementById("resultRank").textContent;
   var wpm = document.getElementById("resultScore").textContent;
   var accuracy = document.getElementById("resultAccuracy").textContent;
-  var time = gameState.totalTime;
-  return "IT タイピングスピードテスト（" + time + "秒）で " + wpm + " WPM（正確率 " + accuracy + "）を記録！\n\n挑戦してみてください！\nhttps://www.hopesconsul.com/games/typing/";
+  var comment = document.getElementById("resultComment").textContent;
+  return "IT タイピングスピードテスト｜" + wpm + " WPM（正確率 " + accuracy + "）｜" + rank + " - " + comment + "\n\nhttps://www.hopesconsul.com/games/typing/";
 }
 shareBtn.addEventListener("click", function() {
   var url = "https://x.com/intent/tweet?text=" + encodeURIComponent(getTypingShareText());

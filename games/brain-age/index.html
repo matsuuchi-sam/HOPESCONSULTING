@@ -14,6 +14,8 @@
 <meta property="og:description" content="4つのミニテストであなたの脳力を診断！AI時代の脳力をチェック。">
 <meta property="og:url" content="https://www.hopesconsul.com/games/brain-age/">
 <meta property="og:image" content="https://www.hopesconsul.com/games/brain-age/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.hopesconsul.com/games/brain-age/ogp.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,7 +62,7 @@ body {
   color: var(--color-text);
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
-  height: 100dvh;
+  min-height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -169,6 +171,7 @@ body::after {
   box-shadow: 6px 6px 0 rgba(217, 119, 87, 0.25);
   flex: 1;
   min-height: 0;
+  max-height: calc(100dvh - 100px);
   display: flex;
   flex-direction: column;
   clip-path: var(--clip-card);
@@ -311,22 +314,46 @@ body::after {
   min-height: 1.3rem;
 }
 
-/* ===== Number Input ===== */
-.number-input {
+/* ===== Number Display + Numpad ===== */
+.number-answer {
   font-family: var(--font-dot);
   font-size: 1.3rem;
   font-weight: 700;
   text-align: center;
-  padding: 0.6rem 0.75rem;
+  padding: 0.5rem 0.75rem;
   width: 100%;
   max-width: 220px;
+  min-height: 2.5rem;
   border: 3px solid var(--color-text);
   background: #fff;
   color: var(--color-text);
-  outline: none;
+  clip-path: var(--clip-btn);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.15em;
+}
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+  width: 100%;
+  max-width: 220px;
+  margin-bottom: 0.4rem;
+}
+.numpad-btn {
+  font-family: var(--font-dot);
+  font-size: 1.1rem;
+  font-weight: 400;
+  padding: 0.5rem;
+  min-height: 42px;
+  border: 3px solid var(--color-border);
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
   clip-path: var(--clip-btn);
 }
-.number-input:focus { border-color: var(--color-accent); }
+.numpad-btn:active { transform: scale(0.93); background: var(--color-bg-alt); }
+.numpad-btn.numpad-del { font-size: 0.8rem; }
 
 /* ===== Pattern Grid ===== */
 .pattern-grid {
@@ -348,6 +375,7 @@ body::after {
 }
 .pattern-cell.lit { background: var(--color-accent); border-color: var(--color-accent); }
 .pattern-cell.correct-lit { background: #16a34a; border-color: #16a34a; }
+.pattern-cell.correct-lit-2 { background: #2563eb; border-color: #2563eb; }
 .pattern-cell.wrong-lit { background: #dc2626; border-color: #dc2626; }
 .pattern-cell:active { transform: scale(0.93); }
 
@@ -445,7 +473,9 @@ body::after {
   .test-display { padding: 0.75rem; min-height: 120px; margin-bottom: 0.4rem; }
   .test-big-text { font-size: 2rem; }
   .test-message { font-size: 0.7rem; margin-bottom: 0.35rem; }
-  .number-input { font-size: 1.1rem; padding: 0.45rem 0.6rem; max-width: 170px; }
+  .number-answer { font-size: 1.1rem; padding: 0.4rem 0.6rem; max-width: 170px; margin-bottom: 0.3rem; }
+  .numpad { max-width: 170px; gap: 0.25rem; }
+  .numpad-btn { font-size: 0.95rem; padding: 0.4rem; min-height: 38px; }
   .pattern-grid { gap: 0.35rem; max-width: 160px; margin-bottom: 0.4rem; }
   .calc-choices { gap: 0.35rem; margin-bottom: 0.4rem; }
   .calc-btn { font-size: 1rem; padding: 0.55rem; min-height: 42px; }
@@ -533,9 +563,21 @@ body::after {
       <div class="test-display" id="numberDisplay">
         <div class="test-big-text" id="numberText"></div>
       </div>
-      <input type="tel" class="number-input" id="numberInput" style="display:none;" placeholder="数字を入力">
-      <div style="height:0.75rem;"></div>
-      <button class="btn-primary" id="btnNumberSubmit" style="display:none;">回答</button>
+      <div class="number-answer" id="numberAnswer" style="display:none;">&nbsp;</div>
+      <div class="numpad" id="numpad" style="display:none;">
+        <button class="numpad-btn" data-num="1">1</button>
+        <button class="numpad-btn" data-num="2">2</button>
+        <button class="numpad-btn" data-num="3">3</button>
+        <button class="numpad-btn" data-num="4">4</button>
+        <button class="numpad-btn" data-num="5">5</button>
+        <button class="numpad-btn" data-num="6">6</button>
+        <button class="numpad-btn" data-num="7">7</button>
+        <button class="numpad-btn" data-num="8">8</button>
+        <button class="numpad-btn" data-num="9">9</button>
+        <button class="numpad-btn numpad-del" data-num="del">&#9003;</button>
+        <button class="numpad-btn" data-num="0">0</button>
+        <button class="numpad-btn" data-num="ok" style="background:var(--color-accent);color:#fff;border-color:var(--color-accent);">OK</button>
+      </div>
     </div>
 
     <!-- ===== Test 3: Pattern Memory ===== -->
@@ -617,44 +659,44 @@ function updateSteps(current) {
 
 // ===== Score to Age Mapping =====
 function reactionToAge(ms) {
-  if (ms <= 220) return 18;
-  if (ms <= 280) return 22;
-  if (ms <= 340) return 26;
-  if (ms <= 400) return 30;
-  if (ms <= 460) return 35;
-  if (ms <= 550) return 42;
-  if (ms <= 700) return 50;
+  if (ms <= 250) return 18;
+  if (ms <= 310) return 22;
+  if (ms <= 370) return 26;
+  if (ms <= 430) return 30;
+  if (ms <= 500) return 35;
+  if (ms <= 600) return 42;
+  if (ms <= 750) return 50;
   return 58;
 }
 
 function numberToAge(digits) {
-  if (digits >= 9) return 18;
+  if (digits >= 8) return 18;
   if (digits >= 7) return 22;
   if (digits >= 6) return 26;
   if (digits >= 5) return 30;
-  if (digits >= 4) return 38;
-  if (digits >= 3) return 48;
+  if (digits >= 4) return 35;
+  if (digits >= 3) return 45;
   return 58;
 }
 
 function patternToAge(count) {
-  if (count >= 9) return 18;
+  if (count >= 8) return 18;
   if (count >= 7) return 22;
   if (count >= 6) return 26;
   if (count >= 5) return 30;
-  if (count >= 4) return 38;
-  if (count >= 3) return 48;
+  if (count >= 4) return 35;
+  if (count >= 3) return 45;
   return 58;
 }
 
 function calcToAge(totalMs) {
   var sec = totalMs / 1000;
-  if (sec <= 12) return 18;
-  if (sec <= 18) return 22;
-  if (sec <= 25) return 26;
-  if (sec <= 32) return 30;
-  if (sec <= 40) return 38;
-  if (sec <= 55) return 48;
+  if (sec <= 15) return 18;
+  if (sec <= 22) return 22;
+  if (sec <= 30) return 26;
+  if (sec <= 38) return 30;
+  if (sec <= 48) return 38;
+  if (sec <= 60) return 48;
   return 58;
 }
 
@@ -765,50 +807,62 @@ document.getElementById("btnNumberStart").addEventListener("click", function() {
   showNumber();
 });
 
+var numpadAnswer = "";
+
 function showNumber() {
   var msg = document.getElementById("numberMsg");
   var display = document.getElementById("numberDisplay");
   var text = document.getElementById("numberText");
-  var input = document.getElementById("numberInput");
-  var btn = document.getElementById("btnNumberSubmit");
+  var answerEl = document.getElementById("numberAnswer");
+  var numpad = document.getElementById("numpad");
 
   currentNumber = "";
   for (var i = 0; i < numDigits; i++) {
     currentNumber += Math.floor(Math.random() * 10).toString();
   }
 
+  numpadAnswer = "";
   msg.textContent = numDigits + "桁の数字を覚えてください";
   text.textContent = currentNumber;
   display.style.display = "flex";
-  input.style.display = "none";
-  btn.style.display = "none";
-  input.value = "";
+  answerEl.style.display = "none";
+  numpad.style.display = "none";
+  answerEl.innerHTML = "&nbsp;";
 
   var showTime = 800 + (numDigits * 300);
   setTimeout(function() {
     display.style.display = "none";
-    input.style.display = "";
-    btn.style.display = "";
+    answerEl.style.display = "";
+    numpad.style.display = "";
     msg.textContent = numDigits + "桁の数字を入力してください";
-    input.focus();
   }, showTime);
 }
 
-document.getElementById("btnNumberSubmit").addEventListener("click", submitNumber);
-document.getElementById("numberInput").addEventListener("keydown", function(e) {
-  if (e.key === "Enter") submitNumber();
+document.getElementById("numpad").addEventListener("click", function(e) {
+  var btn = e.target.closest(".numpad-btn");
+  if (!btn) return;
+  var val = btn.getAttribute("data-num");
+  var answerEl = document.getElementById("numberAnswer");
+
+  if (val === "del") {
+    numpadAnswer = numpadAnswer.slice(0, -1);
+  } else if (val === "ok") {
+    submitNumber();
+    return;
+  } else {
+    numpadAnswer += val;
+  }
+  answerEl.textContent = numpadAnswer || "\u00a0";
 });
 
 function submitNumber() {
-  var input = document.getElementById("numberInput");
-  var answer = input.value.trim();
   var msg = document.getElementById("numberMsg");
 
-  if (answer === currentNumber) {
+  if (numpadAnswer === currentNumber) {
     numCorrectStreak = numDigits;
     numDigits++;
     msg.textContent = "正解！次は" + numDigits + "桁";
-    input.value = "";
+    numpadAnswer = "";
     setTimeout(function() { showNumber(); }, 800);
   } else {
     results.number = numCorrectStreak;
@@ -882,7 +936,12 @@ document.querySelectorAll(".pattern-cell").forEach(function(cell) {
 
     var idx = parseInt(cell.dataset.idx);
     if (idx === patternSequence[patternInputIdx]) {
-      cell.classList.add("correct-lit");
+      if (cell.classList.contains("correct-lit")) {
+        cell.classList.remove("correct-lit");
+        cell.classList.add("correct-lit-2");
+      } else {
+        cell.classList.add("correct-lit");
+      }
       patternInputIdx++;
 
       if (patternInputIdx >= patternSequence.length) {
@@ -1066,7 +1125,8 @@ document.getElementById("btnRetry").addEventListener("click", function() {
 // ===== Share =====
 function getBrainAgeShareText() {
   var age = document.getElementById("resultAge").textContent;
-  return "AI 脳力チェックの結果は「" + age + "歳」でした！\nあなたの脳力は何歳レベル？\n\nhttps://www.hopesconsul.com/games/brain-age/";
+  var comment = document.getElementById("resultComment").textContent;
+  return "AI 脳力チェック｜脳年齢 " + age + "歳｜" + comment + "\n\nhttps://www.hopesconsul.com/games/brain-age/";
 }
 document.getElementById("btnShare").addEventListener("click", function() {
   var url = "https://x.com/intent/tweet?text=" + encodeURIComponent(getBrainAgeShareText());

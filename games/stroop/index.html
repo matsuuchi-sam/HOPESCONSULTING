@@ -14,6 +14,8 @@
 <meta property="og:description" content="脳の処理速度に挑戦！文字の『色』を素早く答えよう。">
 <meta property="og:url" content="https://www.hopesconsul.com/games/stroop/">
 <meta property="og:image" content="https://www.hopesconsul.com/games/stroop/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.hopesconsul.com/games/stroop/ogp.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,7 +62,7 @@ body {
   color: var(--color-text);
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
-  height: 100dvh;
+  min-height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -146,6 +148,7 @@ body::after {
   width: 100%;
   flex: 1;
   min-height: 0;
+  max-height: calc(100dvh - 100px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -622,21 +625,21 @@ function endGame() {
   } else if (accuracy < 80) {
     rank = "Beginner";
     comment = "惜しいミスがありますね。色だけに集中すると正解率が上がります！";
-  } else if (avg > 1000) {
-    rank = "Careful";
-    comment = "慎重派ですね。正確さはバッチリ！次は速度にもチャレンジしてみましょう。";
-  } else if (avg > 700) {
-    rank = "Intermediate";
-    comment = "平均的な速度です。ストループ効果に少し惑わされていますが、良い結果です！";
-  } else if (avg > 500) {
-    rank = "Advanced";
-    comment = "なかなか速い！脳の切り替え能力が高いです。500ms切りを目指してみましょう。";
-  } else if (accuracy >= 90 && avg <= 400) {
+  } else if (accuracy >= 90 && avg <= 500) {
     rank = "Legendary";
     comment = "驚異的な速度！ストループ効果をものともしない最高レベルの認知能力です。";
-  } else {
+  } else if (avg <= 600) {
     rank = "Expert";
     comment = "素晴らしい反応速度！文字の干渉をほぼ無視できています。トップクラスです。";
+  } else if (avg <= 800) {
+    rank = "Advanced";
+    comment = "なかなか速い！脳の切り替え能力が高いです。600ms切りを目指してみましょう。";
+  } else if (avg <= 1200) {
+    rank = "Intermediate";
+    comment = "平均的な速度です。ストループ効果に少し惑わされていますが、良い結果です！";
+  } else {
+    rank = "Careful";
+    comment = "慎重派ですね。正確さはバッチリ！次は速度にもチャレンジしてみましょう。";
   }
 
   // Save best
@@ -678,9 +681,11 @@ retryBtn.addEventListener("click", function() {
 
 // ===== Share =====
 function getStroopShareText() {
+  var rank = document.getElementById("resultRank").textContent;
   var accuracy = document.getElementById("resultScore").textContent;
   var avg = document.getElementById("resultAvgTime").textContent;
-  return "ストループテストで正解率 " + accuracy + "（平均 " + avg + "）を記録！\n文字の色を素早く答えられるかな？\n\nhttps://www.hopesconsul.com/games/stroop/";
+  var comment = document.getElementById("resultComment").textContent;
+  return "ストループテスト｜正解率 " + accuracy + "（平均 " + avg + "）｜" + rank + " - " + comment + "\n\nhttps://www.hopesconsul.com/games/stroop/";
 }
 shareBtn.addEventListener("click", function() {
   var url = "https://x.com/intent/tweet?text=" + encodeURIComponent(getStroopShareText());
