@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>AI 脳年齢テスト | ホープスコンサルティング</title>
-<meta name="description" content="4つのミニテストであなたの脳年齢を診断！反射神経・記憶力・計算力を測定して、AI時代の脳力をチェック。">
+<title>AI 脳力チェック | ホープスコンサルティング</title>
+<meta name="description" content="4つのミニテストであなたの脳力を診断！反射神経・記憶力・計算力を測定して、AI時代の脳力をチェック。">
 <link rel="icon" href="../../images/favicon.ico" sizes="any">
 <link rel="icon" href="../../images/favicon-48x48.png" type="image/png" sizes="48x48">
 <link rel="canonical" href="https://www.hopesconsul.com/games/brain-age/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="AI 脳年齢テスト | ホープスコンサルティング">
-<meta property="og:description" content="4つのミニテストであなたの脳年齢を診断！AI時代の脳力をチェック。">
+<meta property="og:title" content="AI 脳力チェック | ホープスコンサルティング">
+<meta property="og:description" content="4つのミニテストであなたの脳力を診断！AI時代の脳力をチェック。">
 <meta property="og:url" content="https://www.hopesconsul.com/games/brain-age/">
 <meta property="og:image" content="https://www.hopesconsul.com/images/ogp-games.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -59,7 +59,8 @@ body {
   color: var(--color-text);
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   -webkit-tap-highlight-color: transparent;
@@ -131,7 +132,7 @@ body::after {
 .bg-sprite-3 { bottom: 15%; right: 14%; opacity: 0.04; transform: scale(2.5) rotate(25deg); }
 
 .site-header {
-  padding: 1rem 2rem;
+  padding: 0.6rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -146,25 +147,27 @@ body::after {
 
 .main {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 1.5rem 3rem;
+  padding: 0.25rem 1.5rem 0.5rem;
   max-width: 500px;
   margin: 0 auto;
   width: 100%;
 }
 
-.game-title { font-family: var(--font-pixel); font-size: 1.3rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; letter-spacing: 0.05em; }
-.game-subtitle { font-family: var(--font-dot); color: var(--color-text-light); font-size: 0.85rem; text-align: center; margin-bottom: 1.5rem; }
+.game-title { font-family: var(--font-dot); font-size: 1.2rem; font-weight: 400; text-align: center; margin-bottom: 0.1rem; letter-spacing: 0.05em; -webkit-text-stroke: 0.5px currentColor; text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor; }
+.game-subtitle { font-family: var(--font-dot); color: var(--color-text-light); font-size: 0.8rem; text-align: center; margin-bottom: 0.5rem; }
 
 .game-area {
   background: var(--color-bg-warm);
-  padding: 2rem;
+  padding: 1.25rem;
   width: 100%;
   border: 3px solid var(--color-text);
   box-shadow: 6px 6px 0 rgba(217, 119, 87, 0.25);
-  min-height: 350px;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   clip-path: var(--clip-card);
@@ -204,7 +207,7 @@ body::after {
 .steps {
   display: flex;
   gap: 0.4rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
   justify-content: center;
 }
 .step {
@@ -218,36 +221,38 @@ body::after {
 .step.active { background: var(--color-accent-light); }
 
 /* ===== Screen Commons ===== */
-.screen { display: none; flex-direction: column; align-items: center; text-align: center; flex: 1; justify-content: center; }
+.screen { display: none; flex-direction: column; align-items: center; text-align: center; flex: 1; min-height: 0; }
 .screen.active { display: flex; }
+.screen > :first-child { margin-top: auto; }
+.screen > :last-child { margin-bottom: auto; }
 
 .screen-label {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-accent);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .screen-title {
   font-family: var(--font-dot);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 400;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .screen-desc {
   font-family: var(--font-dot);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--color-text-light);
-  margin-bottom: 1.5rem;
-  line-height: 1.8;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
 }
 
 .btn-primary {
-  font-family: var(--font-dot); font-size: 0.95rem; font-weight: 400;
-  padding: 0.875rem 2.5rem; background: var(--color-accent); color: #fff;
+  font-family: var(--font-dot); font-size: 0.85rem; font-weight: 400;
+  padding: 0.65rem 1.75rem; background: var(--color-accent); color: #fff;
   border: none; cursor: pointer;
   transition: background 0.2s var(--ease-smooth); box-shadow: var(--shadow-sm);
   clip-path: var(--clip-btn);
@@ -256,7 +261,7 @@ body::after {
 
 .btn-secondary {
   font-family: var(--font-dot); font-size: 0.85rem; font-weight: 400;
-  padding: 0.75rem 2rem; background: transparent; color: var(--color-text);
+  padding: 0.65rem 1.75rem; background: transparent; color: var(--color-text);
   border: 2px solid var(--color-border);
   cursor: pointer; transition: all 0.2s var(--ease-smooth);
   clip-path: var(--clip-btn);
@@ -266,15 +271,15 @@ body::after {
 /* ===== Test Area ===== */
 .test-display {
   background: var(--color-bg);
-  padding: 2rem;
+  padding: 1.25rem;
   width: 100%;
-  min-height: 220px;
+  min-height: 160px;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 3px solid var(--color-text);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   cursor: pointer;
   transition: background 0.15s;
   clip-path: var(--clip-card);
@@ -285,9 +290,9 @@ body::after {
 .test-display.too-early { background: #dc2626; }
 
 .test-big-text {
-  font-family: var(--font-mono);
-  font-size: 3rem;
-  font-weight: 800;
+  font-family: var(--font-dot);
+  font-size: 2.5rem;
+  font-weight: 400;
   letter-spacing: 0.1em;
   color: var(--color-text);
 }
@@ -299,21 +304,21 @@ body::after {
 
 .test-message {
   font-family: var(--font-dot);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--color-text-light);
-  margin-bottom: 1rem;
-  min-height: 1.5rem;
+  margin-bottom: 0.5rem;
+  min-height: 1.3rem;
 }
 
 /* ===== Number Input ===== */
 .number-input {
-  font-family: var(--font-mono);
-  font-size: 1.5rem;
+  font-family: var(--font-dot);
+  font-size: 1.3rem;
   font-weight: 700;
   text-align: center;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.75rem;
   width: 100%;
-  max-width: 250px;
+  max-width: 220px;
   border: 3px solid var(--color-text);
   background: #fff;
   color: var(--color-text);
@@ -326,10 +331,10 @@ body::after {
 .pattern-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
+  gap: 0.5rem;
   width: 100%;
-  max-width: 240px;
-  margin: 0 auto 1rem;
+  max-width: 200px;
+  margin: 0 auto 0.5rem;
 }
 
 .pattern-cell {
@@ -349,17 +354,17 @@ body::after {
 .calc-choices {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.6rem;
+  gap: 0.5rem;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .calc-btn {
-  font-family: var(--font-mono);
-  font-size: 1.3rem;
-  font-weight: 700;
-  padding: 0.875rem;
-  min-height: 54px;
+  font-family: var(--font-dot);
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding: 0.7rem;
+  min-height: 48px;
   border: 3px solid var(--color-border);
   background: #fff;
   cursor: pointer;
@@ -373,68 +378,87 @@ body::after {
 
 /* ===== Result ===== */
 .result-age {
-  font-family: var(--font-mono);
-  font-size: 5rem;
-  font-weight: 800;
+  font-family: var(--font-dot);
+  font-size: 3rem;
+  font-weight: 400;
   color: var(--color-accent);
   line-height: 1;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.1rem;
 }
 .result-age-unit {
   font-family: var(--font-dot);
-  font-size: 1.1rem;
+  font-size: 0.85rem;
   color: var(--color-text-light);
   font-weight: 400;
-  margin-bottom: 1rem;
+  margin-bottom: 0.4rem;
 }
 .result-comment {
   font-family: var(--font-dot);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--color-text);
-  margin-bottom: 1.5rem;
-  padding: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.7rem;
   background: var(--color-bg);
-  line-height: 1.8;
+  line-height: 1.5;
   border: 2px solid var(--color-border);
   clip-path: var(--clip-btn);
 }
 .result-breakdown {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.6rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 .breakdown-item {
   background: var(--color-bg);
-  padding: 0.75rem;
+  padding: 0.4rem 0.25rem;
   text-align: center;
   border: 2px solid var(--color-border);
   clip-path: var(--clip-btn);
 }
-.breakdown-label { font-family: var(--font-dot); font-size: 0.7rem; color: var(--color-text-muted); font-weight: 400; }
-.breakdown-value { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; }
-.breakdown-age { font-size: 0.75rem; color: var(--color-accent); font-weight: 600; }
+.breakdown-label { font-family: var(--font-dot); font-size: 0.6rem; color: var(--color-text-muted); font-weight: 400; }
+.breakdown-value { font-family: var(--font-dot); font-size: 0.9rem; font-weight: 400; }
+.breakdown-age { font-size: 0.65rem; color: var(--color-accent); font-weight: 600; }
 
-.result-best { font-family: var(--font-dot); font-size: 0.8rem; color: var(--color-text-light); margin-bottom: 1.5rem; }
-.result-best strong { color: var(--color-accent); font-family: var(--font-mono); }
-.new-record { display: inline-block; background: var(--color-accent); color: #fff; font-family: var(--font-pixel); font-size: 0.55rem; font-weight: 700; padding: 0.15rem 0.5rem; margin-left: 0.4rem; vertical-align: middle; clip-path: var(--clip-btn); }
+.result-best { font-family: var(--font-dot); font-size: 0.75rem; color: var(--color-text-light); margin-bottom: 0.5rem; }
+.result-best strong { color: var(--color-accent); font-family: var(--font-dot); }
+.new-record { display: inline-block; background: var(--color-accent); color: #fff; font-family: var(--font-pixel); font-size: 0.5rem; font-weight: 700; padding: 0.1rem 0.4rem; margin-left: 0.3rem; vertical-align: middle; clip-path: var(--clip-btn); }
 
-.result-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; width: 100%; }
+.result-actions { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%; }
 
-.site-footer { text-align: center; padding: 1.5rem; font-family: var(--font-pixel); font-size: 0.75rem; color: var(--color-text-muted); letter-spacing: 0.05em; }
+.site-footer { text-align: center; padding: 0.5rem; font-family: var(--font-pixel); font-size: 0.65rem; color: var(--color-text-muted); letter-spacing: 0.05em; }
 .site-footer a { color: var(--color-text-light); text-decoration: none; }
 .site-footer a:hover { color: var(--color-accent); }
 
 @media (max-width: 600px) {
-  .site-header { padding: 0.75rem 1rem; }
-  .main { padding: 0.75rem 1rem 2rem; }
-  .game-title { font-size: 1.35rem; }
-  .game-area { padding: 1.25rem; min-height: 300px; }
-  .test-big-text { font-size: 2.5rem; }
-  .result-age { font-size: 4rem; }
-  .result-actions { flex-direction: column; }
-  .btn-primary, .btn-secondary { width: 100%; }
+  .site-header { padding: 0.4rem 0.75rem; }
+  .main { padding: 0.15rem 0.5rem 0.25rem; }
+  .game-title { font-size: 1rem; margin-bottom: 0; }
+  .game-subtitle { font-size: 0.65rem; margin-bottom: 0.25rem; }
+  .game-area { padding: 0.75rem; }
+  .steps { margin-bottom: 0.4rem; }
+  .screen-label { font-size: 0.55rem; }
+  .screen-title { font-size: 0.9rem; margin-bottom: 0.25rem; }
+  .screen-desc { font-size: 0.7rem; margin-bottom: 0.4rem; }
+  .test-display { padding: 0.75rem; min-height: 120px; margin-bottom: 0.4rem; }
+  .test-big-text { font-size: 2rem; }
+  .test-message { font-size: 0.7rem; margin-bottom: 0.35rem; }
+  .number-input { font-size: 1.1rem; padding: 0.45rem 0.6rem; max-width: 170px; }
+  .pattern-grid { gap: 0.35rem; max-width: 160px; margin-bottom: 0.4rem; }
+  .calc-choices { gap: 0.35rem; margin-bottom: 0.4rem; }
+  .calc-btn { font-size: 1rem; padding: 0.55rem; min-height: 42px; }
+  .result-age { font-size: 2.5rem; }
+  .result-age-unit { font-size: 0.75rem; margin-bottom: 0.25rem; }
+  .result-comment { font-size: 0.7rem; padding: 0.4rem 0.5rem; margin-bottom: 0.35rem; }
+  .breakdown-item { padding: 0.3rem 0.2rem; }
+  .breakdown-label { font-size: 0.55rem; }
+  .breakdown-value { font-size: 0.8rem; }
+  .breakdown-age { font-size: 0.6rem; }
+  .result-best { font-size: 0.65rem; margin-bottom: 0.35rem; }
+  .result-actions { flex-direction: row; gap: 0.4rem; }
+  .btn-primary, .btn-secondary { font-size: 0.75rem; padding: 0.5rem 1.2rem; }
+  .site-footer { padding: 0.3rem; font-size: 0.6rem; }
 }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -453,8 +477,8 @@ body::after {
 </header>
 
 <main class="main">
-  <h1 class="game-title">AI 脳年齢テスト</h1>
-  <p class="game-subtitle">4つのテストであなたの脳年齢を診断</p>
+  <h1 class="game-title">AI 脳力チェック</h1>
+  <p class="game-subtitle">4つのテストであなたの脳力を診断</p>
 
   <div class="game-area">
     <span class="screw screw-tl" aria-hidden="true"></span>
@@ -472,7 +496,7 @@ body::after {
     <!-- ===== Start Screen ===== -->
     <div class="screen active" id="screenStart">
       <div class="screen-label">Brain Age Test</div>
-      <div class="screen-title">あなたの脳年齢は何歳？</div>
+      <div class="screen-title">あなたの脳力は何歳レベル？</div>
       <div class="screen-desc">
         4つのミニテストで<br>反射神経・記憶力・計算力を測定します。<br>所要時間は約2分です。
       </div>
@@ -563,13 +587,15 @@ body::after {
       <div class="result-actions">
         <button class="btn-primary" id="btnRetry">もう一度</button>
         <button class="btn-secondary" id="btnShare">X でシェア</button>
+        <button class="btn-secondary" id="btnCopy">結果をコピー</button>
       </div>
     </div>
   </div>
 </main>
 
 <footer class="site-footer">
-  <a href="../../">Hopes Consulting Inc.</a> &copy; 2026
+  <a href="../../">Hopes Consulting Inc.</a> &copy; 2026<br>
+  当サイトオリジナルのミニゲームです
 </footer>
 
 <script>
@@ -590,45 +616,45 @@ function updateSteps(current) {
 
 // ===== Score to Age Mapping =====
 function reactionToAge(ms) {
-  if (ms <= 200) return 18;
-  if (ms <= 250) return 22;
-  if (ms <= 300) return 28;
-  if (ms <= 350) return 33;
-  if (ms <= 400) return 40;
-  if (ms <= 500) return 50;
-  if (ms <= 600) return 58;
-  return 65;
+  if (ms <= 220) return 18;
+  if (ms <= 280) return 22;
+  if (ms <= 340) return 26;
+  if (ms <= 400) return 30;
+  if (ms <= 460) return 35;
+  if (ms <= 550) return 42;
+  if (ms <= 700) return 50;
+  return 58;
 }
 
 function numberToAge(digits) {
   if (digits >= 9) return 18;
-  if (digits >= 8) return 22;
-  if (digits >= 7) return 28;
-  if (digits >= 6) return 35;
-  if (digits >= 5) return 42;
-  if (digits >= 4) return 52;
-  return 60;
+  if (digits >= 7) return 22;
+  if (digits >= 6) return 26;
+  if (digits >= 5) return 30;
+  if (digits >= 4) return 38;
+  if (digits >= 3) return 48;
+  return 58;
 }
 
 function patternToAge(count) {
   if (count >= 9) return 18;
-  if (count >= 8) return 22;
-  if (count >= 7) return 28;
-  if (count >= 6) return 35;
-  if (count >= 5) return 42;
-  if (count >= 4) return 52;
-  return 60;
+  if (count >= 7) return 22;
+  if (count >= 6) return 26;
+  if (count >= 5) return 30;
+  if (count >= 4) return 38;
+  if (count >= 3) return 48;
+  return 58;
 }
 
 function calcToAge(totalMs) {
   var sec = totalMs / 1000;
   if (sec <= 12) return 18;
-  if (sec <= 15) return 22;
-  if (sec <= 20) return 28;
-  if (sec <= 25) return 35;
-  if (sec <= 30) return 42;
-  if (sec <= 40) return 52;
-  return 60;
+  if (sec <= 18) return 22;
+  if (sec <= 25) return 26;
+  if (sec <= 32) return 30;
+  if (sec <= 40) return 38;
+  if (sec <= 55) return 48;
+  return 58;
 }
 
 // ===== Game State =====
@@ -1000,7 +1026,7 @@ function showResult() {
     div.className = "breakdown-item";
     div.innerHTML = '<div class="breakdown-label">' + item.label + '</div>' +
       '<div class="breakdown-value">' + item.value + '</div>' +
-      '<div class="breakdown-age">脳年齢 ' + item.age + '歳</div>';
+      '<div class="breakdown-age">脳力年齢' + item.age + '歳</div>';
     breakdown.appendChild(div);
   });
 
@@ -1037,11 +1063,20 @@ document.getElementById("btnRetry").addEventListener("click", function() {
 });
 
 // ===== Share =====
-document.getElementById("btnShare").addEventListener("click", function() {
+function getBrainAgeShareText() {
   var age = document.getElementById("resultAge").textContent;
-  var text = "AI 脳年齢テストの結果は「" + age + "歳」でした！\nあなたの脳年齢は何歳？\n\nhttps://www.hopesconsul.com/games/brain-age/";
-  var url = "https://x.com/intent/tweet?text=" + encodeURIComponent(text);
+  return "AI 脳力チェックの結果は「" + age + "歳」でした！\nあなたの脳力は何歳レベル？\n\nhttps://www.hopesconsul.com/games/brain-age/";
+}
+document.getElementById("btnShare").addEventListener("click", function() {
+  var url = "https://x.com/intent/tweet?text=" + encodeURIComponent(getBrainAgeShareText());
   window.open(url, "_blank", "width=550,height=420");
+});
+document.getElementById("btnCopy").addEventListener("click", function() {
+  var btn = this;
+  navigator.clipboard.writeText(getBrainAgeShareText()).then(function() {
+    btn.textContent = "コピーしました！";
+    setTimeout(function() { btn.textContent = "結果をコピー"; }, 1500);
+  });
 });
 </script>
 </body>

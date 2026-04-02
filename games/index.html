@@ -38,11 +38,6 @@ html { -webkit-text-size-adjust: 100%; }
   --font-body: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
   --font-dot: "DotGothic16", "Noto Sans JP", sans-serif;
   --font-pixel: "Silkscreen", cursive;
-  --radius-lg: 10px;
-  --radius-xl: 14px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
-  --shadow-lg: 0 10px 20px rgba(0,0,0,0.06), 0 4px 8px rgba(0,0,0,0.03);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --px: 4px;
 }
@@ -57,12 +52,10 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* ドットグリッド背景 */
   background-image: radial-gradient(circle, rgba(20,20,19,0.12) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-/* CRTビネット — 四隅がほんのり暗い */
 body::after {
   content: '';
   position: fixed;
@@ -72,8 +65,26 @@ body::after {
   z-index: 100;
 }
 
+/* ===== Mascot Robot ===== */
+.mascot-track {
+  position: relative;
+  max-width: 900px;
+  margin: 0.75rem auto 0.5rem;
+  width: 100%;
+  height: 26px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.mascot {
+  position: absolute;
+  bottom: 0;
+  width: 16px;
+  height: 24px;
+  image-rendering: pixelated;
+}
+
 .site-header {
-  padding: 1rem 2rem;
+  padding: 0.6rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -90,7 +101,7 @@ body::after {
   flex: 1;
   max-width: 900px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 0.5rem 1.5rem 1.5rem;
   width: 100%;
 }
 
@@ -107,15 +118,111 @@ body::after {
   color: var(--color-text-light);
   font-size: 0.85rem;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.25rem;
   font-family: var(--font-dot);
 }
 
 /* ===== Game Cards ===== */
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+/* ===== PC Slider (768px+) ===== */
+@media (min-width: 768px) {
+  .game-grid {
+    display: flex;
+    overflow: hidden;
+    gap: 0;
+    position: relative;
+  }
+  .game-card {
+    min-width: 100%;
+    flex-shrink: 0;
+    max-width: 520px;
+    margin: 0 auto;
+    transition: transform 0.4s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth), border-color 0.25s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
+    animation: none !important;
+  }
+  .slider-wrapper {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 60px;
+  }
+  .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: var(--color-bg-warm);
+    border: 3px solid rgba(20, 20, 19, 0.25);
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-pixel);
+    font-size: 1.2rem;
+    color: rgba(20, 20, 19, 0.4);
+    transition: opacity 0.3s, transform 0.3s, border-color 0.2s, color 0.2s;
+    clip-path: polygon(
+      0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0,
+      calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px),
+      calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+  }
+  .slider-arrow:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .slider-arrow-left { left: 6px; }
+  .slider-arrow-right { right: 6px; }
+  .slider-arrow.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .slider-arrow-left.hidden { transform: translateY(-50%) translateX(-10px); }
+  .slider-arrow-right.hidden { transform: translateY(-50%) translateX(10px); }
+
+  /* Dot indicators */
+  .slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+  .slider-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--color-text-muted);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0, calc(100% - 2px) 0,
+      calc(100% - 2px) 2px, 100% 2px, 100% calc(100% - 2px),
+      calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    padding: 0;
+  }
+  .slider-dot.active {
+    background: var(--color-accent);
+    transform: scale(1.3);
+  }
+  .slider-dot:hover:not(.active) {
+    background: var(--color-text-light);
+  }
+}
+
+/* Hide slider controls on mobile */
+@media (max-width: 767px) {
+  .slider-arrow, .slider-dots { display: none !important; }
 }
 
 .game-card {
@@ -123,13 +230,12 @@ body::after {
   padding: 0;
   border: 3px solid var(--color-text);
   box-shadow: 6px 6px 0 rgba(20, 20, 19, 0.10);
-  transition: box-shadow 0.2s var(--ease-smooth), border-color 0.2s var(--ease-smooth);
+  transition: box-shadow 0.25s var(--ease-smooth), border-color 0.25s var(--ease-smooth), transform 0.25s var(--ease-smooth);
   text-decoration: none;
   color: inherit;
   display: block;
   position: relative;
   overflow: hidden;
-  /* ピクセルステップ角 */
   clip-path: polygon(
     0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0,
     calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
@@ -139,14 +245,16 @@ body::after {
     calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px),
     4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px)
   );
+  animation: cardBreathe 4s ease-in-out infinite;
+  animation-delay: var(--breathe-delay, 0s);
 }
 
-.game-card:hover {
-  border-color: var(--color-accent);
-  box-shadow: 8px 8px 0 rgba(217, 119, 87, 0.15);
+@keyframes cardBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.008); }
 }
 
-/* CRTスキャンラインオーバーレイ */
+/* CRT scanline overlay */
 .game-card::after {
   content: '';
   position: absolute;
@@ -162,11 +270,59 @@ body::after {
   z-index: 2;
 }
 
-.card-inner {
-  padding: 1.75rem 2rem 2rem;
+/* CRT power-on flash overlay */
+.game-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0);
+  pointer-events: none;
+  z-index: 3;
+  transition: background 0.1s;
 }
 
-/* STAGEラベル — アーケードのステージ選択風 */
+/* Hover: CRT power-on */
+.game-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 8px 8px 0 rgba(217, 119, 87, 0.18);
+  animation: none;
+}
+@media (max-width: 767px) {
+  .game-card:hover { transform: translateY(-2px); }
+}
+
+.game-card:hover::before {
+  animation: crtFlash 0.4s ease-out forwards;
+}
+
+@keyframes crtFlash {
+  0% { background: rgba(255,255,255,0.35); }
+  30% { background: rgba(255,255,255,0.08); }
+  60% { background: rgba(255,255,255,0.15); }
+  100% { background: rgba(255,255,255,0); }
+}
+
+/* Touch flash for mobile */
+.game-card.tapped::before {
+  animation: crtFlash 0.35s ease-out forwards;
+}
+
+/* ===== Mini Canvas (animated sprite area) ===== */
+.card-canvas {
+  display: block;
+  width: 100%;
+  height: 44px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: #1a1a2e;
+  border-bottom: 2px solid rgba(20,20,19,0.15);
+}
+
+.card-inner {
+  padding: 1rem 1.5rem 1.15rem;
+}
+
+/* STAGE label */
 .card-stage {
   font-family: var(--font-pixel);
   font-size: 0.6rem;
@@ -177,161 +333,43 @@ body::after {
   color: var(--color-bg-warm);
   padding: 0.25rem 0.7rem;
   display: inline-block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s;
 }
 
-/* ===== ピクセルスプライト（CSSボックスシャドウ） ===== */
-.card-sprite {
+.game-card:hover .card-stage {
+  background: var(--color-accent);
+  animation: stageBlink 0.6s ease-in-out 2;
+}
+
+@keyframes stageBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Pixel select cursor */
+.card-cursor {
   position: absolute;
-  top: 1.5rem;
-  right: 6.5rem;
-  width: var(--px);
-  height: var(--px);
-  opacity: 0.07;
-  z-index: 1;
-  transform: scale(2.5);
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-pixel);
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 5;
+  pointer-events: none;
 }
 
-/* タイピング — ピクセルモニター/ターミナル */
-.sprite-typing {
-  box-shadow:
-    /* モニター外枠 上 */
-    4px 0 0 var(--color-accent),
-    8px 0 0 var(--color-accent),
-    12px 0 0 var(--color-accent),
-    16px 0 0 var(--color-accent),
-    20px 0 0 var(--color-accent),
-    24px 0 0 var(--color-accent),
-    28px 0 0 var(--color-accent),
-    /* 左右枠 */
-    0px 4px 0 var(--color-accent),
-    32px 4px 0 var(--color-accent),
-    0px 8px 0 var(--color-accent),
-    32px 8px 0 var(--color-accent),
-    0px 12px 0 var(--color-accent),
-    32px 12px 0 var(--color-accent),
-    0px 16px 0 var(--color-accent),
-    32px 16px 0 var(--color-accent),
-    0px 20px 0 var(--color-accent),
-    32px 20px 0 var(--color-accent),
-    /* モニター外枠 下 */
-    4px 24px 0 var(--color-accent),
-    8px 24px 0 var(--color-accent),
-    12px 24px 0 var(--color-accent),
-    16px 24px 0 var(--color-accent),
-    20px 24px 0 var(--color-accent),
-    24px 24px 0 var(--color-accent),
-    28px 24px 0 var(--color-accent),
-    /* 画面内テキスト行 */
-    8px 8px 0 var(--color-accent),
-    12px 8px 0 var(--color-accent),
-    16px 8px 0 var(--color-accent),
-    8px 12px 0 var(--color-accent),
-    12px 12px 0 var(--color-accent),
-    16px 12px 0 var(--color-accent),
-    20px 12px 0 var(--color-accent),
-    8px 16px 0 var(--color-accent),
-    12px 16px 0 var(--color-accent),
-    /* カーソル点滅風 */
-    20px 16px 0 var(--color-accent),
-    /* スタンド */
-    14px 28px 0 var(--color-accent),
-    18px 28px 0 var(--color-accent),
-    10px 32px 0 var(--color-accent),
-    14px 32px 0 var(--color-accent),
-    18px 32px 0 var(--color-accent),
-    22px 32px 0 var(--color-accent);
+.game-card:hover .card-cursor {
+  opacity: 1;
+  animation: cursorBlink 0.5s step-end infinite;
 }
 
-/* ストループ — カラフルなピクセルドット（色が混ざるイメージ） */
-.sprite-stroop {
-  --c-red: #c0392b;
-  --c-blue: #2980b9;
-  --c-green: #27ae60;
-  --c-yellow: #f39c12;
-  box-shadow:
-    /* 散らばったカラードット — 色の混乱を表現 */
-    8px 0 0 var(--c-red),
-    12px 0 0 var(--c-red),
-    20px 4px 0 var(--c-blue),
-    24px 4px 0 var(--c-blue),
-    4px 8px 0 var(--c-green),
-    8px 8px 0 var(--c-green),
-    16px 8px 0 var(--c-yellow),
-    28px 8px 0 var(--c-red),
-    0 12px 0 var(--c-blue),
-    12px 12px 0 var(--c-red),
-    20px 12px 0 var(--c-green),
-    24px 12px 0 var(--c-blue),
-    8px 16px 0 var(--c-yellow),
-    16px 16px 0 var(--c-blue),
-    28px 16px 0 var(--c-green),
-    4px 20px 0 var(--c-red),
-    12px 20px 0 var(--c-green),
-    20px 20px 0 var(--c-yellow),
-    24px 20px 0 var(--c-red),
-    0 24px 0 var(--c-yellow),
-    8px 24px 0 var(--c-blue),
-    16px 24px 0 var(--c-green),
-    28px 24px 0 var(--c-yellow),
-    4px 28px 0 var(--c-green),
-    20px 28px 0 var(--c-blue),
-    12px 28px 0 var(--c-yellow),
-    24px 28px 0 var(--c-red);
-}
-
-/* 脳年齢 — 横顔+脳みそ */
-.sprite-brain {
-  box-shadow:
-    /* y=0: ドーム */
-    12px 0 0 var(--color-accent), 16px 0 0 var(--color-accent),
-    20px 0 0 var(--color-accent), 24px 0 0 var(--color-accent),
-    28px 0 0 var(--color-accent), 32px 0 0 var(--color-accent),
-    36px 0 0 var(--color-accent),
-    /* y=4: ドーム（ベタ） */
-    8px 4px 0 var(--color-accent), 12px 4px 0 var(--color-accent),
-    16px 4px 0 var(--color-accent), 20px 4px 0 var(--color-accent),
-    24px 4px 0 var(--color-accent), 28px 4px 0 var(--color-accent),
-    32px 4px 0 var(--color-accent), 36px 4px 0 var(--color-accent),
-    40px 4px 0 var(--color-accent),
-    /* y=8: しわA — 16,28を抜く */
-    4px 8px 0 var(--color-accent), 8px 8px 0 var(--color-accent),
-    12px 8px 0 var(--color-accent),
-    20px 8px 0 var(--color-accent), 24px 8px 0 var(--color-accent),
-    32px 8px 0 var(--color-accent), 36px 8px 0 var(--color-accent),
-    40px 8px 0 var(--color-accent), 44px 8px 0 var(--color-accent),
-    /* y=12: ベタ塗り */
-    0 12px 0 var(--color-accent), 4px 12px 0 var(--color-accent),
-    8px 12px 0 var(--color-accent), 12px 12px 0 var(--color-accent),
-    16px 12px 0 var(--color-accent), 20px 12px 0 var(--color-accent),
-    24px 12px 0 var(--color-accent), 28px 12px 0 var(--color-accent),
-    32px 12px 0 var(--color-accent), 36px 12px 0 var(--color-accent),
-    40px 12px 0 var(--color-accent), 44px 12px 0 var(--color-accent),
-    /* y=16: しわB上段 — 12,24,36を抜く */
-    0 16px 0 var(--color-accent), 4px 16px 0 var(--color-accent),
-    8px 16px 0 var(--color-accent),
-    16px 16px 0 var(--color-accent), 20px 16px 0 var(--color-accent),
-    28px 16px 0 var(--color-accent), 32px 16px 0 var(--color-accent),
-    40px 16px 0 var(--color-accent), 44px 16px 0 var(--color-accent),
-    /* y=20: しわB下段 — 8,20,32を抜く（ずれ） */
-    0 20px 0 var(--color-accent), 4px 20px 0 var(--color-accent),
-    12px 20px 0 var(--color-accent), 16px 20px 0 var(--color-accent),
-    24px 20px 0 var(--color-accent), 28px 20px 0 var(--color-accent),
-    36px 20px 0 var(--color-accent), 40px 20px 0 var(--color-accent),
-    /* y=24: しわC — 16,28を抜く */
-    4px 24px 0 var(--color-accent), 8px 24px 0 var(--color-accent),
-    12px 24px 0 var(--color-accent),
-    20px 24px 0 var(--color-accent), 24px 24px 0 var(--color-accent),
-    32px 24px 0 var(--color-accent), 36px 24px 0 var(--color-accent),
-    /* y=28: 底 + 小脳 */
-    8px 28px 0 var(--color-accent), 12px 28px 0 var(--color-accent),
-    16px 28px 0 var(--color-accent), 20px 28px 0 var(--color-accent),
-    24px 28px 0 var(--color-accent),
-    36px 28px 0 var(--color-accent), 40px 28px 0 var(--color-accent),
-    /* y=32: 脳幹 */
-    32px 32px 0 var(--color-accent), 36px 32px 0 var(--color-accent),
-    /* y=36 */
-    32px 36px 0 var(--color-accent);
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .card-title {
@@ -339,14 +377,17 @@ body::after {
   font-size: 1.1rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
+  color: #3a3a39;
+  -webkit-text-stroke: 0.5px currentColor;
+  text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
 }
 
 .card-desc {
   font-family: var(--font-dot);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--color-text-light);
-  line-height: 1.8;
-  margin-bottom: 1rem;
+  line-height: 1.65;
+  margin-bottom: 0.65rem;
 }
 
 .card-tags {
@@ -370,14 +411,9 @@ body::after {
   color: var(--color-accent);
 }
 
-/* ===== ホバー時のセレクトカーソル（アーケード風） ===== */
-.game-card:hover .card-stage {
-  background: var(--color-accent);
-}
-
 .site-footer {
   text-align: center;
-  padding: 1.5rem;
+  padding: 0.75rem;
   font-family: var(--font-pixel);
   font-size: 0.75rem;
   color: var(--color-text-muted);
@@ -386,13 +422,29 @@ body::after {
 .site-footer a { color: var(--color-text-light); text-decoration: none; transition: color 0.2s; }
 .site-footer a:hover { color: var(--color-accent); }
 
+/* PC slider: bigger canvas + centered layout */
+@media (min-width: 768px) {
+  .card-canvas { height: 72px; }
+  .card-cursor { top: calc(50% + 10px); }
+  .card-inner { padding: 1.25rem 1.75rem 1.35rem; }
+  .card-title { font-size: 1.25rem; }
+  .card-desc { font-size: 0.85rem; line-height: 1.7; }
+  .main { max-width: 800px; padding-top: 1.5rem; }
+  .slider-wrapper { margin-top: 0.75rem; }
+}
+
 @media (max-width: 600px) {
   .site-header { padding: 0.75rem 1rem; }
-  .main { padding: 1.5rem 1rem 3rem; }
+  .main { padding: 0.5rem 1rem 1.5rem; }
   .page-title { font-size: 1.1rem; }
   .game-grid { grid-template-columns: 1fr; }
-  .card-inner { padding: 1.5rem; }
-  .card-sprite { opacity: 0.12; }
+  .card-inner { padding: 1.25rem; }
+  .mascot-track { height: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-card { animation: none; }
+  .game-card:hover { transform: none; }
 }
 </style>
 </head>
@@ -407,56 +459,503 @@ body::after {
   <h1 class="page-title">- SELECT YOUR GAME -</h1>
   <p class="page-subtitle">遊びながらスキルチェック。データはすべてブラウザ内で完結します。</p>
 
-  <div class="game-grid">
+  <!-- Mascot robot walking -->
+  <div class="mascot-track">
+    <canvas class="mascot" id="mascotCanvas" width="16" height="24"></canvas>
+  </div>
 
-    <a href="typing/" class="game-card">
-      <div class="card-sprite sprite-typing" aria-hidden="true"></div>
-      <div class="card-inner">
-        <div class="card-stage">Typing</div>
-        <h2 class="card-title">IT タイピングスピードテスト</h2>
-        <p class="card-desc">IT・ビジネス用語でタイピング速度を測定。30秒・60秒・120秒モード対応。自己ベストに挑戦しよう。</p>
-        <div class="card-tags">
-          <span class="card-tag">PC向け</span>
-          <span class="card-tag">タイピング</span>
-          <span class="card-tag">スコア記録</span>
+  <div class="slider-wrapper">
+    <button class="slider-arrow slider-arrow-left hidden" id="sliderPrev" aria-label="前のゲーム">&#9664;</button>
+    <button class="slider-arrow slider-arrow-right" id="sliderNext" aria-label="次のゲーム">&#9654;</button>
+    <div class="game-grid" id="gameSlider">
+
+      <a href="typing/" class="game-card" style="--breathe-delay:0s" data-game="typing">
+        <canvas class="card-canvas" data-scene="typing"></canvas>
+        <span class="card-cursor" aria-hidden="true">&#9654;</span>
+        <div class="card-inner">
+          <div class="card-stage">Typing</div>
+          <h2 class="card-title">IT タイピングスピードテスト</h2>
+          <p class="card-desc">IT・ビジネス用語でタイピング速度を測定。30秒・60秒・120秒モード対応。自己ベストに挑戦しよう。</p>
+          <div class="card-tags">
+            <span class="card-tag">PC向け</span>
+            <span class="card-tag">タイピング</span>
+            <span class="card-tag">スコア記録</span>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
-    <a href="stroop/" class="game-card">
-      <div class="card-sprite sprite-stroop" aria-hidden="true"></div>
-      <div class="card-inner">
-        <div class="card-stage">Color</div>
-        <h2 class="card-title">ストループテスト</h2>
-        <p class="card-desc">「赤」が青色で表示される...正しい色をタップできるか？脳の処理速度に挑戦。スマホ対応。</p>
-        <div class="card-tags">
-          <span class="card-tag accent">スマホ対応</span>
-          <span class="card-tag">脳トレ</span>
-          <span class="card-tag">20問</span>
+      <a href="stroop/" class="game-card" style="--breathe-delay:1s" data-game="stroop">
+        <canvas class="card-canvas" data-scene="stroop"></canvas>
+        <span class="card-cursor" aria-hidden="true">&#9654;</span>
+        <div class="card-inner">
+          <div class="card-stage">Color</div>
+          <h2 class="card-title">ストループテスト</h2>
+          <p class="card-desc">「赤」が青色で表示される...正しい色をタップできるか？脳の処理速度に挑戦。スマホ対応。</p>
+          <div class="card-tags">
+            <span class="card-tag accent">スマホ対応</span>
+            <span class="card-tag">脳トレ</span>
+            <span class="card-tag">20問</span>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
-    <a href="brain-age/" class="game-card">
-      <div class="card-sprite sprite-brain" aria-hidden="true"></div>
-      <div class="card-inner">
-        <div class="card-stage">Brain</div>
-        <h2 class="card-title">AI 脳年齢テスト</h2>
-        <p class="card-desc">反射神経・数字記憶・パターン記憶・計算力の4つのテストで脳年齢を診断。スマホ対応。</p>
-        <div class="card-tags">
-          <span class="card-tag accent">スマホ対応</span>
-          <span class="card-tag">脳トレ</span>
-          <span class="card-tag">約2分</span>
+      <a href="brain-age/" class="game-card" style="--breathe-delay:2s" data-game="brain">
+        <canvas class="card-canvas" data-scene="brain"></canvas>
+        <span class="card-cursor" aria-hidden="true">&#9654;</span>
+        <div class="card-inner">
+          <div class="card-stage">Brain</div>
+          <h2 class="card-title">AI 脳力チェック</h2>
+          <p class="card-desc">反射神経・数字記憶・パターン記憶・計算力の4つのテストで脳力を診断。スマホ対応。</p>
+          <div class="card-tags">
+            <span class="card-tag accent">スマホ対応</span>
+            <span class="card-tag">脳トレ</span>
+            <span class="card-tag">約2分</span>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
+      <a href="dodge/" class="game-card" style="--breathe-delay:3s" data-game="dodge">
+        <canvas class="card-canvas" data-scene="dodge"></canvas>
+        <span class="card-cursor" aria-hidden="true">&#9654;</span>
+        <div class="card-inner">
+          <div class="card-stage">Dodge</div>
+          <h2 class="card-title">デジタルサバイバー</h2>
+          <p class="card-desc">迫りくるバグ・ウイルス・スパムを避けて生き残れ！アイテムを拾い、AI無敵モードで逆襲だ。</p>
+          <div class="card-tags">
+            <span class="card-tag accent">スマホ対応</span>
+            <span class="card-tag">アクション</span>
+            <span class="card-tag">エンドレス</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="slider-dots" id="sliderDots">
+      <button class="slider-dot active" data-index="0" aria-label="ゲーム1"></button>
+      <button class="slider-dot" data-index="1" aria-label="ゲーム2"></button>
+      <button class="slider-dot" data-index="2" aria-label="ゲーム3"></button>
+      <button class="slider-dot" data-index="3" aria-label="ゲーム4"></button>
+    </div>
   </div>
 </main>
 
 <footer class="site-footer">
-  <a href="../">Hopes Consulting Inc.</a> &copy; 2026
+  <a href="../">Hopes Consulting Inc.</a> &copy; 2026<br>
+  当サイトオリジナルのミニゲームです
 </footer>
 
+<script>
+// ===== Pixel helper =====
+function px(ctx, x, y, w, h, c) {
+  ctx.fillStyle = c;
+  ctx.fillRect(Math.round(x), Math.round(y), w, h);
+}
+
+// ===== Mascot: suited robot walking =====
+(function() {
+  var mc = document.getElementById("mascotCanvas");
+  var mx = mc.getContext("2d");
+  var mPos = -20;
+  var mDir = 1;
+  var trackW = mc.parentElement.offsetWidth;
+
+  function drawMascot(x, frame) {
+    mx.clearRect(0, 0, 16, 24);
+    var f = Math.floor(frame / 12) % 2; // walk cycle
+    // Head
+    px(mx, 4, 0, 8, 4, "#a0a0a0");
+    px(mx, 5, 2, 2, 2, "#00f0ff"); // eye L
+    px(mx, 9, 2, 2, 2, "#00f0ff"); // eye R
+    // Body (suit)
+    px(mx, 3, 5, 10, 7, "#2c3e50");
+    px(mx, 6, 5, 4, 7, "#34495e");
+    px(mx, 7, 6, 2, 2, "#e74c3c"); // tie
+    px(mx, 7, 8, 2, 3, "#c0392b");
+    // Arms
+    px(mx, 1, 6, 2, 5, "#2c3e50");
+    px(mx, 13, 6, 2, 5, "#2c3e50");
+    px(mx, 1, 11, 2, 2, "#a0a0a0");
+    px(mx, 13, 11, 2, 2, "#a0a0a0");
+    // Legs (animated walk)
+    if (f === 0) {
+      px(mx, 4, 12, 3, 5, "#1a252f");
+      px(mx, 9, 12, 3, 5, "#1a252f");
+      px(mx, 3, 17, 4, 2, "#333");
+      px(mx, 9, 17, 4, 2, "#333");
+    } else {
+      px(mx, 5, 12, 3, 5, "#1a252f");
+      px(mx, 8, 12, 3, 5, "#1a252f");
+      px(mx, 4, 17, 4, 2, "#333");
+      px(mx, 8, 17, 4, 2, "#333");
+    }
+  }
+
+  var mFrame = 0;
+  function animMascot() {
+    trackW = mc.parentElement.offsetWidth;
+    var speed = 0.4;
+    mPos += speed * mDir;
+    if (mPos > trackW + 10) { mDir = -1; }
+    if (mPos < -20) { mDir = 1; }
+    mc.style.left = mPos + "px";
+    if (mDir < 0) {
+      mc.style.transform = "scaleX(-1)";
+    } else {
+      mc.style.transform = "scaleX(1)";
+    }
+    mFrame++;
+    drawMascot(0, mFrame);
+    requestAnimationFrame(animMascot);
+  }
+  animMascot();
+})();
+
+// ===== Card Mini Canvas Animations =====
+var canvases = document.querySelectorAll(".card-canvas");
+var scenes = {};
+
+canvases.forEach(function(c) {
+  var scene = c.dataset.scene;
+  var ctx = c.getContext("2d");
+  var ch = c.offsetHeight || 44;
+  c.width = c.offsetWidth;
+  c.height = ch;
+  scenes[scene] = { ctx: ctx, w: c.width, h: ch, data: {} };
+  initScene(scene);
+});
+
+function initScene(name) {
+  var s = scenes[name];
+  if (name === "typing") {
+    s.data.chars = [];
+    s.data.cursor = 0;
+    var words = "DX cloud API AI SaaS deploy agile scrum sprint React".split(" ");
+    s.data.text = words.join("  ");
+    s.data.pos = 0;
+  } else if (name === "stroop") {
+    s.data.colors = ["#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6"];
+    s.data.names = ["RED", "BLUE", "GRN", "YLW", "PPL"];
+    s.data.items = [];
+    for (var i = 0; i < 5; i++) {
+      s.data.items.push({
+        name: s.data.names[Math.floor(Math.random() * 5)],
+        color: s.data.colors[Math.floor(Math.random() * 5)],
+        x: 15 + i * (s.w / 5.5),
+        y: 14 + Math.random() * 12,
+        vy: (Math.random() - 0.5) * 0.3
+      });
+    }
+  } else if (name === "brain") {
+    s.data.numbers = [];
+    for (var j = 0; j < 8; j++) {
+      s.data.numbers.push({
+        val: Math.floor(Math.random() * 10),
+        x: 10 + j * (s.w / 9),
+        y: 18,
+        alpha: 0.3 + Math.random() * 0.5,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+    s.data.sparks = [];
+  } else if (name === "dodge") {
+    s.data.player = { x: s.w / 2, y: 30 };
+    s.data.bullets = [];
+    for (var k = 0; k < 10; k++) {
+      s.data.bullets.push({
+        x: Math.random() * s.w,
+        y: Math.random() * 44,
+        vy: 0.5 + Math.random() * 1,
+        size: 2 + Math.random() * 2,
+        color: ["#4cff4c", "#ff4444", "#ffcc00", "#ff6600"][Math.floor(Math.random() * 4)]
+      });
+    }
+  }
+}
+
+// ===== Scene Draw Functions =====
+function drawScene(name, t) {
+  var s = scenes[name];
+  if (!s) return;
+  var ctx = s.ctx;
+  var w = s.w;
+  var h = s.h;
+
+  // Dark BG with grid
+  ctx.fillStyle = "#1a1a2e";
+  ctx.fillRect(0, 0, w, h);
+  ctx.strokeStyle = "rgba(0,240,255,0.04)";
+  ctx.lineWidth = 1;
+  for (var gx = 0; gx < w; gx += 20) {
+    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+  }
+  var go = (t * 0.02) % 20;
+  for (var gy = go; gy < h; gy += 20) {
+    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+  }
+
+  if (name === "typing") {
+    // Scrolling typed text
+    s.data.pos += 0.015;
+    var txt = s.data.text;
+    var charIdx = Math.floor(s.data.pos) % txt.length;
+    ctx.font = "10px Silkscreen";
+    ctx.textBaseline = "middle";
+    // Already typed (green)
+    var typed = txt.substring(0, charIdx);
+    var remaining = txt.substring(charIdx);
+    ctx.fillStyle = "#2ecc71";
+    ctx.fillText(typed.slice(-30), 8, 18);
+    // Cursor blink
+    var cw = ctx.measureText(typed.slice(-30)).width;
+    if (Math.floor(t / 400) % 2) {
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(8 + cw, 13, 6, 11);
+    }
+    // Remaining (dim)
+    ctx.fillStyle = "rgba(255,255,255,0.25)";
+    ctx.fillText(remaining.slice(0, 25), 8 + cw + 8, 18);
+    // WPM counter
+    ctx.fillStyle = "rgba(0,240,255,0.4)";
+    ctx.font = "7px Silkscreen";
+    var fakeWpm = 60 + Math.floor(Math.sin(t * 0.001) * 15);
+    ctx.fillText(fakeWpm + " WPM", w - 45, 37);
+
+  } else if (name === "stroop") {
+    // Floating color words
+    var d = s.data;
+    for (var i = 0; i < d.items.length; i++) {
+      var it = d.items[i];
+      it.y += it.vy;
+      if (it.y < 10 || it.y > 34) it.vy *= -1;
+      ctx.font = "bold 10px Silkscreen";
+      ctx.fillStyle = it.color;
+      ctx.textAlign = "center";
+      ctx.fillText(it.name, it.x, it.y);
+    }
+    ctx.textAlign = "left";
+    // "What COLOR?" prompt blinking
+    if (Math.floor(t / 600) % 2) {
+      ctx.fillStyle = "rgba(255,255,255,0.3)";
+      ctx.font = "7px Silkscreen";
+      ctx.fillText("TAP THE COLOR", w / 2 - 35, 40);
+    }
+
+  } else if (name === "brain") {
+    // Floating numbers with pulse
+    var d = s.data;
+    for (var i = 0; i < d.numbers.length; i++) {
+      var n = d.numbers[i];
+      var pulse = Math.sin(t * 0.003 + n.phase);
+      ctx.globalAlpha = 0.3 + pulse * 0.25;
+      ctx.font = (12 + pulse * 3) + "px Silkscreen";
+      ctx.fillStyle = pulse > 0.3 ? "#00f0ff" : "#ffffff";
+      ctx.textAlign = "center";
+      ctx.fillText(n.val, n.x, n.y + pulse * 4);
+    }
+    ctx.globalAlpha = 1;
+    ctx.textAlign = "left";
+    // Brainwave line
+    ctx.strokeStyle = "rgba(0,240,255,0.2)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (var bx = 0; bx < w; bx += 3) {
+      var by = 36 + Math.sin(t * 0.004 + bx * 0.05) * 4;
+      if (bx === 0) ctx.moveTo(bx, by); else ctx.lineTo(bx, by);
+    }
+    ctx.stroke();
+
+  } else if (name === "dodge") {
+    // Player + falling bullets
+    var d = s.data;
+    // Move player in sine wave
+    d.player.x = w / 2 + Math.sin(t * 0.002) * (w * 0.3);
+    // Draw player (tiny suited robot)
+    var rpx = d.player.x;
+    var rpy = d.player.y;
+    px(ctx, rpx - 3, rpy - 6, 6, 3, "#a0a0a0"); // head
+    px(ctx, rpx - 2, rpy - 5, 1, 1, "#00f0ff");
+    px(ctx, rpx + 1, rpy - 5, 1, 1, "#00f0ff");
+    px(ctx, rpx - 4, rpy - 3, 8, 5, "#2c3e50"); // body
+    px(ctx, rpx - 1, rpy - 2, 2, 2, "#e74c3c"); // tie
+    px(ctx, rpx - 3, rpy + 2, 2, 3, "#1a252f"); // legs
+    px(ctx, rpx + 1, rpy + 2, 2, 3, "#1a252f");
+
+    // Bullets
+    for (var bi = 0; bi < d.bullets.length; bi++) {
+      var b = d.bullets[bi];
+      b.y += b.vy;
+      if (b.y > h + 5) { b.y = -5; b.x = Math.random() * w; }
+      px(ctx, b.x, b.y, b.size, b.size, b.color);
+    }
+  }
+
+  // Scanline sweep (subtle)
+  var scanY = (t * 0.05) % h;
+  ctx.fillStyle = "rgba(255,255,255,0.03)";
+  ctx.fillRect(0, scanY, w, 1);
+}
+
+// ===== Slider Logic (PC only) =====
+var currentSlide = 0;
+var totalSlides = document.querySelectorAll(".game-card").length;
+var isPC = window.innerWidth >= 768;
+var gameCards = document.querySelectorAll(".game-card");
+var prevBtn = document.getElementById("sliderPrev");
+var nextBtn = document.getElementById("sliderNext");
+var dots = document.querySelectorAll(".slider-dot");
+var sceneKeys = ["typing", "stroop", "brain", "dodge"];
+
+function getActiveScene() {
+  if (!isPC) return null;
+  return sceneKeys[currentSlide] || null;
+}
+
+function updateSlider() {
+  if (!isPC) return;
+  // Move cards via transform
+  gameCards.forEach(function(card, i) {
+    card.style.transform = "translateX(" + (-currentSlide * 100) + "%)";
+    card.style.opacity = (i === currentSlide) ? "1" : "0";
+    card.style.pointerEvents = (i === currentSlide) ? "auto" : "none";
+  });
+  // Arrows
+  if (prevBtn) {
+    if (currentSlide === 0) {
+      prevBtn.classList.add("hidden");
+    } else {
+      prevBtn.classList.remove("hidden");
+    }
+  }
+  if (nextBtn) {
+    if (currentSlide === totalSlides - 1) {
+      nextBtn.classList.add("hidden");
+    } else {
+      nextBtn.classList.remove("hidden");
+    }
+  }
+  // Dots
+  dots.forEach(function(dot, i) {
+    dot.classList.toggle("active", i === currentSlide);
+  });
+}
+
+function goToSlide(idx) {
+  if (idx < 0 || idx >= totalSlides) return;
+  currentSlide = idx;
+  updateSlider();
+}
+
+if (prevBtn) prevBtn.addEventListener("click", function(e) { e.preventDefault(); goToSlide(currentSlide - 1); });
+if (nextBtn) nextBtn.addEventListener("click", function(e) { e.preventDefault(); goToSlide(currentSlide + 1); });
+dots.forEach(function(dot) {
+  dot.addEventListener("click", function() { goToSlide(parseInt(this.dataset.index)); });
+});
+
+// Trackpad / wheel swipe support
+(function() {
+  var wrapper = document.querySelector(".slider-wrapper");
+  if (!wrapper) return;
+  var wheelAccum = 0;
+  var wheelTimer = null;
+  var wheelCooldown = false;
+
+  wrapper.addEventListener("wheel", function(e) {
+    if (!isPC) return;
+    // Use deltaX for horizontal swipe; fall back to deltaY if no horizontal
+    var dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (Math.abs(dx) < 2) return;
+
+    e.preventDefault();
+    if (wheelCooldown) return;
+
+    wheelAccum += dx;
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(function() { wheelAccum = 0; }, 200);
+
+    if (Math.abs(wheelAccum) > 50) {
+      wheelCooldown = true;
+      if (wheelAccum > 0) goToSlide(currentSlide + 1);
+      else goToSlide(currentSlide - 1);
+      wheelAccum = 0;
+      setTimeout(function() { wheelCooldown = false; }, 500);
+    }
+  }, { passive: false });
+
+  // Touch swipe (mobile / tablet)
+  var startX = 0, startY = 0;
+  wrapper.addEventListener("touchstart", function(e) {
+    startX = e.changedTouches[0].screenX;
+    startY = e.changedTouches[0].screenY;
+  }, { passive: true });
+  wrapper.addEventListener("touchend", function(e) {
+    var dx = startX - e.changedTouches[0].screenX;
+    var dy = startY - e.changedTouches[0].screenY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx > 0) goToSlide(currentSlide + 1);
+      else goToSlide(currentSlide - 1);
+    }
+  }, { passive: true });
+})();
+
+// Keyboard support
+document.addEventListener("keydown", function(e) {
+  if (!isPC) return;
+  if (e.key === "ArrowLeft") goToSlide(currentSlide - 1);
+  if (e.key === "ArrowRight") goToSlide(currentSlide + 1);
+});
+
+// ===== Main Animation Loop =====
+function animLoop(t) {
+  if (isPC) {
+    // Only animate the active card's canvas
+    var active = getActiveScene();
+    if (active) drawScene(active, t);
+  } else {
+    // Mobile: animate all (they're all visible)
+    for (var key in scenes) {
+      drawScene(key, t);
+    }
+  }
+  requestAnimationFrame(animLoop);
+}
+requestAnimationFrame(animLoop);
+
+// Init slider on load
+if (isPC) updateSlider();
+
+// ===== Mobile: tap flash =====
+document.querySelectorAll(".game-card").forEach(function(card) {
+  card.addEventListener("touchstart", function() {
+    card.classList.add("tapped");
+    setTimeout(function() { card.classList.remove("tapped"); }, 400);
+  }, { passive: true });
+});
+
+// ===== Resize canvases + recalc slider mode =====
+window.addEventListener("resize", function() {
+  var wasPC = isPC;
+  isPC = window.innerWidth >= 768;
+  canvases.forEach(function(c) {
+    var ch = c.offsetHeight || 44;
+    c.width = c.offsetWidth;
+    c.height = ch;
+    var scene = c.dataset.scene;
+    if (scenes[scene]) { scenes[scene].w = c.width; scenes[scene].h = ch; }
+    initScene(scene);
+  });
+  if (isPC && !wasPC) {
+    // Switched to PC mode
+    updateSlider();
+  } else if (!isPC && wasPC) {
+    // Switched to mobile: reset transforms
+    gameCards.forEach(function(card) {
+      card.style.transform = "";
+      card.style.opacity = "";
+      card.style.pointerEvents = "";
+    });
+  }
+});
+</script>
 </body>
 </html>

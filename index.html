@@ -568,22 +568,89 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ===== Pain Points (課題提起) ===== */
 .pain-section {
   background: var(--color-bg-warm);
+  overflow: hidden;
+  position: relative;
 }
 .pain-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
   gap: var(--space-5);
+  perspective: 1200px;
 }
+
+/* Progress bar */
+.pain-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pain-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.pain-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  transition: width 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.pain-progress-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  font-weight: 600;
+  min-width: 5ch;
+  text-align: right;
+}
+
+/* Flip card */
 .pain-card {
+  perspective: 800px;
+  cursor: pointer;
+  min-height: 180px;
+}
+.pain-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.pain-card.flipped .pain-card-inner {
+  transform: rotateY(180deg);
+}
+.pain-card-front,
+.pain-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   padding: var(--space-6) var(--space-5);
   background: var(--color-bg-warm);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border-light);
-  transition: border-color var(--duration-fast) var(--ease-smooth);
-  position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.pain-card::after {
+.pain-card-front {
+  transition: border-color var(--duration-fast) var(--ease-smooth);
+}
+.pain-card:not(.flipped):hover .pain-card-front {
+  border-color: var(--color-accent);
+}
+
+/* Front face decorative icons */
+.pain-card-front::after {
   content: '';
   position: absolute;
   right: -12px;
@@ -596,27 +663,72 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background-position: center;
   pointer-events: none;
 }
-.pain-card:nth-child(1)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E"); }
-.pain-card:nth-child(2)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"); }
-.pain-card:nth-child(3)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3Cline x1='11' y1='8' x2='11' y2='14'/%3E%3Cline x1='8' y1='11' x2='14' y2='11'/%3E%3C/svg%3E"); }
-.pain-card:nth-child(4)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpolyline points='9 11 12 14 22 4'/%3E%3Cpath d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/%3E%3C/svg%3E"); }
-.pain-card:nth-child(5)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3C/svg%3E"); }
-.pain-card:nth-child(6)::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3C/svg%3E"); }
-.pain-card:hover { border-color: var(--color-accent); }
-.pain-card {
-  cursor: grab;
-  touch-action: none;
-  transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s ease, border-color var(--duration-fast) var(--ease-smooth);
-  will-change: transform, opacity;
+.pain-card:nth-child(1) .pain-card-front::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(2) .pain-card-front::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(3) .pain-card-front::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3Cline x1='11' y1='8' x2='11' y2='14'/%3E%3Cline x1='8' y1='11' x2='14' y2='11'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(4) .pain-card-front::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpolyline points='9 11 12 14 22 4'/%3E%3Cpath d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(5) .pain-card-front::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3C/svg%3E"); }
+.pain-card:nth-child(6) .pain-card-front::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F2137' stroke-width='1.2'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3C/svg%3E"); }
+
+/* Flip hint on front */
+.pain-card-front::before {
+  content: 'タップして解決 \2192';
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-size: 0.7rem;
+  color: var(--color-text-light);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
-.pain-card:active { cursor: grabbing; }
-.pain-card.flung {
-  transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease;
+.pain-card:not(.flipped):hover .pain-card-front::before {
+  opacity: 0.5;
+}
+
+/* Back face */
+.pain-card-back {
+  transform: rotateY(180deg);
+  background: #fff;
+  border-color: var(--color-accent);
+  border-width: 2px;
+  color: var(--color-text);
+}
+.pain-card-back .solve-check {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.3);
+  font-size: min(10rem, 50vw);
+  line-height: 1;
+  color: var(--color-accent);
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s 0.35s, transform 0.6s 0.35s cubic-bezier(0.34,1.56,0.64,1);
 }
-.pain-card.snap-back {
-  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+.pain-card.flipped .solve-check {
+  opacity: 0.13;
+  transform: translate(-50%, -50%) scale(1);
 }
+.pain-card-back h4 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+  color: var(--color-primary);
+}
+.pain-card-back p {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--color-text-light);
+}
+
+/* Strikethrough on headline when flipped */
+.pain-card.flipped .pain-headline {
+  color: var(--color-accent);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+/* Solve hint */
 .pain-solve-hint {
   text-align: center;
   margin-top: var(--space-4);
@@ -624,9 +736,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: var(--color-text-light);
   opacity: 0.6;
 }
+
+/* All solved message */
 .pain-all-solved {
   text-align: center;
   padding: var(--space-8) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   animation: solved-appear 0.6s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 }
 .pain-all-solved h3 {
@@ -653,6 +771,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 @keyframes solved-appear {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Confetti */
+.confetti-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  will-change: transform, opacity;
 }
 
 /* Cursor glow */
@@ -694,7 +825,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   60% { transform: perspective(600px) rotateY(-4deg) scale(1.01); }
   100% { transform: perspective(600px) rotateY(0deg) scale(1); }
 }
-.service-card.tap-tilt {
+.service-card.tap-tilt .service-card-inner {
   animation: tap-tilt 0.5s ease-out;
 }
 
@@ -714,10 +845,59 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   animation: heartbeat 1.8s ease-in-out infinite;
 }
 
-/* 3D tilt cards */
+/* 3D tilt + scroll-rotate cards */
 .service-card {
+  perspective: 800px;
+  border: none;
+  background: none;
+  padding: 0;
+}
+.service-card::before { display: none; }
+.service-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.15s ease-out, border-color var(--duration-fast) var(--ease-smooth);
+  transition: transform 0.15s ease-out;
+}
+.service-card-front,
+.service-card-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-light);
+  position: relative;
+  overflow: hidden;
+}
+.service-card-front {
+  padding: var(--space-8) var(--space-6);
+  background: var(--color-bg-warm);
+}
+.service-card-front::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+.service-card-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  background: var(--color-bg-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.service-back-logo {
+  width: 60%;
+  max-width: 180px;
+  height: auto;
+  opacity: 0.85;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
 }
 .service-card .service-card-shine {
   position: absolute;
@@ -727,6 +907,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   opacity: 0;
   transition: opacity 0.3s ease;
   background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255,255,255,0.15) 0%, transparent 60%);
+  z-index: 2;
 }
 .service-card:hover .service-card-shine { opacity: 1; }
 
@@ -964,21 +1145,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   gap: var(--space-6);
 }
 .service-card {
-  padding: var(--space-8) var(--space-6);
-  background: var(--color-bg-warm);
-  border: 1px solid var(--color-border-light);
   border-radius: var(--radius-lg);
   position: relative;
-}
-.service-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: linear-gradient(90deg, var(--color-accent), transparent);
 }
 .service-num {
   font-family: var(--font-accent);
@@ -1462,26 +1630,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-top: 1px solid rgba(255,255,255,0.08);
   padding-top: var(--space-5);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-4);
+  text-align: center;
+  gap: var(--space-3);
 }
 .footer-bottom p {
   font-size: var(--text-xs);
   color: rgba(255,255,255,0.4);
 }
-.footer-legal {
-  display: flex;
-  gap: var(--space-5);
-  list-style: none;
-}
-.footer-legal a {
-  font-size: var(--text-xs);
-  color: rgba(255,255,255,0.4);
-  transition: color var(--duration-fast) var(--ease-smooth);
-}
-.footer-legal a:hover { color: rgba(255,255,255,0.7); }
 
 @media (max-width: 767px) {
   .footer-grid { grid-template-columns: 1fr; gap: var(--space-8); text-align: center; }
@@ -1628,11 +1785,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     </button>
     <nav aria-label="メインナビゲーション">
       <ul class="nav-links" id="nav-links">
-        <li><a href="#problems">課題</a></li>
         <li><a href="#services">サービス</a></li>
-        <li><a href="#strengths">選ばれる理由</a></li>
         <li><a href="#flow">ご利用の流れ</a></li>
-        <li><a href="#shigyou">士業の方</a></li>
         <li><a href="#about">会社概要</a></li>
         <li><a href="mailto:info.hopesconsul@gmail.com" class="nav-cta">無料相談</a></li>
       </ul>
@@ -1644,11 +1798,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <div class="mobile-menu-overlay" id="mobile-menu">
   <button class="mobile-menu-close" aria-label="メニューを閉じる">&times;</button>
   <ul>
-    <li><a href="#problems">課題</a></li>
     <li><a href="#services">サービス</a></li>
-    <li><a href="#strengths">選ばれる理由</a></li>
     <li><a href="#flow">ご利用の流れ</a></li>
-    <li><a href="#shigyou">士業の方</a></li>
     <li><a href="#about">会社概要</a></li>
     <li><a href="mailto:info.hopesconsul@gmail.com" class="nav-cta">無料相談</a></li>
   </ul>
@@ -1706,39 +1857,104 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <h2>こんな課題、抱えていませんか？</h2>
       <p>多くの企業が同じ壁にぶつかっています。あなたの会社ではいかがでしょうか。</p>
     </div>
-    <div class="pain-grid stagger-group">
-      <div class="pain-card stagger-item">
-        <p class="pain-headline">「毎日が作業で終わる」</p>
-        <h3>日々のルーチンで業務が逼迫</h3>
-        <p>本来やるべき戦略検討に時間を使えていない。目の前の業務に追われ、未来を考える余裕がない。</p>
-      </div>
-      <div class="pain-card stagger-item">
-        <p class="pain-headline">「担当者不在で停滞」</p>
-        <h3>知識と業務が属人化</h3>
-        <p>あの人が辞めたら、この業務は回らなくなる。長年の経験が特定の個人に集中してしまっている。</p>
-      </div>
-      <div class="pain-card stagger-item">
-        <p class="pain-headline">「何から手を付けるべきか」</p>
-        <h3>デジタル化の開始手順が不明</h3>
-        <p>IT投資で失敗したくないが、相談相手がいない。何が自社に必要なのか判断できない。</p>
-      </div>
-      <div class="pain-card stagger-item">
-        <p class="pain-headline">「結局 Excel に逆戻り」</p>
-        <h3>ツール導入後に運用定着せず</h3>
-        <p>高い費用をかけたのに、誰も使ってくれない。現場に合わないツールを導入してしまった。</p>
-      </div>
-      <div class="pain-card stagger-item">
-        <p class="pain-headline">「転記ミスが発生」</p>
-        <h3>書類作成・入力に時間を要す</h3>
-        <p>単純作業のミスで、顧客の信頼を損ねたくない。手作業による入力ミスが業務品質を下げている。</p>
-      </div>
-      <div class="pain-card stagger-item">
-        <p class="pain-headline">「全体像が把握できない」</p>
-        <h3>複数の管理表が肥大化</h3>
-        <p>正確な経営判断に必要なデータがすぐに出てこない。情報が分散し、意思決定が遅れている。</p>
-      </div>
+    <div class="pain-progress">
+      <div class="pain-progress-bar"><div class="pain-progress-fill" id="painProgressFill"></div></div>
+      <span class="pain-progress-text" id="painProgressText">0/6</span>
     </div>
-    <p class="pain-solve-hint">&#8592; カードをスワイプして課題を解決 &#8594;</p>
+    <div class="pain-grid stagger-group">
+
+      <div class="pain-card stagger-item">
+        <div class="pain-card-inner">
+          <div class="pain-card-front">
+            <p class="pain-headline">「毎日が作業で終わる」</p>
+            <h3>日々のルーチンで業務が逼迫</h3>
+            <p>本来やるべき戦略検討に時間を使えていない。目の前の業務に追われ、未来を考える余裕がない。</p>
+          </div>
+          <div class="pain-card-back">
+            <span class="solve-check">&#10003;</span>
+            <h4>業務フロー分析で「やめる・任せる」を特定。</h4>
+            <p>RPA・自動化で定型作業を削減し、戦略に使える時間を創出します。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pain-card stagger-item">
+        <div class="pain-card-inner">
+          <div class="pain-card-front">
+            <p class="pain-headline">「担当者不在で停滞」</p>
+            <h3>知識と業務が属人化</h3>
+            <p>あの人が辞めたら、この業務は回らなくなる。長年の経験が特定の個人に集中してしまっている。</p>
+          </div>
+          <div class="pain-card-back">
+            <span class="solve-check">&#10003;</span>
+            <h4>業務の見える化とマニュアル整備を支援。</h4>
+            <p>ナレッジをチームの資産に変え、誰が抜けても回る体制を作ります。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pain-card stagger-item">
+        <div class="pain-card-inner">
+          <div class="pain-card-front">
+            <p class="pain-headline">「何から手を付けるべきか」</p>
+            <h3>デジタル化の開始手順が不明</h3>
+            <p>IT投資で失敗したくないが、相談相手がいない。何が自社に必要なのか判断できない。</p>
+          </div>
+          <div class="pain-card-back">
+            <span class="solve-check">&#10003;</span>
+            <h4>現状診断から始める無料相談。</h4>
+            <p>貴社の規模・業種に合ったロードマップを一緒に描きます。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pain-card stagger-item">
+        <div class="pain-card-inner">
+          <div class="pain-card-front">
+            <p class="pain-headline">「結局 Excel に逆戻り」</p>
+            <h3>ツール導入後に運用定着せず</h3>
+            <p>高い費用をかけたのに、誰も使ってくれない。現場に合わないツールを導入してしまった。</p>
+          </div>
+          <div class="pain-card-back">
+            <span class="solve-check">&#10003;</span>
+            <h4>現場ヒアリング重視の導入設計。</h4>
+            <p>使う人の目線で選定・カスタマイズし、定着まで伴走します。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pain-card stagger-item">
+        <div class="pain-card-inner">
+          <div class="pain-card-front">
+            <p class="pain-headline">「転記ミスが発生」</p>
+            <h3>書類作成・入力に時間を要す</h3>
+            <p>単純作業のミスで、顧客の信頼を損ねたくない。手作業による入力ミスが業務品質を下げている。</p>
+          </div>
+          <div class="pain-card-back">
+            <span class="solve-check">&#10003;</span>
+            <h4>入力・転記の自動化を実現。</h4>
+            <p>データ連携と自動チェックで、ミスゼロと時短を両立します。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pain-card stagger-item">
+        <div class="pain-card-inner">
+          <div class="pain-card-front">
+            <p class="pain-headline">「全体像が把握できない」</p>
+            <h3>複数の管理表が肥大化</h3>
+            <p>正確な経営判断に必要なデータがすぐに出てこない。情報が分散し、意思決定が遅れている。</p>
+          </div>
+          <div class="pain-card-back">
+            <span class="solve-check">&#10003;</span>
+            <h4>データを一元化し、リアルタイムで可視化。</h4>
+            <p>必要な数字がすぐ出る経営ダッシュボードを構築します。</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p class="pain-solve-hint">カードをクリックして課題を解決しよう</p>
   </div>
 </section>
 
@@ -1751,38 +1967,59 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <h2>人がより創造的な仕事に<br>集中できる環境を</h2>
     </div>
     <div class="services-grid stagger-group">
-      <div class="service-card stagger-item" data-tilt>
-        <div class="service-card-shine"></div>
-        <div class="service-num">1</div>
-        <h3>AI導入支援</h3>
-        <p class="service-sub">経営課題を解決するAI活用戦略</p>
-        <ul>
-          <li>経営診断に基づくAI活用領域の特定</li>
-          <li>費用対効果シミュレーション</li>
-          <li>段階的導入計画の策定</li>
-        </ul>
+      <div id="service-ai" class="service-card stagger-item" data-tilt>
+        <div class="service-card-inner">
+          <div class="service-card-front">
+            <div class="service-card-shine"></div>
+            <div class="service-num">1</div>
+            <h3>AI導入支援</h3>
+            <p class="service-sub">経営課題を解決するAI活用戦略</p>
+            <ul>
+              <li>経営診断に基づくAI活用領域の特定</li>
+              <li>費用対効果シミュレーション</li>
+              <li>段階的導入計画の策定</li>
+            </ul>
+          </div>
+          <div class="service-card-back">
+            <img src="images/Gemini_Generated_Image_gqyftdgqyftdgqyf_transparent.png" alt="HOPES" class="service-back-logo">
+          </div>
+        </div>
       </div>
-      <div class="service-card stagger-item" data-tilt>
-        <div class="service-card-shine"></div>
-        <div class="service-num">2</div>
-        <h3>効率化戦略策定</h3>
-        <p class="service-sub">経営戦略と一体化した効率化ロードマップ</p>
-        <ul>
-          <li>業務プロセスのデジタル化推進</li>
-          <li>IT人材の育成支援</li>
-          <li>IT投資の最適配分と実行管理</li>
-        </ul>
+      <div id="service-strategy" class="service-card stagger-item" data-tilt>
+        <div class="service-card-inner">
+          <div class="service-card-front">
+            <div class="service-card-shine"></div>
+            <div class="service-num">2</div>
+            <h3>効率化戦略策定</h3>
+            <p class="service-sub">経営戦略と一体化した効率化ロードマップ</p>
+            <ul>
+              <li>業務プロセスのデジタル化推進</li>
+              <li>IT人材の育成支援</li>
+              <li>IT投資の最適配分と実行管理</li>
+            </ul>
+          </div>
+          <div class="service-card-back">
+            <img src="images/Gemini_Generated_Image_gqyftdgqyftdgqyf_transparent.png" alt="HOPES" class="service-back-logo">
+          </div>
+        </div>
       </div>
-      <div class="service-card stagger-item" data-tilt>
-        <div class="service-card-shine"></div>
-        <div class="service-num">3</div>
-        <h3>受託開発</h3>
-        <p class="service-sub">経営課題解決型のシステム開発</p>
-        <ul>
-          <li>業務プロセス最適化設計</li>
-          <li>投資効果の最大化</li>
-          <li>内製化移行支援</li>
-        </ul>
+      <div id="service-dev" class="service-card stagger-item" data-tilt>
+        <div class="service-card-inner">
+          <div class="service-card-front">
+            <div class="service-card-shine"></div>
+            <div class="service-num">3</div>
+            <h3>受託開発</h3>
+            <p class="service-sub">経営課題解決型のシステム開発</p>
+            <ul>
+              <li>業務プロセス最適化設計</li>
+              <li>投資効果の最大化</li>
+              <li>内製化移行支援</li>
+            </ul>
+          </div>
+          <div class="service-card-back">
+            <img src="images/Gemini_Generated_Image_gqyftdgqyftdgqyf_transparent.png" alt="HOPES" class="service-back-logo">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1804,7 +2041,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <div class="strength-item fade-in">
         <div class="strength-body">
           <h3>低コストかつ迅速な開発</h3>
-          <p>Custom GPTsやGoogle Apps Script等を駆使し、大掛かりなシステム開発なしに、最短1週間で業務課題を解決するプロトタイプを構築可能。現場で実際に触れて効果を実感いただいてから、本格的な展開を判断できます。</p>
+          <p>まずはAIで「どこが楽になるか」を見つけるところから。大掛かりなシステム導入の前に、今ある業務の改善ポイントを特定し、小さく試して効果を実感。納得いただいてから本格展開できます。</p>
         </div>
       </div>
       <div class="strength-item fade-in">
@@ -1974,9 +2211,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <div>
         <h4>サービス</h4>
         <ul class="footer-links">
+          <li><a href="#problems">効率化戦略策定</a></li>
           <li><a href="#services">AI導入支援</a></li>
-          <li><a href="#services">効率化戦略策定</a></li>
-          <li><a href="#services">受託開発</a></li>
           <li><a href="#shigyou">士業効率化</a></li>
         </ul>
       </div>
@@ -1984,16 +2220,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <h4>企業情報</h4>
         <ul class="footer-links">
           <li><a href="#about">会社概要</a></li>
-          <li><a href="#services">サービス詳細</a></li>
           <li><a href="mailto:info.hopesconsul@gmail.com">お問い合わせ</a></li>
+          <li><a href="privacy.html">プライバシーポリシー</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Hopes Consulting Co., Ltd. All rights reserved.</p>
-      <ul class="footer-legal">
-        <li><a href="privacy.html">プライバシーポリシー</a></li>
-      </ul>
     </div>
   </div>
 </footer>
@@ -2206,92 +2439,119 @@ window.addEventListener('scroll', () => {
   }, { passive: false });
 })();
 
-/* Pain card flick-to-solve */
+/* Pain card flip-to-solve */
 (function() {
   var cards = document.querySelectorAll('.pain-card');
   var grid = document.querySelector('.pain-grid');
   var hint = document.querySelector('.pain-solve-hint');
   var section = document.querySelector('.pain-section .container');
+  var progressFill = document.getElementById('painProgressFill');
+  var progressText = document.getElementById('painProgressText');
   if (!cards.length) return;
 
   var solvedCount = 0;
   var totalCards = cards.length;
-  var THRESHOLD = 80;
+
+  function updateProgress() {
+    var pct = (solvedCount / totalCards) * 100;
+    progressFill.style.width = pct + '%';
+    progressText.textContent = solvedCount + '/' + totalCards;
+  }
+
+  function launchConfetti() {
+    var painSection = document.querySelector('.pain-section');
+    var container = document.createElement('div');
+    container.className = 'confetti-container';
+    painSection.appendChild(container);
+    var sectionH = painSection.offsetHeight;
+    var colors = ['#d97757', '#0F2137', '#f5c542', '#4ecdc4', '#ff6b6b', '#a78bfa'];
+    var pieces = [];
+
+    for (var i = 0; i < 60; i++) {
+      var el = document.createElement('div');
+      el.className = 'confetti-piece';
+      var size = 6 + Math.random() * 8;
+      var shape = Math.random() > 0.5 ? '50%' : '2px';
+      var color = colors[Math.floor(Math.random() * colors.length)];
+      el.style.cssText = 'width:' + size + 'px;height:' + size +
+        'px;border-radius:' + shape + ';background:' + color + ';opacity:0;';
+      container.appendChild(el);
+      var floor = sectionH - size - (Math.random() * 20);
+      pieces.push({
+        el: el,
+        x: Math.random() * 100,
+        y: -20,
+        vy: 1.5 + Math.random() * 2.5,
+        vx: (Math.random() - 0.5) * 1.5,
+        rot: 0,
+        rotV: (Math.random() - 0.5) * 12,
+        floor: floor,
+        delay: Math.random() * 800,
+        landed: false,
+        size: size
+      });
+    }
+
+    var start = performance.now();
+    function tick(now) {
+      var allLanded = true;
+      for (var i = 0; i < pieces.length; i++) {
+        var p = pieces[i];
+        if (now - start < p.delay) { allLanded = false; continue; }
+        if (p.landed) continue;
+        p.y += p.vy;
+        p.x += p.vx * 0.05;
+        p.rot += p.rotV;
+        if (p.y >= p.floor) {
+          p.y = p.floor;
+          p.landed = true;
+          p.el.style.transform = 'translate(' + p.x + 'vw,' + p.y + 'px) rotate(' + p.rot + 'deg)';
+          p.el.style.opacity = '0.85';
+          continue;
+        }
+        p.el.style.transform = 'translate(' + p.x + 'vw,' + p.y + 'px) rotate(' + p.rot + 'deg)';
+        p.el.style.opacity = '1';
+        allLanded = false;
+      }
+      if (!allLanded) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 
   cards.forEach(function(card) {
-    var isDragging = false;
-    var startX, startY, dx, dy, lastT, lastX, vx;
+    card.addEventListener('click', function() {
+      if (card.classList.contains('flipped')) return;
+      card.classList.add('flipped');
+      solvedCount++;
+      updateProgress();
 
-    function onStart(e) {
-      if (card.classList.contains('flung')) return;
-      card.classList.remove('snap-back');
-      var point = e.touches ? e.touches[0] : e;
-      startX = point.clientX;
-      startY = point.clientY;
-      dx = 0; dy = 0; vx = 0;
-      lastX = startX;
-      lastT = Date.now();
-      isDragging = true;
-    }
+      if (solvedCount === totalCards) {
+        setTimeout(function() {
+          /* グリッドの高さを固定してから非表示へフェード */
+          grid.style.opacity = '0';
+          grid.style.transition = 'opacity 0.5s ease';
+          if (hint) { hint.style.opacity = '0'; hint.style.transition = 'opacity 0.3s'; }
+          var progress = document.querySelector('.pain-progress');
+          if (progress) { progress.style.opacity = '0'; progress.style.transition = 'opacity 0.3s'; }
 
-    function onMove(e) {
-      if (!isDragging) return;
-      e.preventDefault();
-      var point = e.touches ? e.touches[0] : e;
-      dx = point.clientX - startX;
-      dy = point.clientY - startY;
-      var now = Date.now();
-      var dt = now - lastT;
-      if (dt > 0) { vx = (point.clientX - lastX) / dt; }
-      lastX = point.clientX;
-      lastT = now;
-      var rotate = dx * 0.08;
-      var opacity = Math.max(0.3, 1 - Math.abs(dx) / 400);
-      card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rotate + 'deg)';
-      card.style.opacity = opacity;
-    }
-
-    function onEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      var speed = Math.abs(vx);
-      var dist = Math.abs(dx);
-
-      if (dist > THRESHOLD || speed > 0.5) {
-        var dir = dx > 0 ? 1 : -1;
-        var flingX = dir * (800 + dist);
-        var flingY = dy * 2;
-        var flingR = dir * (20 + Math.random() * 20);
-        card.classList.add('flung');
-        card.style.transform = 'translate(' + flingX + 'px,' + flingY + 'px) rotate(' + flingR + 'deg)';
-        card.style.opacity = '0';
-        solvedCount++;
-
-        if (solvedCount === totalCards) {
           setTimeout(function() {
             grid.style.display = 'none';
             if (hint) hint.style.display = 'none';
+            if (progress) progress.style.display = 'none';
             var msg = document.createElement('div');
             msg.className = 'pain-all-solved';
+            msg.style.minHeight = '50vh';
             msg.innerHTML = '<h3>すべての課題、解決できます。</h3>' +
               '<p>ホープスコンサルティングが<br>貴社の課題解決パートナーになります。</p>' +
               '<a href="mailto:info.hopesconsul@gmail.com" class="solved-cta">無料相談してみる</a>';
             section.appendChild(msg);
-          }, 700);
-        }
-      } else {
-        card.classList.add('snap-back');
-        card.style.transform = '';
-        card.style.opacity = '';
+            msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            /* コンテンツ切り替え後に紙吹雪を発射 */
+            setTimeout(function() { launchConfetti(); }, 100);
+          }, 500);
+        }, 800);
       }
-    }
-
-    card.addEventListener('mousedown', onStart);
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onEnd);
-    card.addEventListener('touchstart', onStart, { passive: true });
-    document.addEventListener('touchmove', onMove, { passive: false });
-    document.addEventListener('touchend', onEnd);
+    });
   });
 })();
 
@@ -2310,25 +2570,112 @@ window.addEventListener('scroll', () => {
   });
 })();
 
-/* 3D tilt cards */
+/* 3D tilt + scroll-rotate cards */
 (function() {
   document.querySelectorAll('[data-tilt]').forEach(function(card) {
+    var inner = card.querySelector('.service-card-inner');
     var shine = card.querySelector('.service-card-shine');
+    var spinY = 0;
+    var tiltX = 0;
+    var tiltY = 0;
+    var isHovering = false;
+
+    function applyTransform() {
+      inner.style.transform = 'rotateX(' + tiltX + 'deg) rotateY(' + (tiltY + spinY) + 'deg) scale(1.02)';
+    }
+
+    card.addEventListener('mouseenter', function() {
+      isHovering = true;
+      inner.style.transition = 'transform 0.15s ease-out';
+    });
+
     card.addEventListener('mousemove', function(e) {
       var rect = card.getBoundingClientRect();
       var x = (e.clientX - rect.left) / rect.width;
       var y = (e.clientY - rect.top) / rect.height;
-      var rotateX = (0.5 - y) * 12;
-      var rotateY = (x - 0.5) * 12;
-      card.style.transform = 'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
+      tiltX = (0.5 - y) * 15;
+      tiltY = (x - 0.5) * 15;
+      applyTransform();
       if (shine) {
         shine.style.setProperty('--shine-x', (x * 100) + '%');
         shine.style.setProperty('--shine-y', (y * 100) + '%');
       }
     });
+
     card.addEventListener('mouseleave', function() {
-      card.style.transform = '';
+      isHovering = false;
+      tiltX = 0;
+      tiltY = 0;
+      inner.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
+      /* 最も近い表/裏にスナップ */
+      var norm = ((spinY % 360) + 360) % 360;
+      if (norm > 90 && norm <= 270) {
+        spinY = Math.round(spinY / 360) * 360 + 180;
+      } else {
+        spinY = Math.round(spinY / 360) * 360;
+      }
+      applyTransform();
     });
+
+    /* PC + スマホ共通: 横ドラッグ/スワイプでY軸回転 */
+    var dragStartX = 0;
+    var dragging = false;
+
+    function onDragStart(e) {
+      var point = e.touches ? e.touches[0] : e;
+      dragStartX = point.clientX;
+      dragging = true;
+      inner.style.transition = 'none';
+    }
+
+    function onDragMove(e) {
+      if (!dragging) return;
+      var point = e.touches ? e.touches[0] : e;
+      var dx = point.clientX - dragStartX;
+      if (Math.abs(dx) > 10) {
+        if (e.cancelable) e.preventDefault();
+        tiltX = 0;
+        tiltY = 0;
+        inner.style.transform = 'rotateY(' + (spinY + dx * 0.5) + 'deg)';
+      }
+    }
+
+    function onDragEnd(e) {
+      if (!dragging) return;
+      dragging = false;
+      var point = e.changedTouches ? e.changedTouches[0] : e;
+      var dx = point.clientX - dragStartX;
+      spinY += dx * 0.5;
+      /* 最も近い表/裏にスナップ */
+      inner.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
+      var norm = ((spinY % 360) + 360) % 360;
+      if (norm > 90 && norm <= 270) {
+        spinY = Math.round(spinY / 360) * 360 + 180;
+      } else {
+        spinY = Math.round(spinY / 360) * 360;
+      }
+      tiltX = 0;
+      tiltY = 0;
+      inner.style.transform = 'rotateY(' + spinY + 'deg)';
+    }
+
+    card.addEventListener('mousedown', onDragStart);
+    document.addEventListener('mousemove', onDragMove);
+    document.addEventListener('mouseup', onDragEnd);
+    card.addEventListener('touchstart', onDragStart, { passive: true });
+    document.addEventListener('touchmove', onDragMove, { passive: false });
+    document.addEventListener('touchend', onDragEnd);
+
+    /* PC: トラックパッド二本指スワイプでも回転 */
+    card.addEventListener('wheel', function(e) {
+      if (!isHovering) return;
+      e.preventDefault();
+      inner.style.transition = 'none';
+      spinY += e.deltaX * 0.3 || e.deltaY * 0.3;
+      tiltX = 0;
+      tiltY = 0;
+      inner.style.transform = 'rotateY(' + spinY + 'deg)';
+    }, { passive: false });
   });
 })();
 
@@ -2417,7 +2764,7 @@ window.addEventListener('scroll', () => {
 /* Magnetic buttons — event delegation for dynamic elements too */
 (function() {
   var RANGE = 60;
-  var SELECTOR = '.btn, .nav-cta, .solved-cta';
+  var SELECTOR = '.btn, .nav-cta';
   var lastBtn = null;
 
   document.addEventListener('mousemove', function(e) {
@@ -2614,7 +2961,7 @@ window.addEventListener('scroll', () => {
 
   /* 3. Button tap bounce */
   document.addEventListener('touchstart', function(e) {
-    var btn = e.target.closest('.btn, .nav-cta, .solved-cta');
+    var btn = e.target.closest('.btn, .nav-cta');
     if (!btn) return;
     btn.classList.remove('tap-bounce');
     void btn.offsetWidth;
