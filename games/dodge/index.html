@@ -13,9 +13,9 @@
 <meta property="og:title" content="デジタルサバイバー | ホープスコンサルティング">
 <meta property="og:description" content="迫りくるバグ・ウイルス・スパムを避けて生き残れ！">
 <meta property="og:url" content="https://www.hopesconsul.com/games/dodge/">
-<meta property="og:image" content="https://www.hopesconsul.com/images/ogp-games.png">
+<meta property="og:image" content="https://www.hopesconsul.com/games/dodge/ogp.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.hopesconsul.com/images/ogp-games.png">
+<meta name="twitter:image" content="https://www.hopesconsul.com/games/dodge/ogp.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&family=Silkscreen:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
@@ -207,6 +207,7 @@ canvas {
   cursor: pointer;
   clip-path: var(--clip-btn);
   transition: background 0.2s;
+  white-space: nowrap;
 }
 .btn-retry:hover { background: var(--color-cta-hover); }
 .btn-share {
@@ -220,6 +221,7 @@ canvas {
   cursor: pointer;
   clip-path: var(--clip-btn);
   transition: all 0.2s;
+  white-space: nowrap;
 }
 .btn-share:hover { border-color: rgba(255,255,255,0.5); }
 
@@ -834,6 +836,8 @@ container.addEventListener("mousemove", function(e) {
   targetY = (e.clientY - rect.top) / rect.height * H;
 });
 
+var TOUCH_OFFSET_Y = 60;
+
 container.addEventListener("touchstart", function(e) {
   if (state !== "playing") return;
   e.preventDefault();
@@ -841,7 +845,8 @@ container.addEventListener("touchstart", function(e) {
   var t = e.touches[0];
   var rect = canvas.getBoundingClientRect();
   targetX = (t.clientX - rect.left) / rect.width * W;
-  targetY = (t.clientY - rect.top) / rect.height * H;
+  targetY = (t.clientY - rect.top) / rect.height * H - TOUCH_OFFSET_Y;
+  if (targetY < 0) targetY = 0;
 }, { passive: false });
 
 container.addEventListener("touchmove", function(e) {
@@ -850,7 +855,8 @@ container.addEventListener("touchmove", function(e) {
   var t = e.touches[0];
   var rect = canvas.getBoundingClientRect();
   targetX = (t.clientX - rect.left) / rect.width * W;
-  targetY = (t.clientY - rect.top) / rect.height * H;
+  targetY = (t.clientY - rect.top) / rect.height * H - TOUCH_OFFSET_Y;
+  if (targetY < 0) targetY = 0;
 }, { passive: false });
 
 container.addEventListener("touchend", function() {
