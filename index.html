@@ -689,13 +689,61 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   opacity: 0.5;
 }
 
-/* Back face */
+/* Back face — fluid glass style */
 .pain-card-back {
   transform: rotateY(180deg);
-  background: #fff;
-  border-color: var(--color-accent);
-  border-width: 2px;
+  background:
+    radial-gradient(ellipse at 15% -10%, rgba(217,119,87,0.15) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 110%, rgba(147,119,210,0.13) 0%, transparent 45%),
+    radial-gradient(ellipse at 60% 40%, rgba(56,189,248,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 80%, rgba(217,175,87,0.06) 0%, transparent 40%),
+    linear-gradient(165deg, #ffffff 0%, #faf9f5 30%, #f5f3ec 60%, #f0eee6 100%);
+  border: 1.5px solid rgba(217,119,87,0.2);
   color: var(--color-text);
+  box-shadow:
+    0 1px 2px rgba(20,20,19,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  overflow: hidden;
+}
+/* Light streak shimmer on flip */
+.pain-card-back::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255,255,255,0.5) 45%,
+    rgba(255,255,255,0.8) 50%,
+    rgba(255,255,255,0.5) 55%,
+    transparent 60%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.pain-card.flipped .pain-card-back::before {
+  animation: cardShine 0.8s 0.3s ease-out forwards;
+}
+@keyframes cardShine {
+  0% { opacity: 1; transform: translateX(-30%) rotate(0deg); }
+  100% { opacity: 0; transform: translateX(80%) rotate(0deg); }
+}
+/* Float up on flip */
+.pain-card.flipped {
+  transform: translateY(-4px);
+  transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.pain-card.flipped .pain-card-back {
+  box-shadow:
+    0 4px 12px rgba(20,20,19,0.06),
+    0 16px 40px rgba(20,20,19,0.08),
+    0 2px 4px rgba(217,119,87,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  border-color: rgba(217,119,87,0.28);
 }
 .pain-card-back .solve-check {
   position: absolute;
@@ -707,19 +755,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: var(--color-accent);
   pointer-events: none;
   opacity: 0;
+  z-index: 1;
   transition: opacity 0.5s 0.35s, transform 0.6s 0.35s cubic-bezier(0.34,1.56,0.64,1);
 }
 .pain-card.flipped .solve-check {
-  opacity: 0.13;
+  opacity: 0.07;
   transform: translate(-50%, -50%) scale(1);
 }
 .pain-card-back h4 {
+  position: relative;
+  z-index: 1;
   font-size: var(--text-base);
   font-weight: 700;
   margin-bottom: var(--space-2);
   color: var(--color-primary);
 }
 .pain-card-back p {
+  position: relative;
+  z-index: 1;
   font-size: var(--text-sm);
   line-height: 1.6;
   color: var(--color-text-light);
@@ -1894,7 +1947,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
           <div class="pain-card-back">
             <span class="solve-check">&#10003;</span>
-            <h4>業務フロー分析で「やめる・任せる」を特定。</h4>
+            <h4>業務分析で"やめる""任せる"を特定</h4>
             <p>RPA・自動化で定型作業を削減し、戦略に使える時間を創出します。</p>
           </div>
         </div>
@@ -1909,7 +1962,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
           <div class="pain-card-back">
             <span class="solve-check">&#10003;</span>
-            <h4>業務の見える化とマニュアル整備を支援。</h4>
+            <h4>見える化とマニュアル整備を支援</h4>
             <p>ナレッジをチームの資産に変え、誰が抜けても回る体制を作ります。</p>
           </div>
         </div>
@@ -1924,7 +1977,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
           <div class="pain-card-back">
             <span class="solve-check">&#10003;</span>
-            <h4>現状診断から始める無料相談。</h4>
+            <h4>現状診断から始める無料相談</h4>
             <p>貴社の規模・業種に合ったロードマップを一緒に描きます。</p>
           </div>
         </div>
@@ -1939,7 +1992,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
           <div class="pain-card-back">
             <span class="solve-check">&#10003;</span>
-            <h4>現場ヒアリング重視の導入設計。</h4>
+            <h4>現場ヒアリング重視の導入設計</h4>
             <p>使う人の目線で選定・カスタマイズし、定着まで伴走します。</p>
           </div>
         </div>
@@ -1954,7 +2007,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
           <div class="pain-card-back">
             <span class="solve-check">&#10003;</span>
-            <h4>入力・転記の自動化を実現。</h4>
+            <h4>入力・転記の自動化を実現</h4>
             <p>データ連携と自動チェックで、ミスゼロと時短を両立します。</p>
           </div>
         </div>
@@ -1969,7 +2022,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
           <div class="pain-card-back">
             <span class="solve-check">&#10003;</span>
-            <h4>データを一元化し、リアルタイムで可視化。</h4>
+            <h4>データ一元化とリアルタイム可視化</h4>
             <p>必要な数字がすぐ出る経営ダッシュボードを構築します。</p>
           </div>
         </div>
