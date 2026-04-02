@@ -818,16 +818,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
 }
 
-/* Mobile tap tilt */
-@keyframes tap-tilt {
-  0% { transform: perspective(600px) rotateY(0deg) scale(1); }
-  30% { transform: perspective(600px) rotateY(6deg) scale(1.02); }
-  60% { transform: perspective(600px) rotateY(-4deg) scale(1.01); }
-  100% { transform: perspective(600px) rotateY(0deg) scale(1); }
-}
-.service-card.tap-tilt .service-card-inner {
-  animation: tap-tilt 0.5s ease-out;
-}
 
 /* Mobile tap bounce for buttons */
 @keyframes tap-bounce {
@@ -866,10 +856,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   -webkit-backface-visibility: hidden;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border-light);
-  position: relative;
   overflow: hidden;
 }
 .service-card-front {
+  position: relative;
   padding: var(--space-8) var(--space-6);
   background: var(--color-bg-warm);
 }
@@ -1749,16 +1739,44 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     bottom: 0;
     left: 0;
     right: 0;
-    padding: var(--space-3) var(--space-4);
-    background: rgba(255,255,255,0.96);
+    padding: var(--space-2) var(--space-3);
+    background: rgba(232,230,220,0.96);
     backdrop-filter: blur(12px);
     box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
     z-index: 90;
     display: flex;
     justify-content: center;
+    gap: var(--space-2);
   }
-  .fixed-cta-bar .btn { width: 100%; max-width: 400px; }
-  body { padding-bottom: 72px; }
+  .fixed-cta-bar .btn,
+  .fixed-cta-bar .btn-game {
+    flex: 1;
+    max-width: 200px;
+    font-size: 0.85rem;
+    padding: 0.55rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Silkscreen", cursive;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border: 2px solid var(--color-accent);
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-accent);
+    box-shadow: none;
+    clip-path: polygon(
+      0 4px, 4px 4px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px),
+      calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    animation: footer-glow-pulse 2s ease-in-out infinite;
+  }
+  .fixed-cta-bar .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+  body { padding-bottom: 56px; }
 }
 
 /* ===== Mid CTA ===== */
@@ -2249,7 +2267,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 <!-- ===== Fixed CTA Bar (Mobile) ===== -->
 <div class="fixed-cta-bar">
-  <a href="mailto:info.hopesconsul@gmail.com" class="btn btn-primary">無料相談を予約する</a>
+  <a href="mailto:info.hopesconsul@gmail.com" class="btn btn-primary">無料相談</a>
+  <a href="games/" class="btn btn-game">GAME</a>
 </div>
 
 <script>
@@ -2617,54 +2636,48 @@ window.addEventListener('scroll', () => {
       applyTransform();
     });
 
-    /* PC + スマホ共通: 横ドラッグ/スワイプでY軸回転 */
-    var dragStartX = 0;
-    var dragging = false;
+    var isMobile = 'ontouchstart' in window;
 
-    function onDragStart(e) {
-      var point = e.touches ? e.touches[0] : e;
-      dragStartX = point.clientX;
-      dragging = true;
-      inner.style.transition = 'none';
-    }
+    if (isMobile) {
+      /* スマホ: 回転無効、静的表示のみ */
+    } else {
+      /* PC: 横ドラッグでY軸回転 */
+      var dragStartX = 0;
+      var pcDragging = false;
 
-    function onDragMove(e) {
-      if (!dragging) return;
-      var point = e.touches ? e.touches[0] : e;
-      var dx = point.clientX - dragStartX;
-      if (Math.abs(dx) > 10) {
-        if (e.cancelable) e.preventDefault();
+      card.addEventListener('mousedown', function(e) {
+        dragStartX = e.clientX;
+        pcDragging = true;
+        inner.style.transition = 'none';
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!pcDragging) return;
+        var dx = e.clientX - dragStartX;
+        if (Math.abs(dx) > 5) {
+          tiltX = 0;
+          tiltY = 0;
+          inner.style.transform = 'rotateY(' + (spinY + dx * 1.5) + 'deg)';
+        }
+      });
+      document.addEventListener('mouseup', function(e) {
+        if (!pcDragging) return;
+        pcDragging = false;
+        var dx = e.clientX - dragStartX;
+        if (Math.abs(dx) > 30) {
+          spinY += (dx > 0) ? 180 : -180;
+        }
+        inner.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
+        var norm = ((spinY % 360) + 360) % 360;
+        if (norm > 90 && norm <= 270) {
+          spinY = Math.round(spinY / 360) * 360 + 180;
+        } else {
+          spinY = Math.round(spinY / 360) * 360;
+        }
         tiltX = 0;
         tiltY = 0;
-        inner.style.transform = 'rotateY(' + (spinY + dx * 0.5) + 'deg)';
-      }
+        inner.style.transform = 'rotateY(' + spinY + 'deg)';
+      });
     }
-
-    function onDragEnd(e) {
-      if (!dragging) return;
-      dragging = false;
-      var point = e.changedTouches ? e.changedTouches[0] : e;
-      var dx = point.clientX - dragStartX;
-      spinY += dx * 0.5;
-      /* 最も近い表/裏にスナップ */
-      inner.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
-      var norm = ((spinY % 360) + 360) % 360;
-      if (norm > 90 && norm <= 270) {
-        spinY = Math.round(spinY / 360) * 360 + 180;
-      } else {
-        spinY = Math.round(spinY / 360) * 360;
-      }
-      tiltX = 0;
-      tiltY = 0;
-      inner.style.transform = 'rotateY(' + spinY + 'deg)';
-    }
-
-    card.addEventListener('mousedown', onDragStart);
-    document.addEventListener('mousemove', onDragMove);
-    document.addEventListener('mouseup', onDragEnd);
-    card.addEventListener('touchstart', onDragStart, { passive: true });
-    document.addEventListener('touchmove', onDragMove, { passive: false });
-    document.addEventListener('touchend', onDragEnd);
 
     /* PC: トラックパッド二本指スワイプでも回転 */
     card.addEventListener('wheel', function(e) {
@@ -2947,17 +2960,6 @@ window.addEventListener('scroll', () => {
     setTimeout(function() { ripple.remove(); }, 600);
   }, { passive: true });
 
-  /* 2. Service card tap tilt */
-  document.querySelectorAll('[data-tilt]').forEach(function(card) {
-    card.addEventListener('touchstart', function() {
-      card.classList.remove('tap-tilt');
-      void card.offsetWidth;
-      card.classList.add('tap-tilt');
-    }, { passive: true });
-    card.addEventListener('animationend', function() {
-      card.classList.remove('tap-tilt');
-    });
-  });
 
   /* 3. Button tap bounce */
   document.addEventListener('touchstart', function(e) {
