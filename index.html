@@ -173,20 +173,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 1;
 }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+.fade-in.visible { opacity: 1; }
 
 .stagger-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  transition-delay: calc(var(--stagger-index, 0) * 0.08s);
+  opacity: 1;
 }
-.stagger-item.visible { opacity: 1; transform: translateY(0); }
+.stagger-item.visible { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -613,7 +607,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ===== Pain Points (課題提起) ===== */
 .pain-section {
-  background: var(--color-bg-warm);
   overflow: hidden;
   position: relative;
 }
@@ -1436,7 +1429,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ===== Strengths (選ばれる理由) ===== */
 .strengths-section {
-  background: var(--color-bg-warm);
 }
 .strengths-list {
   display: flex;
@@ -1563,7 +1555,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ===== 士業特化 ===== */
 .shigyou-section {
-  background: var(--color-bg-warm);
 }
 .shigyou-intro {
   max-width: 760px;
