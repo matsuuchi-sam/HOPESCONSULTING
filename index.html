@@ -297,17 +297,29 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 8px 24px;
-  background: var(--color-cta);
+  padding: 0.45rem 1.2rem;
+  background: var(--color-accent);
   color: #fff;
-  font-size: var(--text-sm);
-  font-weight: 500;
-  border-radius: var(--radius-full);
+  font-family: "Silkscreen", cursive;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 2px solid var(--color-accent);
+  border-radius: 0;
   white-space: nowrap;
-  letter-spacing: 0.02em;
-  transition: background var(--duration-fast) var(--ease-smooth);
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+  transition: background 0.2s, box-shadow 0.2s;
 }
-.nav-links .nav-cta:hover { background: var(--color-cta-hover); color: #fff; }
+.nav-links .nav-cta:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: #fff;
+}
 .nav-links .nav-cta::after { display: none; }
 
 .hamburger {
@@ -380,13 +392,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mobile-menu-overlay a:hover { color: var(--color-accent); }
 .mobile-menu-overlay .nav-cta {
   display: inline-flex;
-  padding: var(--space-3) var(--space-6);
-  background: var(--color-cta);
+  padding: 0.55rem 1.5rem;
+  background: var(--color-accent);
   color: #fff;
-  font-size: var(--text-base);
-  border-radius: var(--radius-full);
+  font-family: "Silkscreen", cursive;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 2px solid var(--color-accent);
+  border-radius: 0;
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
 }
-.mobile-menu-overlay .nav-cta:hover { color: #fff; background: var(--color-cta-hover); }
+.mobile-menu-overlay .nav-cta:hover {
+  color: #fff;
+  background: var(--color-accent-hover);
+  animation: pixel-hover 0.4s steps(3) forwards;
+  box-shadow: 0 0 0 2px var(--color-accent), 0 0 16px rgba(217,119,87,0.5);
+}
 
 @media (max-width: 767px) {
   .hamburger {
@@ -600,7 +627,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Progress bar */
 .pain-progress {
   max-width: 400px;
-  margin: -0.5rem auto var(--space-5);
+  margin: -1rem auto var(--space-5);
 }
 .pain-progress-header {
   display: flex;
@@ -840,45 +867,78 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pain-solve-hint {
   text-align: center;
   margin-top: var(--space-4);
-  font-size: var(--text-sm);
-  color: var(--color-text-light);
-  opacity: 0.6;
+  font-family: "Silkscreen", cursive;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  opacity: 0.8;
+  animation: hint-blink 1.8s ease-in-out infinite;
 }
 
 /* All solved message */
 .pain-all-solved {
   text-align: center;
-  padding: var(--space-8) var(--space-4);
+  padding: var(--space-3) var(--space-4) var(--space-2);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-1);
   animation: solved-appear 0.6s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 }
 .pain-all-solved h3 {
-  font-size: var(--text-xl);
+  font-family: "Silkscreen", cursive;
+  font-size: 1.1rem;
   color: var(--color-primary);
-  margin-bottom: var(--space-3);
+  letter-spacing: 0.06em;
+  margin-bottom: 0;
 }
 .pain-all-solved p {
   color: var(--color-text-light);
   font-size: var(--text-base);
+  line-height: 1.7;
 }
 .pain-all-solved .solved-cta {
   display: inline-block;
-  margin-top: var(--space-5);
-  padding: var(--space-3) var(--space-6);
+  margin-top: var(--space-3);
+  padding: 0.55rem 1.5rem;
   background: var(--color-accent);
   color: #fff;
-  border-radius: var(--radius-lg);
+  font-family: "Silkscreen", cursive;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 2px solid var(--color-accent);
+  border-radius: 0;
   text-decoration: none;
-  font-weight: 600;
-  transition: background 0.2s;
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+  transition: background 0.2s, box-shadow 0.2s;
 }
-.pain-all-solved .solved-cta:hover { background: var(--color-accent-hover); }
+.pain-all-solved .solved-cta:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  animation: pixel-hover 0.4s steps(3) forwards;
+  box-shadow: 0 0 0 2px var(--color-accent), 0 0 16px rgba(217,119,87,0.5);
+}
 @keyframes solved-appear {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hint-blink {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.3; }
+}
+@keyframes pixel-hover {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-1px, 1px); }
+  66%  { transform: translate(1px, -1px); }
+  100% { transform: translate(0, 0); }
 }
 
 /* Confetti */
@@ -1904,8 +1964,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--color-accent);
   border-color: var(--color-accent);
   color: #fff;
-  animation: none;
-  box-shadow: 0 0 20px rgba(217,119,87,0.4);
+  animation: pixel-hover 0.4s steps(3) forwards;
+  box-shadow: 0 0 0 2px var(--color-accent), 0 0 16px rgba(217,119,87,0.5);
 }
 .footer-game-btn:hover::before {
   animation: none;
@@ -1998,7 +2058,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <li><a href="#services">サービス</a></li>
         <li><a href="#flow">ご利用の流れ</a></li>
         <li><a href="#about">会社概要</a></li>
-        <li><a href="mailto:info.hopesconsul@gmail.com" class="nav-cta">無料相談</a></li>
+        <li><a href="contact.html" class="nav-cta">無料相談</a></li>
       </ul>
     </nav>
   </div>
@@ -2011,7 +2071,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     <li><a href="#services">サービス</a></li>
     <li><a href="#flow">ご利用の流れ</a></li>
     <li><a href="#about">会社概要</a></li>
-    <li><a href="mailto:info.hopesconsul@gmail.com" class="nav-cta">無料相談</a></li>
+    <li><a href="contact.html" class="nav-cta">無料相談</a></li>
   </ul>
 </div>
 
@@ -2170,7 +2230,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
 
     </div>
-    <p class="pain-solve-hint">カードをクリックして課題を解決しよう</p>
+    <p class="pain-solve-hint">▶ TAP CARDS TO SOLVE ◀</p>
   </div>
 </section>
 
@@ -2444,7 +2504,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <h4>企業情報</h4>
         <ul class="footer-links">
           <li><a href="#about">会社概要</a></li>
-          <li><a href="mailto:info.hopesconsul@gmail.com">お問い合わせ</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
           <li><a href="privacy.html">プライバシーポリシー</a></li>
         </ul>
       </div>
@@ -2473,7 +2533,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 <!-- ===== Fixed CTA Bar (Mobile) ===== -->
 <div class="fixed-cta-bar">
-  <a href="mailto:info.hopesconsul@gmail.com" class="btn btn-primary">無料相談</a>
+  <a href="contact.html" class="btn btn-primary">無料相談</a>
   <a href="games/" class="btn btn-game">GAME</a>
 </div>
 
@@ -2704,23 +2764,22 @@ window.addEventListener('scroll', () => {
     for (var i = 0; i < 60; i++) {
       var el = document.createElement('div');
       el.className = 'confetti-piece';
-      var size = 6 + Math.random() * 8;
-      var shape = Math.random() > 0.5 ? '50%' : '2px';
+      var size = 4 + Math.floor(Math.random() * 4) * 2;
       var color = colors[Math.floor(Math.random() * colors.length)];
       el.style.cssText = 'width:' + size + 'px;height:' + size +
-        'px;border-radius:' + shape + ';background:' + color + ';opacity:0;';
+        'px;border-radius:0;background:' + color + ';image-rendering:pixelated;opacity:0;';
       container.appendChild(el);
       var floor = sectionH - size - (Math.random() * 20);
       pieces.push({
         el: el,
         x: Math.random() * 100,
         y: -20,
-        vy: 2.5 + Math.random() * 3.5,
+        vy: 4 + Math.random() * 5,
         vx: (Math.random() - 0.5) * 1.5,
         rot: 0,
         rotV: (Math.random() - 0.5) * 12,
         floor: floor,
-        delay: Math.random() * 400,
+        delay: Math.random() * 200,
         landed: false,
         size: size
       });
@@ -2882,7 +2941,7 @@ window.addEventListener('scroll', () => {
 
       var robotX = -64;
       var sectionW = painSection.offsetWidth;
-      var sweepSpeed = 3;
+      var sweepSpeed = 5;
       var walkFrame = 0;
       var robotPhase = "sweep"; // sweep → return → wait → exit
 
@@ -2904,8 +2963,8 @@ window.addEventListener('scroll', () => {
             if (dist < 120 && p.y > sectionH - 200) {
               p.landed = false;
               p.disturbed = true;
-              p.vy = -(Math.random() * 0.5);
-              p.vx = sweepSpeed + 1 + Math.random() * 2;
+              p.vy = -(Math.random() * 1);
+              p.vx = sweepSpeed + 2 + Math.random() * 3;
               p.rotV = (Math.random() - 0.5) * 10;
             }
           }
@@ -2944,15 +3003,17 @@ window.addEventListener('scroll', () => {
 
             // 吹き出し表示
             var bubble = document.createElement('div');
-            bubble.style.cssText = 'position:absolute;bottom:70px;left:' + (robotX - 20) + 'px;' +
-              'background:#fff;color:#141413;font-family:"Noto Sans JP",sans-serif;font-size:0.7rem;font-weight:600;' +
-              'padding:0.3rem 0.6rem;border-radius:6px;white-space:nowrap;z-index:11;' +
-              'box-shadow:0 2px 8px rgba(0,0,0,0.12);opacity:0;transition:opacity 0.3s;';
-            bubble.textContent = 'お気軽にどうぞ！';
-            // 吹き出し三角
+            bubble.style.cssText = 'position:absolute;bottom:46px;left:' + (robotX + 68) + 'px;' +
+              'background:#fff;color:var(--color-primary);font-family:"Silkscreen",cursive;font-size:0.6rem;font-weight:700;' +
+              'padding:0.35rem 0.7rem;border-radius:0;white-space:nowrap;z-index:11;letter-spacing:0.06em;' +
+              'border:2px solid var(--color-primary);opacity:0;transition:opacity 0.3s;' +
+              'clip-path:polygon(0 3px,3px 3px,3px 0,calc(100% - 3px) 0,calc(100% - 3px) 3px,100% 3px,' +
+              '100% calc(100% - 3px),calc(100% - 3px) calc(100% - 3px),calc(100% - 3px) 100%,3px 100%,3px calc(100% - 3px),0 calc(100% - 3px));';
+            bubble.textContent = 'CONTACT ME!';
+            // ドット風三角（左向き、ロボ側を指す）
             var tri = document.createElement('div');
-            tri.style.cssText = 'position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);' +
-              'width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #fff;';
+            tri.style.cssText = 'position:absolute;top:50%;left:-8px;transform:translateY(-50%);' +
+              'width:8px;height:8px;background:var(--color-primary);';
             bubble.appendChild(tri);
             container.appendChild(bubble);
             setTimeout(function() { bubble.style.opacity = '1'; }, 50);
@@ -2968,11 +3029,11 @@ window.addEventListener('scroll', () => {
               bubble.style.opacity = '0';
               setTimeout(function() { bubble.remove(); }, 300);
 
-              // お辞儀 → 0.8秒後に退場
+              // お辞儀 → 0.5秒後に退場
               setTimeout(function() {
                 robotPhase = "exit";
                 requestAnimationFrame(sweepTick);
-              }, 800);
+              }, 500);
             }
             document.addEventListener('click', onPageClick);
             return; // アニメーション一時停止
@@ -2999,10 +3060,10 @@ window.addEventListener('scroll', () => {
     function checkAllSettled() {
       if (pieces.every(function(p) { return p.landed; })) {
         clearInterval(settledCheckId);
-        setTimeout(launchRobot, 1000);
+        setTimeout(launchRobot, 400);
       }
     }
-    settledCheckId = setInterval(checkAllSettled, 500);
+    settledCheckId = setInterval(checkAllSettled, 200);
 
     // マウスで紙吹雪を散らす
     var lastMouse = { x: 0, y: 0 };
@@ -3085,8 +3146,8 @@ window.addEventListener('scroll', () => {
             msg.className = 'pain-all-solved';
             msg.style.minHeight = '50vh';
             msg.innerHTML = '<h3>すべての課題、解決できます。</h3>' +
-              '<p>ホープスコンサルティングが<br>貴社の課題解決パートナーになります。</p>' +
-              '<a href="mailto:info.hopesconsul@gmail.com" class="solved-cta">無料相談してみる</a>';
+              '<p>HOPES CONSULTINGが<br>貴社の課題解決パートナーになります。</p>' +
+              '<a href="contact.html" class="solved-cta">無料相談してみる</a>';
             section.appendChild(msg);
             msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
             /* コンテンツ切り替え後に紙吹雪を発射 */
