@@ -315,6 +315,18 @@ body::after {
 .result-best strong { color: var(--color-accent); font-family: var(--font-dot); }
 .new-record { display: inline-block; background: var(--color-accent); color: #fff; font-family: var(--font-pixel); font-size: 0.55rem; font-weight: 700; padding: 0.15rem 0.5rem; margin-left: 0.4rem; vertical-align: middle; clip-path: var(--clip-btn); }
 
+/* Ranking */
+.ranking-box { width: 100%; max-width: 260px; margin: 0 auto 0.4rem; }
+.ranking-title { font-family: var(--font-pixel); font-size: 0.6rem; color: var(--color-text-muted); margin-bottom: 0.2rem; text-align: center; letter-spacing: 0.1em; }
+.ranking-row { display: flex; align-items: center; gap: 0.4rem; padding: 0.15rem 0; font-family: var(--font-dot); font-size: 0.7rem; color: var(--color-text); }
+.ranking-medal { font-size: 0.8rem; width: 1.2rem; text-align: center; }
+.ranking-name { flex: 1; }
+.ranking-score { font-weight: 700; color: var(--color-accent); }
+.ranking-empty { font-family: var(--font-dot); font-size: 0.65rem; color: var(--color-text-muted); text-align: center; padding: 0.2rem 0; }
+.ranking-input { font-family: var(--font-dot); font-size: 0.7rem; width: 3.5rem; padding: 0.15rem 0.3rem; border: 1.5px solid var(--color-accent); background: var(--color-bg); color: var(--color-text); text-align: center; text-transform: uppercase; clip-path: var(--clip-btn); }
+.ranking-input::placeholder { color: var(--color-text-muted); }
+.ranking-msg { font-family: var(--font-dot); font-size: 0.6rem; color: var(--color-accent); text-align: center; margin-top: 0.15rem; }
+
 .result-actions { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
 .btn-retry { font-family: var(--font-dot); font-size: 0.8rem; font-weight: 400; padding: 0.6rem 1.5rem; background: var(--color-accent); color: #fff; border: none; cursor: pointer; transition: background 0.2s var(--ease-smooth); clip-path: var(--clip-btn); white-space: nowrap; }
 .btn-retry:hover { background: var(--color-cta-hover); }
@@ -425,6 +437,12 @@ body::after {
       <div class="result-comment" id="resultComment" style="font-size:0.8rem; color:var(--color-text); margin-bottom:0.4rem; padding:0.5rem 0.7rem; background:var(--color-bg); border-radius:var(--radius-lg); line-height:1.5;"></div>
 
       <div class="result-best" id="resultBest"></div>
+
+      <div class="ranking-box" id="rankingBox" style="display:none;">
+        <div class="ranking-title">TOP 3</div>
+        <div id="rankingList"></div>
+        <div class="ranking-msg" id="rankingMsg"></div>
+      </div>
 
       <div class="result-actions">
         <button class="btn-retry" id="retryBtn">タイトルへ戻る</button>
@@ -670,6 +688,138 @@ function endGame() {
   resultScreen.style.display = "block";
   resultScreen.classList.add("fade-in");
   progressBar.style.width = "100%";
+
+  // ランキング取得・表示
+  fetchRanking("stroop", accuracy, avg);
+}
+
+// ===== Ranking =====
+var RANKING_API = "/api/ranking.php";
+var MEDALS = ["\uD83E\uDD47", "\uD83E\uDD48", "\uD83E\uDD49"];
+
+function fetchRanking(game, myScore, mySubScore) {
+  var box = document.getElementById("rankingBox");
+  var list = document.getElementById("rankingList");
+  var msg = document.getElementById("rankingMsg");
+  box.style.display = "none";
+  list.innerHTML = "";
+  msg.textContent = "";
+
+  fetch(RANKING_API + "?game=" + game)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var rankings = data.rankings || [];
+      var qualifies = false;
+
+      if (rankings.length < 3) {
+        qualifies = true;
+      } else {
+        var worst = rankings[rankings.length - 1];
+        if (myScore > parseFloat(worst.score) || (myScore == parseFloat(worst.score) && mySubScore < parseFloat(worst.sub_score))) {
+          qualifies = true;
+        }
+      }
+
+      renderRanking(rankings, qualifies, myScore, mySubScore, game);
+      box.style.display = "";
+    })
+    .catch(function() {});
+}
+
+function renderRanking(rankings, qualifies, myScore, mySubScore, game) {
+  var list = document.getElementById("rankingList");
+  var msg = document.getElementById("rankingMsg");
+  list.innerHTML = "";
+
+  var rows = [];
+  for (var i = 0; i < rankings.length; i++) {
+    rows.push({ initials: rankings[i].initials, score: parseFloat(rankings[i].score), sub_score: parseFloat(rankings[i].sub_score || 0), isMe: false });
+  }
+
+  if (qualifies) {
+    var insertIdx = rows.length;
+    for (var i = 0; i < rows.length; i++) {
+      if (myScore > rows[i].score || (myScore == rows[i].score && mySubScore < rows[i].sub_score)) {
+        insertIdx = i;
+        break;
+      }
+    }
+    rows.splice(insertIdx, 0, { initials: null, score: myScore, sub_score: mySubScore, isMe: true });
+    if (rows.length > 3) rows = rows.slice(0, 3);
+    msg.textContent = "ランクイン！イニシャルを入力してEnter";
+  }
+
+  for (var i = 0; i < 3; i++) {
+    if (i < rows.length) {
+      var r = rows[i];
+      if (r.isMe) {
+        list.innerHTML += '<div class="ranking-row">' +
+          '<span class="ranking-medal">' + MEDALS[i] + '</span>' +
+          '<input class="ranking-input" id="rankInput" maxlength="5" placeholder="A.B">' +
+          '<span class="ranking-score">' + r.score + '%</span>' +
+          '</div>';
+      } else {
+        list.innerHTML += '<div class="ranking-row">' +
+          '<span class="ranking-medal">' + MEDALS[i] + '</span>' +
+          '<span class="ranking-name">' + escapeHtml(r.initials) + '</span>' +
+          '<span class="ranking-score">' + parseFloat(r.score) + '%</span>' +
+          '</div>';
+      }
+    } else {
+      list.innerHTML += '<div class="ranking-row"><span class="ranking-medal">' + MEDALS[i] + '</span><span class="ranking-empty">---</span></div>';
+    }
+  }
+
+  if (qualifies) setupRankInput(game, myScore, mySubScore);
+}
+
+function setupRankInput(game, score, subScore) {
+  setTimeout(function() {
+    var input = document.getElementById("rankInput");
+    if (!input) return;
+    input.focus();
+    input.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" && input.value.trim()) {
+        submitRanking(game, input.value.trim(), score, subScore);
+      }
+    });
+  }, 100);
+}
+
+function submitRanking(game, initials, score, subScore) {
+  var msg = document.getElementById("rankingMsg");
+  msg.textContent = "登録中...";
+
+  fetch(RANKING_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ game: game, initials: initials, score: score, sub_score: subScore })
+  })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ranked) {
+        msg.textContent = "登録しました！";
+        var list = document.getElementById("rankingList");
+        list.innerHTML = "";
+        var rankings = data.rankings || [];
+        for (var i = 0; i < rankings.length; i++) {
+          list.innerHTML += '<div class="ranking-row">' +
+            '<span class="ranking-medal">' + MEDALS[i] + '</span>' +
+            '<span class="ranking-name">' + escapeHtml(rankings[i].initials) + '</span>' +
+            '<span class="ranking-score">' + parseFloat(rankings[i].score) + '%</span>' +
+            '</div>';
+        }
+      } else {
+        msg.textContent = "登録できませんでした";
+      }
+    })
+    .catch(function() { msg.textContent = "通信エラー"; });
+}
+
+function escapeHtml(str) {
+  var div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
 }
 
 // ===== Retry =====

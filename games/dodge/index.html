@@ -197,6 +197,18 @@ canvas {
 .result-best strong { color: var(--color-accent); }
 .result-new-record { color: var(--color-accent); font-size: 0.75rem; font-family: var(--font-pixel); margin-bottom: 0.2rem; }
 
+/* Ranking */
+.ranking-box { width: 100%; max-width: 260px; margin-bottom: 0.6rem; }
+.ranking-title { font-family: var(--font-pixel); font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem; text-align: center; letter-spacing: 0.1em; }
+.ranking-row { display: flex; align-items: center; gap: 0.4rem; padding: 0.2rem 0; font-family: var(--font-dot); font-size: 0.75rem; color: rgba(255,255,255,0.8); }
+.ranking-medal { font-size: 0.85rem; width: 1.2rem; text-align: center; }
+.ranking-name { flex: 1; }
+.ranking-score { font-weight: 700; color: var(--color-accent); }
+.ranking-empty { font-family: var(--font-dot); font-size: 0.7rem; color: rgba(255,255,255,0.3); text-align: center; padding: 0.3rem 0; }
+.ranking-input { font-family: var(--font-dot); font-size: 0.75rem; width: 3.5rem; padding: 0.15rem 0.3rem; border: 1.5px solid var(--color-accent); background: rgba(0,0,0,0.4); color: #fff; text-align: center; text-transform: uppercase; }
+.ranking-input::placeholder { color: rgba(255,255,255,0.3); }
+.ranking-msg { font-family: var(--font-dot); font-size: 0.65rem; color: var(--color-accent); text-align: center; margin-top: 0.2rem; }
+
 .result-btns { display: flex; gap: 0.6rem; }
 .btn-retry {
   font-family: var(--font-dot);
@@ -273,7 +285,7 @@ canvas {
         <div class="hud-heart"></div>
       </div>
       <div class="hud-right">
-        <div class="hud-distance" id="hudDistance">0 m</div>
+        <div class="hud-distance" id="hudDistance">0.0 s</div>
         <div class="hud-phase" id="hudPhase"></div>
       </div>
     </div>
@@ -309,9 +321,14 @@ canvas {
     <div class="screen-overlay hidden" id="resultScreen">
       <div class="result-new-record hidden" id="resultNewRecord">NEW RECORD!</div>
       <div class="result-distance" id="resultDistance">0</div>
-      <div class="result-unit">m</div>
+      <div class="result-unit">秒</div>
       <div class="result-comment" id="resultComment"></div>
       <div class="result-best" id="resultBest"></div>
+      <div class="ranking-box" id="rankingBox" style="display:none;">
+        <div class="ranking-title">TOP 3</div>
+        <div id="rankingList"></div>
+        <div class="ranking-msg" id="rankingMsg"></div>
+      </div>
       <div class="result-btns">
         <button class="btn-retry" id="btnRetry">RETRY</button>
         <button class="btn-share" id="btnShare">X でシェア</button>
@@ -814,7 +831,6 @@ var targetX = player.x;
 var targetY = player.y;
 var lives = 3;
 var maxLives = 3;
-var distance = 0;
 var elapsed = 0;
 var speedMul = 0;
 var phase = 1;
@@ -903,7 +919,9 @@ function updatePhase() {
 // ===== Spawning =====
 function updateSpawns(dt) {
   var slow = slowTimer > 0 ? 0.4 : 1;
-  speedMul = Math.min(elapsed / 80, 2.5);
+  speedMul = elapsed / 80;
+  if (elapsed <= 200) speedMul = Math.min(speedMul, 2.5);
+  else speedMul = 2.5 + (elapsed - 200) / 60;
 
   // Bug: always
   spawnTimers.bug -= dt;
@@ -960,7 +978,6 @@ function updateSpawns(dt) {
 // ===== Update =====
 function update(dt) {
   elapsed += dt;
-  distance += (10 + speedMul * 15) * dt;
   gridOffset += (1 + speedMul * 0.5);
 
   updatePhase();
@@ -1086,7 +1103,7 @@ function update(dt) {
   updateItemBar();
 
   // HUD
-  document.getElementById("hudDistance").textContent = Math.floor(distance) + " m";
+  document.getElementById("hudDistance").textContent = (Math.floor(elapsed * 10) / 10).toFixed(1) + " s";
 }
 
 function hitPlayer() {
@@ -1270,7 +1287,6 @@ function startGame() {
   targetX = player.x;
   targetY = player.y;
   lives = 3;
-  distance = 0;
   elapsed = 0;
   speedMul = 0;
   phase = 1;
@@ -1288,7 +1304,7 @@ function startGame() {
   updateHudLives();
   hideItemHud();
   document.getElementById("hudPhase").textContent = phaseNames[1];
-  document.getElementById("hudDistance").textContent = "0 m";
+  document.getElementById("hudDistance").textContent = "0.0 s";
   document.getElementById("startScreen").classList.add("hidden");
   document.getElementById("resultScreen").classList.add("hidden");
   document.getElementById("phaseAnnounce").classList.remove("show");
@@ -1300,32 +1316,211 @@ function gameOver() {
   state = "dead";
   if (animId) cancelAnimationFrame(animId);
 
-  var dist = Math.floor(distance);
-  var prevBest = parseInt(localStorage.getItem("dodge_best") || "0");
-  var isNew = dist > prevBest;
-  if (isNew) localStorage.setItem("dodge_best", dist.toString());
-  var best = isNew ? dist : prevBest;
+  var sec = Math.floor(elapsed * 10) / 10;
+  var prevBest = parseFloat(localStorage.getItem("dodge_best_sec") || "0");
+  var isNew = sec > prevBest;
+  if (isNew) localStorage.setItem("dodge_best_sec", sec.toString());
+  var best = isNew ? sec : prevBest;
 
   var comment = "";
-  if (dist < 200) comment = "インターン初日...まずは生き残ることから！";
-  else if (dist < 500) comment = "新人エンジニアレベル。伸びしろ無限大！";
-  else if (dist < 1000) comment = "中堅エンジニア！安定感が光ります。";
-  else if (dist < 2000) comment = "シニアエンジニア級！鋼の反射神経。";
-  else if (dist < 3000) comment = "CTO級の生存力！デジタル世界の覇者。";
+  if (sec < 15) comment = "インターン初日...まずは生き残ることから！";
+  else if (sec < 30) comment = "新人エンジニアレベル。伸びしろ無限大！";
+  else if (sec < 60) comment = "中堅エンジニア！安定感が光ります。";
+  else if (sec < 90) comment = "シニアエンジニア級！鋼の反射神経。";
+  else if (sec < 120) comment = "CTO級の生存力！デジタル世界の覇者。";
   else comment = "伝説のハッカー...あなたに倒せない脅威はない。";
 
-  document.getElementById("resultDistance").textContent = dist;
+  document.getElementById("resultDistance").textContent = sec.toFixed(1);
   document.getElementById("resultComment").textContent = comment;
-  document.getElementById("resultBest").innerHTML = "自己ベスト: <strong>" + best + " m</strong>" + (isNew ? " (更新!)" : "");
+  document.getElementById("resultBest").innerHTML = "自己ベスト: <strong>" + best.toFixed(1) + " 秒</strong>" + (isNew ? " (更新!)" : "");
   document.getElementById("resultNewRecord").classList.toggle("hidden", !isNew);
   document.getElementById("resultScreen").classList.remove("hidden");
+
+  // ランキング取得・表示
+  fetchRanking("dodge", sec);
+}
+
+// ===== Ranking =====
+var RANKING_API = "/api/ranking.php";
+var MEDALS = ["\uD83E\uDD47", "\uD83E\uDD48", "\uD83E\uDD49"];
+
+function fetchRanking(game, myScore) {
+  var box = document.getElementById("rankingBox");
+  var list = document.getElementById("rankingList");
+  var msg = document.getElementById("rankingMsg");
+  box.style.display = "none";
+  list.innerHTML = "";
+  msg.textContent = "";
+
+  fetch(RANKING_API + "?game=" + game)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var rankings = data.rankings || [];
+      var qualifies = false;
+
+      if (rankings.length < 3) {
+        qualifies = true;
+      } else {
+        var worst = parseFloat(rankings[rankings.length - 1].score);
+        if (myScore > worst) qualifies = true;
+      }
+
+      renderRanking(rankings, qualifies, myScore, game);
+      box.style.display = "";
+    })
+    .catch(function() {
+      // API失敗時は表示しない
+    });
+}
+
+function renderRanking(rankings, qualifies, myScore, game) {
+  var list = document.getElementById("rankingList");
+  var msg = document.getElementById("rankingMsg");
+  list.innerHTML = "";
+
+  if (rankings.length === 0 && qualifies) {
+    msg.textContent = "ランクイン！イニシャルを入力してください";
+    list.innerHTML = '<div class="ranking-row">' +
+      '<span class="ranking-medal">' + MEDALS[0] + '</span>' +
+      '<input class="ranking-input" id="rankInput" maxlength="5" placeholder="A.B">' +
+      '<span class="ranking-score">' + myScore.toFixed(1) + '秒</span>' +
+      '</div>';
+    setupRankInput(game, myScore);
+    return;
+  }
+
+  // 自分のランクイン位置を特定
+  var insertIdx = -1;
+  if (qualifies) {
+    for (var i = 0; i < rankings.length; i++) {
+      if (myScore > parseFloat(rankings[i].score)) {
+        insertIdx = i;
+        break;
+      }
+    }
+    if (insertIdx === -1) insertIdx = rankings.length;
+  }
+
+  var displayed = 0;
+  for (var i = 0; i < 3; i++) {
+    if (qualifies && i === insertIdx && displayed < 3) {
+      // ランクイン行（入力欄）
+      list.innerHTML += '<div class="ranking-row">' +
+        '<span class="ranking-medal">' + MEDALS[i] + '</span>' +
+        '<input class="ranking-input" id="rankInput" maxlength="5" placeholder="A.B">' +
+        '<span class="ranking-score">' + myScore.toFixed(1) + '秒</span>' +
+        '</div>';
+      displayed++;
+      i--; // 次のループで既存データを表示
+      qualifies = false; // 一度だけ挿入
+      msg.textContent = "ランクイン！イニシャルを入力してEnter";
+      continue;
+    }
+    var rIdx = displayed - (insertIdx !== -1 && displayed > insertIdx ? 1 : 0);
+    if (qualifies === false && insertIdx !== -1 && displayed > insertIdx) {
+      rIdx = displayed - 1;
+    } else {
+      rIdx = i - (insertIdx !== -1 && !qualifies && i > insertIdx ? 1 : 0);
+    }
+    // 簡潔に再実装
+    break;
+  }
+
+  // シンプルな実装に切り替え
+  list.innerHTML = "";
+  var rows = [];
+  for (var i = 0; i < rankings.length; i++) {
+    rows.push({ initials: rankings[i].initials, score: parseFloat(rankings[i].score), isMe: false });
+  }
+  if (insertIdx !== -1) {
+    rows.splice(insertIdx, 0, { initials: null, score: myScore, isMe: true });
+    if (rows.length > 3) rows = rows.slice(0, 3);
+  }
+
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    if (r.isMe) {
+      list.innerHTML += '<div class="ranking-row">' +
+        '<span class="ranking-medal">' + MEDALS[i] + '</span>' +
+        '<input class="ranking-input" id="rankInput" maxlength="5" placeholder="A.B">' +
+        '<span class="ranking-score">' + r.score.toFixed(1) + '秒</span>' +
+        '</div>';
+      msg.textContent = "ランクイン！イニシャルを入力してEnter";
+    } else {
+      list.innerHTML += '<div class="ranking-row">' +
+        '<span class="ranking-medal">' + MEDALS[i] + '</span>' +
+        '<span class="ranking-name">' + escapeHtml(r.initials) + '</span>' +
+        '<span class="ranking-score">' + parseFloat(r.score).toFixed(1) + '秒</span>' +
+        '</div>';
+    }
+  }
+
+  // 3件未満で自分がランクインしない場合
+  if (insertIdx === -1) {
+    for (var i = rows.length; i < 3; i++) {
+      list.innerHTML += '<div class="ranking-row"><span class="ranking-medal">' + MEDALS[i] + '</span><span class="ranking-empty">---</span></div>';
+    }
+  }
+
+  if (insertIdx !== -1) setupRankInput(game, myScore);
+}
+
+function setupRankInput(game, score) {
+  setTimeout(function() {
+    var input = document.getElementById("rankInput");
+    if (!input) return;
+    input.focus();
+    input.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" && input.value.trim()) {
+        submitRanking(game, input.value.trim(), score);
+      }
+    });
+  }, 100);
+}
+
+function submitRanking(game, initials, score) {
+  var msg = document.getElementById("rankingMsg");
+  msg.textContent = "登録中...";
+
+  fetch(RANKING_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ game: game, initials: initials, score: score })
+  })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ranked) {
+        msg.textContent = "登録しました！";
+        var list = document.getElementById("rankingList");
+        list.innerHTML = "";
+        var rankings = data.rankings || [];
+        for (var i = 0; i < rankings.length; i++) {
+          list.innerHTML += '<div class="ranking-row">' +
+            '<span class="ranking-medal">' + MEDALS[i] + '</span>' +
+            '<span class="ranking-name">' + escapeHtml(rankings[i].initials) + '</span>' +
+            '<span class="ranking-score">' + parseFloat(rankings[i].score).toFixed(1) + '秒</span>' +
+            '</div>';
+        }
+      } else {
+        msg.textContent = "登録できませんでした";
+      }
+    })
+    .catch(function() {
+      msg.textContent = "通信エラー";
+    });
+}
+
+function escapeHtml(str) {
+  var div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
 }
 
 // ===== Share =====
 function getDodgeShareText() {
-  var dist = document.getElementById("resultDistance").textContent;
+  var sec = document.getElementById("resultDistance").textContent;
   var comment = document.getElementById("resultComment").textContent;
-  return "デジタルサバイバー｜" + dist + "m 生存｜" + comment + "\n\nhttps://www.hopesconsul.com/games/dodge/";
+  return "デジタルサバイバー｜" + sec + "秒サバイブ｜" + comment + "\n\nhttps://www.hopesconsul.com/games/dodge/";
 }
 function shareResult() {
   var url = "https://x.com/intent/tweet?text=" + encodeURIComponent(getDodgeShareText());
