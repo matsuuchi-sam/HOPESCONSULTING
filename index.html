@@ -163,7 +163,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .section {
-  padding: clamp(var(--space-8), 5vw, var(--space-10)) 0;
+  padding: clamp(var(--space-8), 4.5vw, var(--space-10)) 0 clamp(var(--space-6), 3.5vw, var(--space-8));
 }
 
 /* ===== Animations ===== */
@@ -554,19 +554,34 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .section-header {
   text-align: center;
   max-width: 640px;
-  margin: 0 auto var(--space-10);
+  margin: 0 auto var(--space-8);
 }
 .section-header h2 {
   font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
   font-weight: 900;
   color: var(--color-primary);
   line-height: 1.3;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 .section-header p {
   font-size: var(--text-base);
   color: var(--color-text-light);
   line-height: 1.8;
+}
+@media (max-width: 767px) {
+  .section {
+    padding: var(--space-6) 0;
+  }
+  .section-header {
+    margin: 0 auto var(--space-5);
+  }
+  .section-header h2 {
+    font-size: clamp(var(--text-2xl), 5.5vw, var(--text-3xl));
+    margin-bottom: var(--space-2);
+  }
+  .section-header p {
+    font-size: var(--text-sm);
+  }
 }
 
 /* ===== Pain Points (課題提起) ===== */
@@ -584,34 +599,70 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* Progress bar */
 .pain-progress {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-5);
   max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: -0.5rem auto var(--space-5);
+}
+.pain-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.35rem;
+}
+.pain-progress-label {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  opacity: 0.7;
+}
+.pain-progress-xp {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  letter-spacing: 0.05em;
 }
 .pain-progress-bar {
-  flex: 1;
+  position: relative;
   height: 6px;
   background: var(--color-border-light);
-  border-radius: var(--radius-full);
+  border-radius: 1px;
   overflow: hidden;
 }
 .pain-progress-fill {
   height: 100%;
   width: 0%;
   background: var(--color-accent);
-  border-radius: var(--radius-full);
-  transition: width 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+  border-radius: 1px;
+  transition: width 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  position: relative;
 }
-.pain-progress-text {
-  font-size: var(--text-sm);
-  color: var(--color-text-light);
-  font-weight: 600;
-  min-width: 5ch;
-  text-align: right;
+.pain-progress-glow {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 0;
+  width: 0%;
+  border-radius: 1px;
+  background: transparent;
+  box-shadow: none;
+  transition: width 0.6s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.3s;
+  pointer-events: none;
+}
+.pain-progress-glow.active {
+  box-shadow: 0 0 6px rgba(217,119,87,0.35);
+}
+.pain-progress.complete .pain-progress-fill {
+  background: var(--color-primary);
+}
+.pain-progress.complete .pain-progress-glow {
+  box-shadow: 0 0 8px rgba(15,33,55,0.3);
+}
+.pain-progress.complete .pain-progress-label {
+  color: var(--color-primary);
+  opacity: 1;
 }
 
 /* Flip card */
@@ -819,7 +870,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: var(--space-3) var(--space-6);
   background: var(--color-accent);
   color: #fff;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-lg);
   text-decoration: none;
   font-weight: 600;
   transition: background 0.2s;
@@ -892,60 +943,85 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   animation: heartbeat 1.8s ease-in-out infinite;
 }
 
-/* 3D tilt + scroll-rotate cards */
+/* Service card — trump card design */
 .service-card {
   perspective: 800px;
-  border: none;
-  background: none;
-  padding: 0;
+  cursor: pointer;
 }
-.service-card::before { display: none; }
+.service-card-flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.service-card-inner,
+.service-card-back {
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border-light);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
 .service-card-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.15s ease-out;
-}
-.service-card-front,
-.service-card-back {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border-light);
-  overflow: hidden;
-}
-.service-card-front {
-  position: relative;
-  padding: var(--space-8) var(--space-6);
   background: var(--color-bg-warm);
+  padding: 3.5rem var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: box-shadow 0.3s ease;
 }
-.service-card-front::before {
-  content: '';
+.service-card:hover .service-card-inner {
+  box-shadow: 0 8px 30px rgba(20,20,19,0.08), 0 2px 8px rgba(217,119,87,0.06);
+}
+/* トランプ角 — 左上 */
+.trump-corner {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: linear-gradient(90deg, var(--color-accent), transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  z-index: 3;
 }
+.trump-corner-tl { top: 10px; left: 12px; }
+.trump-corner-br { bottom: 10px; right: 12px; transform: rotate(180deg); }
+.trump-num {
+  font-family: var(--font-accent);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  line-height: 1;
+}
+.trump-suit {
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
+}
+/* 裏面 */
 .service-card-back {
   position: absolute;
   inset: 0;
   transform: rotateY(180deg);
-  background: var(--color-bg-warm);
+  background: var(--color-accent);
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px),
+    repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px);
 }
 .service-back-logo {
-  width: 60%;
-  max-width: 180px;
+  width: 50%;
+  max-width: 140px;
   height: auto;
-  opacity: 0.85;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+  opacity: 0.9;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.2));
 }
+/* 光沢 */
 .service-card .service-card-shine {
   position: absolute;
   inset: 0;
@@ -954,9 +1030,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   opacity: 0;
   transition: opacity 0.3s ease;
   background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255,255,255,0.15) 0%, transparent 60%);
-  z-index: 2;
+  z-index: 4;
 }
 .service-card:hover .service-card-shine { opacity: 1; }
+/* 中央装飾線 */
 
 /* Text decode */
 .hero-content h1 .decode-char {
@@ -1188,12 +1265,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ===== Services ===== */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
+  max-width: 960px;
+  margin: 0 auto;
 }
 .service-card {
   border-radius: var(--radius-lg);
   position: relative;
+  aspect-ratio: 9 / 10;
 }
 .service-num {
   font-family: var(--font-accent);
@@ -1238,6 +1318,60 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   height: 6px;
   border-radius: 50%;
   background: var(--color-accent);
+}
+
+@media (max-width: 767px) {
+  .services-grid {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    gap: 12px;
+    padding: 0 6vw;
+  }
+  .services-grid::-webkit-scrollbar { display: none; }
+  .service-card {
+    flex: 0 0 88vw;
+    max-width: 400px;
+    aspect-ratio: auto;
+    perspective: none;
+    scroll-snap-align: center;
+  }
+  .service-card-flipper { height: auto; }
+  .service-card-inner { height: auto; padding: 2.8rem 1.4rem 2.5rem; overflow: visible; }
+  .service-card-flipper { transform-style: preserve-3d; }
+  .service-card-back { display: flex; }
+  .trump-corner-tl { top: 10px; left: 12px; }
+  .trump-corner-br { bottom: 10px; right: 12px; }
+  .trump-num { font-size: 1rem; }
+  .trump-suit { width: 12px; height: 12px; }
+  .service-card h3 { font-size: var(--text-lg); }
+  .service-card .service-sub { font-size: 0.85rem; margin-bottom: var(--space-4); }
+  .service-card li { font-size: 0.85rem; }
+}
+
+/* スライダードット（モバイル） */
+.service-dots { display: none; }
+@media (max-width: 767px) {
+  .service-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .service-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border-light);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .service-dot.active { background: var(--color-accent); }
 }
 
 /* ===== Strengths (選ばれる理由) ===== */
@@ -1373,7 +1507,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .shigyou-intro {
   max-width: 760px;
-  margin: 0 auto var(--space-10);
+  margin: -0.5rem auto var(--space-6);
   text-align: center;
 }
 .shigyou-intro p {
@@ -1688,10 +1822,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 @media (max-width: 767px) {
-  .footer-grid { grid-template-columns: 1fr; gap: var(--space-8); text-align: center; }
+  .footer { padding: var(--space-6) 0 var(--space-4); }
+  .footer-grid { grid-template-columns: 1fr; gap: var(--space-5); text-align: center; margin-bottom: var(--space-4); }
   .footer-brand { display: flex; flex-direction: column; align-items: center; }
   .footer-brand p { text-align: center; }
-  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-bottom { flex-direction: column; text-align: center; padding-top: var(--space-3); }
 }
 
 /* ===== Scroll to Top ===== */
@@ -1932,9 +2067,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <h2>こんな課題、抱えていませんか？</h2>
       <p>多くの企業が同じ壁にぶつかっています。あなたの会社ではいかがでしょうか。</p>
     </div>
-    <div class="pain-progress">
-      <div class="pain-progress-bar"><div class="pain-progress-fill" id="painProgressFill"></div></div>
-      <span class="pain-progress-text" id="painProgressText">0/6</span>
+    <div class="pain-progress" id="painProgress">
+      <div class="pain-progress-header">
+        <span class="pain-progress-label">SOLVE PROGRESS</span>
+        <span class="pain-progress-xp" id="painProgressText">0 / 6 SOLVED</span>
+      </div>
+      <div class="pain-progress-bar">
+        <div class="pain-progress-fill" id="painProgressFill"></div>
+        <div class="pain-progress-glow" id="painProgressGlow"></div>
+      </div>
     </div>
     <div class="pain-grid stagger-group">
 
@@ -2036,21 +2177,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <div class="cursor-glow" id="cursorGlow"></div>
 
 <!-- ===== Services ===== -->
-<section class="section" id="services">
+<section class="section services-section" id="services">
   <div class="container">
     <div class="section-header fade-in">
       <h2>人がより創造的な仕事に<br>集中できる環境を</h2>
     </div>
     <div class="services-grid stagger-group">
       <div id="service-ai" class="service-card stagger-item" data-tilt>
-        <div class="service-card-inner">
-          <div class="service-card-front">
+        <div class="service-card-flipper">
+          <div class="service-card-inner">
             <div class="service-card-shine"></div>
-            <div class="service-num">1</div>
+            <div class="trump-corner trump-corner-tl"><span class="trump-num">A</span><img src="images/HOPESCONSULTING_logo.png" alt="" class="trump-suit"></div>
+            <div class="trump-corner trump-corner-br"><span class="trump-num">A</span><img src="images/HOPESCONSULTING_logo.png" alt="" class="trump-suit"></div>
             <h3>AI導入支援</h3>
             <p class="service-sub">経営課題を解決するAI活用戦略</p>
             <ul>
-              <li>経営診断に基づくAI活用領域の特定</li>
+              <li>経営診断に基づくAI活用の特定</li>
               <li>費用対効果シミュレーション</li>
               <li>段階的導入計画の策定</li>
             </ul>
@@ -2061,12 +2203,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         </div>
       </div>
       <div id="service-strategy" class="service-card stagger-item" data-tilt>
-        <div class="service-card-inner">
-          <div class="service-card-front">
+        <div class="service-card-flipper">
+          <div class="service-card-inner">
             <div class="service-card-shine"></div>
-            <div class="service-num">2</div>
+            <div class="trump-corner trump-corner-tl"><span class="trump-num">2</span><img src="images/HOPESCONSULTING_logo.png" alt="" class="trump-suit"></div>
+            <div class="trump-corner trump-corner-br"><span class="trump-num">2</span><img src="images/HOPESCONSULTING_logo.png" alt="" class="trump-suit"></div>
             <h3>効率化戦略策定</h3>
-            <p class="service-sub">経営戦略と一体化した効率化ロードマップ</p>
+            <p class="service-sub">経営と一体化した効率化戦略</p>
             <ul>
               <li>業務プロセスのデジタル化推進</li>
               <li>IT人材の育成支援</li>
@@ -2079,10 +2222,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         </div>
       </div>
       <div id="service-dev" class="service-card stagger-item" data-tilt>
-        <div class="service-card-inner">
-          <div class="service-card-front">
+        <div class="service-card-flipper">
+          <div class="service-card-inner">
             <div class="service-card-shine"></div>
-            <div class="service-num">3</div>
+            <div class="trump-corner trump-corner-tl"><span class="trump-num">3</span><img src="images/HOPESCONSULTING_logo.png" alt="" class="trump-suit"></div>
+            <div class="trump-corner trump-corner-br"><span class="trump-num">3</span><img src="images/HOPESCONSULTING_logo.png" alt="" class="trump-suit"></div>
             <h3>受託開発</h3>
             <p class="service-sub">経営課題解決型のシステム開発</p>
             <ul>
@@ -2096,6 +2240,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
         </div>
       </div>
+    </div>
+    <div class="service-dots" id="serviceDots">
+      <button class="service-dot active" data-idx="0"></button>
+      <button class="service-dot" data-idx="1"></button>
+      <button class="service-dot" data-idx="2"></button>
     </div>
   </div>
 </section>
@@ -2522,7 +2671,9 @@ window.addEventListener('scroll', () => {
   var hint = document.querySelector('.pain-solve-hint');
   var section = document.querySelector('.pain-section .container');
   var progressFill = document.getElementById('painProgressFill');
+  var progressGlow = document.getElementById('painProgressGlow');
   var progressText = document.getElementById('painProgressText');
+  var progressWrap = document.getElementById('painProgress');
   if (!cards.length) return;
 
   var solvedCount = 0;
@@ -2531,7 +2682,14 @@ window.addEventListener('scroll', () => {
   function updateProgress() {
     var pct = (solvedCount / totalCards) * 100;
     progressFill.style.width = pct + '%';
-    progressText.textContent = solvedCount + '/' + totalCards;
+    progressGlow.style.width = pct + '%';
+    progressText.textContent = solvedCount + ' / ' + totalCards + ' SOLVED';
+    if (solvedCount > 0) {
+      progressGlow.classList.add('active');
+    }
+    if (solvedCount === totalCards) {
+      progressWrap.classList.add('complete');
+    }
   }
 
   function launchConfetti() {
@@ -2557,31 +2715,59 @@ window.addEventListener('scroll', () => {
         el: el,
         x: Math.random() * 100,
         y: -20,
-        vy: 1.5 + Math.random() * 2.5,
+        vy: 2.5 + Math.random() * 3.5,
         vx: (Math.random() - 0.5) * 1.5,
         rot: 0,
         rotV: (Math.random() - 0.5) * 12,
         floor: floor,
-        delay: Math.random() * 800,
+        delay: Math.random() * 400,
         landed: false,
         size: size
       });
     }
 
     var start = performance.now();
+    var allSettled = false;
+
     function tick(now) {
       var allLanded = true;
       for (var i = 0; i < pieces.length; i++) {
         var p = pieces[i];
         if (now - start < p.delay) { allLanded = false; continue; }
-        if (p.landed) continue;
+        if (p.landed && !p.disturbed) continue;
+
+        if (p.disturbed) {
+          // マウスで散らされた後の物理演算
+          p.vy += 0.15; // 重力
+          p.vx *= 0.98; // 摩擦
+          p.y += p.vy;
+          p.xPx += p.vx;
+          p.rot += p.rotV;
+
+          if (p.y >= p.floor) {
+            p.y = p.floor;
+            p.vy = -p.vy * 0.3; // バウンス
+            if (Math.abs(p.vy) < 0.5) {
+              p.vy = 0;
+              p.vx = 0;
+              p.landed = true;
+              p.disturbed = false;
+            }
+          }
+          p.el.style.transform = 'translate(' + p.xPx + 'px,' + p.y + 'px) rotate(' + p.rot + 'deg)';
+          allLanded = false;
+          continue;
+        }
+
         p.y += p.vy;
         p.x += p.vx * 0.05;
         p.rot += p.rotV;
         if (p.y >= p.floor) {
           p.y = p.floor;
           p.landed = true;
-          p.el.style.transform = 'translate(' + p.x + 'vw,' + p.y + 'px) rotate(' + p.rot + 'deg)';
+          // vw → px に変換して保存（マウス操作用）
+          p.xPx = p.x * painSection.offsetWidth / 100;
+          p.el.style.transform = 'translate(' + p.xPx + 'px,' + p.y + 'px) rotate(' + p.rot + 'deg)';
           p.el.style.opacity = '0.85';
           continue;
         }
@@ -2589,9 +2775,290 @@ window.addEventListener('scroll', () => {
         p.el.style.opacity = '1';
         allLanded = false;
       }
-      if (!allLanded) requestAnimationFrame(tick);
+      if (allLanded && !allSettled) {
+        allSettled = true;
+      }
+      if (!allLanded) {
+        requestAnimationFrame(tick);
+      } else {
+        // 散らされる可能性があるので継続監視
+        requestAnimationFrame(tick);
+      }
     }
     requestAnimationFrame(tick);
+
+    // スーツロボットが掃除しに来る
+    var robotTimer = null;
+    function launchRobot() {
+      var robot = document.createElement('canvas');
+      robot.width = 64;
+      robot.height = 64;
+      robot.style.cssText = 'position:absolute;bottom:2px;left:-64px;z-index:10;image-rendering:pixelated;';
+      container.appendChild(robot);
+      var rc = robot.getContext('2d');
+
+      // ロボット描画: mode = "broom" | "walk" | "bow"
+      function drawRobot(flip, mode) {
+        rc.clearRect(0, 0, 64, 64);
+        rc.save();
+        if (flip) {
+          rc.translate(64, 0);
+          rc.scale(-1, 1);
+        }
+        var s = 2;
+        var ox = 18, oy = 3;
+        function px(x, y, w, h, c) { rc.fillStyle = c; rc.fillRect(ox + x * s, oy + y * s, w * s, h * s); }
+
+        if (mode === "bow") {
+          // お辞儀ポーズ（頭を下げる）
+          px(-3, 4, 6, 3, "#c0c0c0");
+          px(-4, 7, 8, 6, "#a0a0a0");
+          px(-3, 8, 2, 2, "#00f0ff");
+          px(1, 8, 2, 2, "#00f0ff");
+          px(-1, 10, 2, 1, "#808080");
+          // Body（前傾）
+          px(-5, 12, 10, 8, "#2c3e50");
+          px(-2, 12, 4, 8, "#34495e");
+          px(-1, 13, 2, 2, "#e74c3c");
+          px(-1, 15, 2, 4, "#c0392b");
+          // Arms（前に垂らす）
+          px(-7, 13, 2, 8, "#2c3e50");
+          px(5, 13, 2, 8, "#2c3e50");
+          px(-7, 21, 2, 2, "#a0a0a0");
+          px(5, 21, 2, 2, "#a0a0a0");
+          // Legs
+          px(-4, 20, 3, 4, "#1a252f");
+          px(1, 20, 3, 4, "#1a252f");
+          px(-5, 24, 4, 2, "#333");
+          px(1, 24, 4, 2, "#333");
+        } else {
+          // 通常立ち姿
+          px(-3, 0, 6, 3, "#c0c0c0");
+          px(-4, 3, 8, 6, "#a0a0a0");
+          px(-3, 4, 2, 2, "#00f0ff");
+          px(1, 4, 2, 2, "#00f0ff");
+          px(-1, 6, 2, 1, "#808080");
+          px(-5, 9, 10, 8, "#2c3e50");
+          px(-2, 9, 4, 8, "#34495e");
+          px(-1, 10, 2, 2, "#e74c3c");
+          px(-1, 12, 2, 4, "#c0392b");
+          px(-7, 10, 2, 7, "#2c3e50"); // 左腕
+          px(-7, 17, 2, 2, "#a0a0a0"); // 左手
+          if (mode === "point") {
+            // 右腕を上に伸ばして指さし
+            px(5, 2, 2, 8, "#2c3e50");
+            px(5, 0, 2, 2, "#a0a0a0"); // 指先
+          } else {
+            px(5, 10, 2, 7, "#2c3e50"); // 右腕通常
+            px(5, 17, 2, 2, "#a0a0a0"); // 右手通常
+          }
+          px(-4, 17, 3, 5, "#1a252f");
+          px(1, 17, 3, 5, "#1a252f");
+          px(-5, 22, 4, 2, "#333");
+          px(1, 22, 4, 2, "#333");
+          if (mode === "blower") {
+            // タンク（背中側）
+            px(6, 9, 4, 8, "#555");
+            px(6, 8, 4, 1, "#777");
+            px(7, 17, 2, 1, "#444");
+            // ホース
+            px(10, 12, 2, 2, "#666");
+            px(12, 11, 2, 2, "#666");
+            // ノズル（先端・太め）
+            px(14, 10, 3, 4, "#888");
+            px(14, 9, 3, 1, "#999");
+            px(17, 11, 2, 2, "#aaa");
+            // 排気エフェクト
+            px(19, 10, 1, 1, "rgba(200,200,200,0.5)");
+            px(19, 13, 1, 1, "rgba(200,200,200,0.4)");
+            px(20, 11, 1, 2, "rgba(200,200,200,0.3)");
+            px(21, 12, 1, 1, "rgba(200,200,200,0.2)");
+          }
+        }
+        rc.restore();
+      }
+
+      drawRobot(false, "blower");
+
+      var robotX = -64;
+      var sectionW = painSection.offsetWidth;
+      var sweepSpeed = 3;
+      var walkFrame = 0;
+      var robotPhase = "sweep"; // sweep → return → wait → exit
+
+      function sweepTick() {
+        walkFrame++;
+        var bob = Math.sin(walkFrame * 0.15) * 2;
+
+        if (robotPhase === "sweep") {
+          robotX += sweepSpeed;
+          robot.style.bottom = (2 + bob) + 'px';
+          robot.style.left = robotX + 'px';
+          drawRobot(false, "blower");
+
+          // 掃除
+          for (var i = 0; i < pieces.length; i++) {
+            var p = pieces[i];
+            if (p.xPx === undefined) continue;
+            var dist = Math.abs(p.xPx - (robotX + 32));
+            if (dist < 120 && p.y > sectionH - 200) {
+              p.landed = false;
+              p.disturbed = true;
+              p.vy = -(Math.random() * 0.5);
+              p.vx = sweepSpeed + 1 + Math.random() * 2;
+              p.rotV = (Math.random() - 0.5) * 10;
+            }
+          }
+
+          if (robotX > sectionW + 10) {
+            // 右端到達 → ゴミと箒を画面外に置いて、帰り開始
+            robotPhase = "return";
+            robotX = sectionW + 10;
+            // 残った紙吹雪をフェードアウト
+            for (var i = 0; i < pieces.length; i++) {
+              pieces[i].el.style.transition = 'opacity 0.5s ease';
+              pieces[i].el.style.opacity = '0';
+            }
+          }
+        } else if (robotPhase === "return") {
+          robotX -= sweepSpeed;
+          robot.style.bottom = (2 + bob) + 'px';
+          robot.style.left = robotX + 'px';
+          drawRobot(true, "walk");
+
+          // CTAボタンの下あたりで停止
+          var cta = painSection.querySelector('.solved-cta');
+          var stopX = sectionW / 2 - 32;
+          if (cta) {
+            var ctaRect = cta.getBoundingClientRect();
+            var sectionRect = painSection.getBoundingClientRect();
+            stopX = ctaRect.left - sectionRect.left + ctaRect.width / 2 - 32;
+          }
+
+          if (robotX <= stopX) {
+            robotX = stopX;
+            robot.style.left = robotX + 'px';
+            robot.style.bottom = '2px';
+            robotPhase = "wait";
+            drawRobot(true, "point");
+
+            // 吹き出し表示
+            var bubble = document.createElement('div');
+            bubble.style.cssText = 'position:absolute;bottom:70px;left:' + (robotX - 20) + 'px;' +
+              'background:#fff;color:#141413;font-family:"Noto Sans JP",sans-serif;font-size:0.7rem;font-weight:600;' +
+              'padding:0.3rem 0.6rem;border-radius:6px;white-space:nowrap;z-index:11;' +
+              'box-shadow:0 2px 8px rgba(0,0,0,0.12);opacity:0;transition:opacity 0.3s;';
+            bubble.textContent = 'お気軽にどうぞ！';
+            // 吹き出し三角
+            var tri = document.createElement('div');
+            tri.style.cssText = 'position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);' +
+              'width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #fff;';
+            bubble.appendChild(tri);
+            container.appendChild(bubble);
+            setTimeout(function() { bubble.style.opacity = '1'; }, 50);
+
+            // クリック待ち
+            function onPageClick(e) {
+              // CTAボタンはそのまま動作させる
+              if (e.target.closest('.solved-cta')) return;
+              document.removeEventListener('click', onPageClick);
+              robotPhase = "bow";
+              drawRobot(true, "bow");
+              robot.style.bottom = '2px';
+              bubble.style.opacity = '0';
+              setTimeout(function() { bubble.remove(); }, 300);
+
+              // お辞儀 → 0.8秒後に退場
+              setTimeout(function() {
+                robotPhase = "exit";
+                requestAnimationFrame(sweepTick);
+              }, 800);
+            }
+            document.addEventListener('click', onPageClick);
+            return; // アニメーション一時停止
+          }
+        } else if (robotPhase === "exit") {
+          robotX -= sweepSpeed;
+          robot.style.bottom = (2 + bob) + 'px';
+          robot.style.left = robotX + 'px';
+          drawRobot(true, "walk");
+
+          if (robotX < -64) {
+            robot.remove();
+            return;
+          }
+        }
+
+        requestAnimationFrame(sweepTick);
+      }
+      requestAnimationFrame(sweepTick);
+    }
+
+    // 全て落ちて3秒後にロボット登場
+    var settledCheckId = null;
+    function checkAllSettled() {
+      if (pieces.every(function(p) { return p.landed; })) {
+        clearInterval(settledCheckId);
+        setTimeout(launchRobot, 1000);
+      }
+    }
+    settledCheckId = setInterval(checkAllSettled, 500);
+
+    // マウスで紙吹雪を散らす
+    var lastMouse = { x: 0, y: 0 };
+    painSection.addEventListener('mousemove', function(e) {
+      if (!allSettled && pieces.every(function(p) { return !p.disturbed; })) return;
+      var rect = painSection.getBoundingClientRect();
+      var mx = e.clientX - rect.left;
+      var my = e.clientY - rect.top;
+      var dx = e.clientX - lastMouse.x;
+      var dy = e.clientY - lastMouse.y;
+      var speed = Math.sqrt(dx * dx + dy * dy);
+      lastMouse.x = e.clientX;
+      lastMouse.y = e.clientY;
+
+      if (speed < 3) return;
+
+      for (var i = 0; i < pieces.length; i++) {
+        var p = pieces[i];
+        if (!p.landed || p.xPx === undefined) continue;
+        var px = p.xPx;
+        var py = p.y;
+        var dist = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
+        if (dist < 60) {
+          p.landed = false;
+          p.disturbed = true;
+          var force = Math.min(speed * 0.15, 8);
+          var angle = Math.atan2(py - my, px - mx);
+          p.vx = Math.cos(angle) * force + (Math.random() - 0.5) * 2;
+          p.vy = Math.max(Math.sin(angle) * force, -2) - Math.random() * 1;
+          p.rotV = (Math.random() - 0.5) * 15;
+        }
+      }
+    });
+
+    // タッチ対応
+    painSection.addEventListener('touchmove', function(e) {
+      if (!allSettled) return;
+      var touch = e.touches[0];
+      var rect = painSection.getBoundingClientRect();
+      var mx = touch.clientX - rect.left;
+      var my = touch.clientY - rect.top;
+
+      for (var i = 0; i < pieces.length; i++) {
+        var p = pieces[i];
+        if (!p.landed || p.xPx === undefined) continue;
+        var dist = Math.sqrt((mx - p.xPx) * (mx - p.xPx) + (my - p.y) * (my - p.y));
+        if (dist < 50) {
+          p.landed = false;
+          p.disturbed = true;
+          var angle = Math.atan2(p.y - my, p.xPx - mx);
+          p.vx = Math.cos(angle) * 5 + (Math.random() - 0.5) * 2;
+          p.vy = Math.max(Math.sin(angle) * 3, -2) - Math.random() * 1;
+          p.rotV = (Math.random() - 0.5) * 15;
+        }
+      }
+    });
   }
 
   cards.forEach(function(card) {
@@ -2646,32 +3113,41 @@ window.addEventListener('scroll', () => {
   });
 })();
 
-/* 3D tilt + scroll-rotate cards */
+/* Service card smooth tilt + click flip */
 (function() {
   document.querySelectorAll('[data-tilt]').forEach(function(card) {
-    var inner = card.querySelector('.service-card-inner');
+    var flipper = card.querySelector('.service-card-flipper');
     var shine = card.querySelector('.service-card-shine');
-    var spinY = 0;
-    var tiltX = 0;
-    var tiltY = 0;
-    var isHovering = false;
+    var tiltX = 0, tiltY = 0, targetX = 0, targetY = 0;
+    var animating = false;
+    var flipping = false;
 
-    function applyTransform() {
-      inner.style.transform = 'rotateX(' + tiltX + 'deg) rotateY(' + (tiltY + spinY) + 'deg) scale(1.02)';
+    function tick() {
+      tiltX += (targetX - tiltX) * 0.08;
+      tiltY += (targetY - tiltY) * 0.08;
+      if (!flipping) {
+        flipper.style.transform = 'rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale(1.02)';
+      }
+      if (Math.abs(targetX - tiltX) > 0.05 || Math.abs(targetY - tiltY) > 0.05) {
+        requestAnimationFrame(tick);
+      } else {
+        tiltX = targetX; tiltY = targetY;
+        if (!flipping) {
+          flipper.style.transform = targetX === 0 && targetY === 0 ? '' : 'rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale(1.02)';
+        }
+        animating = false;
+      }
     }
-
-    card.addEventListener('mouseenter', function() {
-      isHovering = true;
-      inner.style.transition = 'transform 0.15s ease-out';
-    });
+    function startAnim() { if (!animating) { animating = true; requestAnimationFrame(tick); } }
 
     card.addEventListener('mousemove', function(e) {
+      if (flipping) return;
       var rect = card.getBoundingClientRect();
       var x = (e.clientX - rect.left) / rect.width;
       var y = (e.clientY - rect.top) / rect.height;
-      tiltX = (0.5 - y) * 15;
-      tiltY = (x - 0.5) * 15;
-      applyTransform();
+      targetX = (0.5 - y) * 12;
+      targetY = (x - 0.5) * 12;
+      startAnim();
       if (shine) {
         shine.style.setProperty('--shine-x', (x * 100) + '%');
         shine.style.setProperty('--shine-y', (y * 100) + '%');
@@ -2679,74 +3155,50 @@ window.addEventListener('scroll', () => {
     });
 
     card.addEventListener('mouseleave', function() {
-      isHovering = false;
-      tiltX = 0;
-      tiltY = 0;
-      inner.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
-      /* 最も近い表/裏にスナップ */
-      var norm = ((spinY % 360) + 360) % 360;
-      if (norm > 90 && norm <= 270) {
-        spinY = Math.round(spinY / 360) * 360 + 180;
-      } else {
-        spinY = Math.round(spinY / 360) * 360;
-      }
-      applyTransform();
+      if (flipping) return;
+      targetX = 0; targetY = 0;
+      startAnim();
     });
 
-    var isMobile = 'ontouchstart' in window;
-
-    if (isMobile) {
-      /* スマホ: 回転無効、静的表示のみ */
-    } else {
-      /* PC: 横ドラッグでY軸回転 */
-      var dragStartX = 0;
-      var pcDragging = false;
-
-      card.addEventListener('mousedown', function(e) {
-        dragStartX = e.clientX;
-        pcDragging = true;
-        inner.style.transition = 'none';
-      });
-      document.addEventListener('mousemove', function(e) {
-        if (!pcDragging) return;
-        var dx = e.clientX - dragStartX;
-        if (Math.abs(dx) > 5) {
-          tiltX = 0;
-          tiltY = 0;
-          inner.style.transform = 'rotateY(' + (spinY + dx * 1.5) + 'deg)';
-        }
-      });
-      document.addEventListener('mouseup', function(e) {
-        if (!pcDragging) return;
-        pcDragging = false;
-        var dx = e.clientX - dragStartX;
-        if (Math.abs(dx) > 30) {
-          spinY += (dx > 0) ? 180 : -180;
-        }
-        inner.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
-        var norm = ((spinY % 360) + 360) % 360;
-        if (norm > 90 && norm <= 270) {
-          spinY = Math.round(spinY / 360) * 360 + 180;
-        } else {
-          spinY = Math.round(spinY / 360) * 360;
-        }
-        tiltX = 0;
-        tiltY = 0;
-        inner.style.transform = 'rotateY(' + spinY + 'deg)';
-      });
-    }
-
-    /* PC: トラックパッド二本指スワイプでも回転 */
-    card.addEventListener('wheel', function(e) {
-      if (!isHovering) return;
-      e.preventDefault();
-      inner.style.transition = 'none';
-      spinY += e.deltaX * 0.3 || e.deltaY * 0.3;
-      tiltX = 0;
-      tiltY = 0;
-      inner.style.transform = 'rotateY(' + spinY + 'deg)';
-    }, { passive: false });
+    // クリックで回転 → 裏面チラ見せ → 自動で戻る
+    card.addEventListener('click', function() {
+      if (flipping) return;
+      flipping = true;
+      flipper.style.transition = 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
+      flipper.style.transform = 'rotateY(180deg)';
+      setTimeout(function() {
+        flipper.style.transition = 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
+        flipper.style.transform = 'rotateY(0deg)';
+        setTimeout(function() {
+          flipper.style.transition = '';
+          flipper.style.transform = '';
+          flipping = false;
+        }, 600);
+      }, 800);
+    });
   });
+
+  /* Service slider dots — scroll連動 (mobile) */
+  var grid = document.querySelector('.services-grid');
+  var dots = document.querySelectorAll('.service-dot');
+  var sCards = grid ? grid.querySelectorAll('.service-card') : [];
+
+  if (grid && dots.length && sCards.length) {
+    grid.addEventListener('scroll', function() {
+      var scrollLeft = grid.scrollLeft;
+      var cardW = sCards[0].offsetWidth;
+      var gap = 16;
+      var idx = Math.round(scrollLeft / (cardW + gap));
+      idx = Math.max(0, Math.min(idx, dots.length - 1));
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+    });
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        var idx = parseInt(dot.dataset.idx);
+        if (sCards[idx]) sCards[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+    });
+  }
 })();
 
 /* Text decode effect */
