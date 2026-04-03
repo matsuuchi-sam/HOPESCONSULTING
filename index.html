@@ -164,6 +164,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .section {
   padding: clamp(var(--space-8), 4.5vw, var(--space-10)) 0 clamp(var(--space-6), 3.5vw, var(--space-8));
+  background-image: linear-gradient(90deg, transparent, var(--color-border), transparent);
+  background-size: 60% 1px;
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 
 /* ===== Animations ===== */
@@ -991,9 +995,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   animation: tap-bounce 0.4s ease-out !important;
 }
 
-/* Mobile: strength icon auto-pulse on scroll */
-.strength-item.in-view::before {
-  animation: heartbeat 1.8s ease-in-out infinite;
+/* Mobile only: strength line auto-slide on scroll */
+@media (max-width: 767px) {
+  .strength-item.in-view h3::after {
+    width: auto;
+    left: 0;
+    right: 0;
+    transform: none;
+    animation: line-slide 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+@keyframes line-slide {
+  0% { width: 0; opacity: 0.35; }
+  30% { width: 100%; opacity: 0.3; }
+  70% { width: 100%; opacity: 0.12; }
+  100% { width: 0; opacity: 0; }
+}
+@keyframes mark-breathe {
+  0% { opacity: 0.3; }
+  30% { opacity: 0.15; }
+  70% { opacity: 0.15; }
+  100% { opacity: 0.3; }
 }
 
 /* Service card — trump card design */
@@ -1443,6 +1465,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   grid-template-columns: auto 1fr;
   gap: var(--space-6);
   align-items: center;
+  padding: var(--space-6) var(--space-8);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(20,20,19,0.04);
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.strength-item:hover {
+  box-shadow: 0 12px 32px rgba(20,20,19,0.1), 0 4px 10px rgba(20,20,19,0.05);
+  transform: scale(1.02);
+}
+@media (max-width: 767px) {
+  .strength-item {
+    padding: var(--space-5) var(--space-5);
+    box-shadow: 0 10px 28px rgba(20,20,19,0.08), 0 3px 8px rgba(20,20,19,0.05);
+    transform: scale(1.01);
+  }
+  .strength-item::before {
+    font-size: var(--text-5xl);
+  }
+  .strength-body h3 {
+    display: block;
+    font-size: var(--text-base);
+  }
 }
 .strength-item::before {
   content: "✦";
@@ -1450,10 +1494,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1;
   color: var(--color-accent);
   opacity: 0.18;
-  transition: opacity 0.3s ease;
+  animation: mark-breathe 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 .strength-item:hover::before {
-  animation: heartbeat 1.8s ease-in-out infinite;
+  animation: none;
+  opacity: 0.18;
 }
 @keyframes heartbeat {
   0%, 100% { transform: scale(1); opacity: 0.18; }
@@ -1463,10 +1508,29 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   56% { transform: scale(1); opacity: 0.18; }
 }
 .strength-body h3 {
-  font-size: var(--text-xl);
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-xl));
   font-weight: 700;
   color: var(--color-primary);
   margin-bottom: var(--space-3);
+  position: relative;
+  display: inline-block;
+}
+.strength-body h3::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  border-top: 1px solid var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
+  opacity: 0.18;
+  transform: translateX(-50%);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.strength-item:hover h3::after {
+  width: 100%;
+  opacity: 0.35;
 }
 .strength-body p {
   font-size: var(--text-sm);
@@ -3546,7 +3610,7 @@ window.addEventListener('scroll', () => {
           entry.target.classList.remove('in-view');
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.2 });
     strengthItems.forEach(function(item) { sObserver.observe(item); });
   }
 })();
